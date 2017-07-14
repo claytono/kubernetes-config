@@ -1,0 +1,56 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: plexpy
+  labels:
+    app: plexpy
+spec:
+  ports:
+  - port: 8181
+    targetPort: 8181
+    protocol: TCP
+    name: http
+  selector:
+    app: plexpy
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: plexpy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: plexpy
+    spec:
+      containers:
+      - name: plexpy
+        image: linuxserver/plexpy
+        ports:
+        - containerPort: 8181
+        volumeMounts:
+          - mountPath: "/config"
+            name: config
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: plexpy-config
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: plexpy-config
+  labels:
+    app: plexpy
+    id: plexpy-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      id: plexpy-config

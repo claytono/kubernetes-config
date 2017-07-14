@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-ingress-controller
+  namespace: kube-system
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+        k8s-app: nginx-ingress-lb
+  template:
+    metadata:
+      labels:
+        k8s-app: nginx-ingress-lb
+    spec:
+      serviceAccountName: nginx-ingress-serviceaccount
+      hostNetwork: true
+      containers:
+        - name: nginx-ingress-controller
+          image: gcr.io/google_containers/nginx-ingress-controller:0.9.0-beta.10
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+          args:
+             - /nginx-ingress-controller
+             - --default-backend-service=kube-system/default-http-backend
+             - --default-ssl-certificate=$(POD_NAMESPACE)/tls-certificate
+          env:
+             - name: POD_NAME
+               valueFrom:
+                 fieldRef:
+                   fieldPath: metadata.name
+             - name: POD_NAMESPACE
+               valueFrom:
+                 fieldRef:
+                   fieldPath: metadata.namespace
+          ports:
+          - name: http
+            containerPort: 80

@@ -1,0 +1,16 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: plexpy-config
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    name: plexpy-config
+    namespace: default
+  nfs:
+    server: fs1.oneill.net
+    path: /volume1/k8s-pv/static/plexpy-config
