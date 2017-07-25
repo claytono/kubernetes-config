@@ -1,0 +1,17 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: grafana
+  namespace: kube-system
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: "grafana.k.oneill.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: monitoring-grafana
+              servicePort: 80
