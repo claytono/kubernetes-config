@@ -1,0 +1,62 @@
+apiVersion: batch/v2alpha1
+kind: CronJob
+metadata:
+  name: cluster-backup
+  namespace: kube-system
+spec:
+  schedule: "0 */12 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 10
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: cluster-backup
+          annotations:
+            scheduler.alpha.kubernetes.io/tolerations: |
+              [
+                {
+                  "key": "dedicated",
+                  "operator": "Equal",
+                  "value": "master",
+                  "effect": "NoSchedule"
+                }
+              ]
+        spec:
+          containers:
+          - name: cluster-backup
+            command:
+            - /backup.sh
+            image: dvorak/kubernetes-backup:latest
+            imagePullPolicy: Always
+            volumeMounts:
+            - mountPath: /etc/ssl/certs
+              name: certs
+              readOnly: true
+            - mountPath: /var/lib/etcd
+              name: etcd
+              readOnly: true
+            - mountPath: /etc/kubernetes
+              name: k8s
+              readOnly: true
+            - mountPath: /backups
+              name: backups
+          hostNetwork: true
+          volumes:
+          - hostPath:
+              path: /etc/ssl/certs
+            name: certs
+          - hostPath:
+              path: /var/lib/etcd
+            name: etcd
+          - hostPath:
+              path: /etc/kubernetes
+            name: k8s
+          - nfs:
+              server: fs1.oneill.net
+              path: /volume1/k8s-pv/backups
+            name: backups
+          restartPolicy: OnFailure
+          nodeSelector:
+            node-role.kubernetes.io/master: ""
