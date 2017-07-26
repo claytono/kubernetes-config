@@ -1,0 +1,17 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kibana
+  namespace: kube-system
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: "kibana.k.oneill.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: kibana-logging
+              servicePort: 5601
