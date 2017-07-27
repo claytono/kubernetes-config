@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: smokeping
+  labels:
+    k8s-app: smokeping
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: smokeping
+    spec:
+      containers:
+      - name: smokeping
+        image: dvorak/docker-smokeping
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - mountPath: "/config"
+            name: config
+          - mountPath: "/data"
+            name: data
+      volumes:
+        - nfs:
+            server: fs1.oneill.net
+            path: /volume1/k8s-pv/static/smokeping-config
+          name: config
+        - nfs:
+            server: fs1.oneill.net
+            path: /volume1/k8s-pv/static/smokeping-data
+          name: data
