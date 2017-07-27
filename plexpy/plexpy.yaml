@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: plexpy
   labels:
-    app: plexpy
+    k8s-app: plexpy
 spec:
   ports:
   - port: 8181
@@ -12,18 +12,20 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: plexpy
+    k8s-app: plexpy
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: plexpy
+  labels:
+    k8s-app: plexpy
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: plexpy
+        k8s-app: plexpy
     spec:
       containers:
       - name: plexpy
@@ -34,23 +36,7 @@ spec:
           - mountPath: "/config"
             name: config
       volumes:
-        - name: config
-          persistentVolumeClaim:
-            claimName: plexpy-config
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: plexpy-config
-  labels:
-    app: plexpy
-    id: plexpy-config
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-  selector:
-    matchLabels:
-      id: plexpy-config
+        - nfs:
+            server: fs1.oneill.net
+            path: /volume1/k8s-pv/static/plexpy-config
+          name: config
