@@ -25,6 +25,9 @@ spec:
             name: config
           - mountPath: "/data"
             name: data
+        env:
+          - name: TZ
+            value: "America/New_York"
       volumes:
         - nfs:
             server: fs1.oneill.net
