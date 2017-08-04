@@ -4,9 +4,7 @@ metadata:
   name: nginx-ingress-controller
   namespace: kube-system
 spec:
-  # Can only use one replica here for now, because external-dns can't properly
-  # update A records with multiple IPs with the 0.3.0 release
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
         k8s-app: nginx-ingress-lb
