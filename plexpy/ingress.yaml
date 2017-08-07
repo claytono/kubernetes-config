@@ -7,6 +7,7 @@ metadata:
     k8s-app: plexpy
   annotations:
     kubernetes.io/ingress.class: "nginx"
+    external-dns.alpha.kubernetes.io/external-ip: "172.19.74.20"
 spec:
   rules:
     - host: "plexpy.k.oneill.net"

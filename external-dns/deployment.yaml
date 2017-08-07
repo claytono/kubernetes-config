@@ -15,7 +15,7 @@ spec:
       serviceAccountName: external-dns
       containers:
       - name: external-dns
-        image: registry.opensource.zalan.do/teapot/external-dns:v0.4.0
+        image: dvorak/external-dns:v0.4.2-1-gfe498ad
         args:
         - --source=ingress
         - --domain-filter=k.oneill.net.
