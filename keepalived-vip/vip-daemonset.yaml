@@ -38,7 +38,7 @@ spec:
           # to use unicast
           args:
           - --services-configmap=kube-system/vip-configmap
-          - -v 9
+          - --alsologtostderr
           # unicast uses the ip of the nodes instead of multicast
           # this is useful if running in cloud providers (like AWS)
           #- --use-unicast=true
