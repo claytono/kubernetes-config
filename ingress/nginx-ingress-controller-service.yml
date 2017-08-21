@@ -5,7 +5,7 @@ metadata:
   namespace: kube-system
 spec:
 # Can also use LoadBalancer type
-  type: LoadBalancer
+  type: NodePort
   externalIPs: 
   - '172.19.74.20'
   ports:
