@@ -39,6 +39,7 @@ spec:
           args:
           - --services-configmap=kube-system/vip-configmap
           - --alsologtostderr
+          - --watch-all-namespaces
           # unicast uses the ip of the nodes instead of multicast
           # this is useful if running in cloud providers (like AWS)
           #- --use-unicast=true
