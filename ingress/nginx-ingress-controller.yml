@@ -35,6 +35,7 @@ spec:
              - /nginx-ingress-controller
              - --default-backend-service=kube-system/default-http-backend
              - --default-ssl-certificate=$(POD_NAMESPACE)/tls-certificate
+             - --publish-service=kube-system/nginx-ingress
           env:
              - name: POD_NAME
                valueFrom:
