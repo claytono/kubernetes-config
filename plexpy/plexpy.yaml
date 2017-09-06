@@ -30,6 +30,7 @@ spec:
       containers:
       - name: plexpy
         image: linuxserver/plexpy
+        imagePullPolicy: Always
         ports:
         - containerPort: 8181
         volumeMounts:
