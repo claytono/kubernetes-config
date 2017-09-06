@@ -14,7 +14,7 @@ spec:
       hostNetwork: true
       serviceAccountName: keepalived-vip
       containers:
-        - image: dvorak/kube-keepalived-vip:0.10
+        - image: aledbf/kube-keepalived-vip:0.16
           name: kube-keepalived-vip
           imagePullPolicy: Always
           securityContext:
