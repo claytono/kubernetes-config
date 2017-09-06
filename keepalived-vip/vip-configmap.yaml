@@ -3,5 +3,4 @@ kind: ConfigMap
 metadata:
   name: vip-configmap
   namespace: kube-system
-data:
-  172.19.74.20: "kube-system/nginx-ingress:DR"
+data: {}

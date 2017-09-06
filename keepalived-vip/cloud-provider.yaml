@@ -24,7 +24,7 @@ spec:
       serviceAccountName: cloud-provider-keepalived-vip
       containers:
       - name: keepalived-cloud-provider
-        image: dvorak/keepalived-cloud-provider:0.0.1-4-gce3b1ea-dirty
+        image: dvorak/keepalived-cloud-provider:0.0.1-4-gdf4f1e0
         imagePullPolicy: Always
         env:
         - name: KEEPALIVED_NAMESPACE
@@ -33,7 +33,7 @@ spec:
           value: vip-configmap
         - name: KEEPALIVED_SERVICE_CIDR
           value: 172.19.74.32/27 # pick a CIDR that is explicitly reserved for keepalived
-        - name: KEEPALIVED_FORWARD_METHOD
+        - name: KEEPALIVED_DEFAULT_FORWARD_METHOD
           value: DR
         volumeMounts:
         - name: certs
