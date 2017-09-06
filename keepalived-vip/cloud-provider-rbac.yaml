@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cloud-provider-keepalived-vip
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: cloud-provider-keepalived-vip
+  namespace: kube-system
+rules:
+- apiGroups: [""]
+  resources:
+  - nodes
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources:
+  - configmaps
+  - endpoints
+  verbs: ["create", "get", "list", "update", "watch"]
+- apiGroups: [""]
+  resources:
+  - services
+  - services/status
+  verbs: ["create", "get", "list", "update", "watch"]
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs: [ "create", "patch" ]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: cloud-provider-keepalived-vip
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cloud-provider-keepalived-vip
+subjects:
+- kind: ServiceAccount
+  name: cloud-provider-keepalived-vip
+  namespace: kube-system
