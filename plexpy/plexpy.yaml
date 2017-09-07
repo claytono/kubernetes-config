@@ -37,7 +37,6 @@ spec:
           - mountPath: "/config"
             name: config
       volumes:
-        - nfs:
-            server: fs1.oneill.net
-            path: /volume1/k8s-pv/static/plexpy-config
-          name: config
+        - name: config
+          persistentVolumeClaim:
+            claimName: plexpy-config

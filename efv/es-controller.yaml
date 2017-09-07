@@ -46,7 +46,6 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
       volumes:
-        - nfs:
-            server: fs1.oneill.net
-            path: /volume1/k8s-pv/static/es-persistent-storage
-          name: es-persistent-storage
+        - name: es-persistent-storage
+          persistentVolumeClaim:
+            claimName: es-persistent-storage

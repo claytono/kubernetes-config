@@ -41,10 +41,9 @@ spec:
           # value: /api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/
           value: /
       volumes:
-      - nfs:
-          server: fs1.oneill.net
-          path: /volume1/k8s-pv/static/grafana-storage
-        name: grafana-storage
+      - name: grafana-storage
+        persistentVolumeClaim:
+          claimName: grafana-storage
 ---
 apiVersion: v1
 kind: Service

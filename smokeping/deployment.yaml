@@ -29,11 +29,9 @@ spec:
           - name: TZ
             value: "America/New_York"
       volumes:
-        - nfs:
-            server: fs1.oneill.net
-            path: /volume1/k8s-pv/static/smokeping-config
-          name: config
-        - nfs:
-            server: fs1.oneill.net
-            path: /volume1/k8s-pv/static/smokeping-data
-          name: data
+        - name: config
+          persistentVolumeClaim:
+            claimName: smokeping-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: smokeping-data

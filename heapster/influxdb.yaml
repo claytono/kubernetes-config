@@ -21,10 +21,9 @@ spec:
         - mountPath: /data
           name: influxdb-storage
       volumes:
-      - nfs:
-          server: fs1.oneill.net
-          path: /volume1/k8s-pv/static/influxdb-storage
-        name: influxdb-storage
+      - name: influxdb-storage
+        persistentVolumeClaim:
+          claimName: influxdb-storage
 ---
 apiVersion: v1
 kind: Service
