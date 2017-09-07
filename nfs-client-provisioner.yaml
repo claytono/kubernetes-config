@@ -55,7 +55,7 @@ spec:
       serviceAccount: nfs-client-provisioner
       containers:
         - name: nfs-client-provisioner
-          image: quay.io/external_storage/nfs-client-provisioner:v2.0.0
+          image: dvorak/nfs-client-provisioner:0.0.1
           volumeMounts:
             - name: nfs-client-root
               mountPath: /persistentvolumes
@@ -76,5 +76,6 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: nfs
-  namespace: kube-system
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
 provisioner: nfs
