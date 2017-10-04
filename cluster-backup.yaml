@@ -13,16 +13,6 @@ spec:
       template:
         metadata:
           name: cluster-backup
-          annotations:
-            scheduler.alpha.kubernetes.io/tolerations: |
-              [
-                {
-                  "key": "dedicated",
-                  "operator": "Equal",
-                  "value": "master",
-                  "effect": "NoSchedule"
-                }
-              ]
         spec:
           containers:
           - name: cluster-backup
@@ -60,3 +50,7 @@ spec:
           restartPolicy: OnFailure
           nodeSelector:
             node-role.kubernetes.io/master: ""
+          tolerations:
+          - key: "node-role.kubernetes.io/master"
+            operator: "Exists"
+            effect: "NoSchedule"
