@@ -5,9 +5,14 @@ metadata:
   name: plexpy
   labels:
     k8s-app: plexpy
+    stable.k8s.psg.io/kcm.class: "default"
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:
+  tls:
+    - hosts:
+      - "plexpy.k.oneill.net"
+      secretName: "plexpy-tls"
   rules:
     - host: "plexpy.k.oneill.net"
       http:

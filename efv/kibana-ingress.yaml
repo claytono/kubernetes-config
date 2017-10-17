@@ -4,9 +4,15 @@ kind: Ingress
 metadata:
   name: kibana
   namespace: kube-system
+  labels:
+    stable.k8s.psg.io/kcm.class: "default"
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:
+  tls:
+    - hosts:
+      - "kibana.k.oneill.net"
+      secretName: "kibana-tls"
   rules:
     - host: "kibana.k.oneill.net"
       http:

@@ -5,9 +5,14 @@ metadata:
   name: smokeping
   labels:
     k8s-app: smokeping
+    stable.k8s.psg.io/kcm.class: "default"
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:
+  tls:
+    - hosts:
+      - "smokeping.k.oneill.net"
+      secretName: "smokeping-tls"
   rules:
     - host: "smokeping.k.oneill.net"
       http:
