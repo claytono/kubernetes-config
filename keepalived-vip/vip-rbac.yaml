@@ -9,7 +9,6 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
   name: kube-keepalived-vip
-  namespace: kube-system
 rules:
 - apiGroups: [""]
   resources:
@@ -24,7 +23,6 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
   name: kube-keepalived-vip
-  namespace: kube-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
