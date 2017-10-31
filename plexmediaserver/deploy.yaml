@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: plexmediaserver
-        image: plexinc/pms-docker
+        image: plexinc/pms-docker:plexpass
         imagePullPolicy: Always
         ports:
           # See
