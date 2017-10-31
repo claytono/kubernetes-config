@@ -6,6 +6,8 @@ metadata:
   labels:
     k8s-app: plexmediaserver
 spec:
+  type: LoadBalancer
+  loadBalancerIP: 172.19.74.21
   ports:
   - port: 32400
     targetPort: 32400
