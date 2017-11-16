@@ -20,6 +20,7 @@ spec:
         - --source=ingress
         - --domain-filter=k.oneill.net.
         - --provider=aws
+        - --txt-prefix=extdns-
         env:
           - name: AWS_ACCESS_KEY_ID
             valueFrom:
