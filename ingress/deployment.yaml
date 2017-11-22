@@ -17,7 +17,7 @@ spec:
       hostNetwork: true
       containers:
         - name: nginx-ingress-controller
-          image: gcr.io/google_containers/nginx-ingress-controller:0.9.0-beta.14
+          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.9.0-beta.17
           imagePullPolicy: Always
           readinessProbe:
             httpGet:
