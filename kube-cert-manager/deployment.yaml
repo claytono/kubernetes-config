@@ -32,6 +32,8 @@ spec:
             - "-default-email=clayton@oneill.net"
             # If you set a default provider, you can omit the field/annotation from Certificates/Ingresses
             - "-default-provider=route53"
+            # Renew right Lets Encrypt starts sending emails
+            - "-renew-before-days=30"
           volumeMounts:
             - name: data
               mountPath: /var/lib/cert-manager
