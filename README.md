@@ -43,3 +43,12 @@ the Ingress certificate resources.
 
 This is no longer maintained but seems to work well for now.  It would
 be nice to find a replacement at some point that is maintained.
+
+## Backup
+
+Backup of etcd and Kubernetes certificates are done twice a day via a
+[Kubernetes
+Cronjob](https://github.com/claytononeill/kubernetes-config/blob/master/cluster-backup.yaml).
+The backups are stored on NFS which is also backed up offsite automatically.
+The backup script can be in my
+[kubernetes-backup](https://github.com/claytononeill/kubernetes-backup) repo.
