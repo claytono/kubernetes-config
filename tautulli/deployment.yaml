@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: plexpy
+  name: tautulli
   labels:
-    k8s-app: plexpy
+    k8s-app: tautulli
 spec:
   ports:
   - port: 8181
@@ -12,24 +12,24 @@ spec:
     protocol: TCP
     name: http
   selector:
-    k8s-app: plexpy
+    k8s-app: tautulli
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: plexpy
+  name: tautulli
   labels:
-    k8s-app: plexpy
+    k8s-app: tautulli
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        k8s-app: plexpy
+        k8s-app: tautulli
     spec:
       containers:
-      - name: plexpy
-        image: linuxserver/plexpy
+      - name: tautulli
+        image: linuxserver/tautulli
         imagePullPolicy: Always
         ports:
         - containerPort: 8181
@@ -39,4 +39,4 @@ spec:
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: plexpy-config
+            claimName: tautulli-config

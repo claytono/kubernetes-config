@@ -2,22 +2,22 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: plexpy
+  name: tautulli
   labels:
-    k8s-app: plexpy
+    k8s-app: tautulli
     stable.k8s.psg.io/kcm.class: "default"
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
     - hosts:
-      - "plexpy.k.oneill.net"
-      secretName: "plexpy-tls"
+      - "tautulli.k.oneill.net"
+      secretName: "tautulli-tls"
   rules:
-    - host: "plexpy.k.oneill.net"
+    - host: "tautulli.k.oneill.net"
       http:
         paths:
           - path: /
             backend:
-              serviceName: plexpy
+              serviceName: tautulli
               servicePort: 8181

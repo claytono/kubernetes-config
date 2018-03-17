@@ -2,9 +2,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: plexpy-config
+  name: tautulli-config
   labels:
-    k8s-app: plexpy
+    k8s-app: tautulli
 spec:
   accessModes:
     - ReadWriteOnce
