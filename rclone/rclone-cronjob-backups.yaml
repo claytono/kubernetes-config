@@ -1,0 +1,47 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: rclone-backups
+spec:
+  schedule: "40 2/4 * * * "
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: rclone
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: rclone
+            command:
+              - rclone
+              - sync
+              - /source
+              - gsc:backups
+              - -v
+              - --stats=5m
+            image: dvorak/rclone
+            imagePullPolicy: Always
+            env:
+            - name: RCLONE_CONFIG_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: rclone-config-password
+                  key: RCLONE_CONFIG_PASS
+            volumeMounts:
+            - mountPath: /root/.config/rclone
+              name: rclone-config
+            - mountPath: /source
+              name: source
+              readOnly: true
+          volumes:
+          - name: rclone-config
+            configMap:
+              name: rclone-config
+          - nfs:
+              server: fs1.oneill.net
+              path: /volume1/backups
+              readOnly: true
+            name: source
