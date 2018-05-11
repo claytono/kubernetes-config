@@ -1,0 +1,40 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: rclone-about
+spec:
+  schedule: "*/10 * * * * "
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: rclone-about
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: rclone
+            command:
+              - /run-rclone.sh
+              - about
+              - "gsc:"
+            image: dvorak/rclone
+            imagePullPolicy: Always
+            env:
+            - name: RCLONE_CONFIG_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: rclone-config-password
+                  key: RCLONE_CONFIG_PASS
+            - name: PUSH_GATEWAY
+              value: https://pushgateway.k.oneill.net
+            - name: INSTANCE
+              value: total
+            volumeMounts:
+            - mountPath: /root/.config/rclone
+              name: rclone-config
+          volumes:
+          - name: rclone-config
+            configMap:
+              name: rclone-config
