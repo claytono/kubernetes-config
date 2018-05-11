@@ -1,27 +1,27 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: rclone-k8s-pv
+  name: rclone-sync-backups
 spec:
-  schedule: "20 1/4 * * * "
+  schedule: "40 2/4 * * * "
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   jobTemplate:
     spec:
       template:
-        metadata:
-          name: rclone
         spec:
           restartPolicy: OnFailure
           containers:
           - name: rclone
             command:
-              - rclone
+              - /run-rclone.sh
               - sync
+              - --drive-chunk-size=128M
+              - --transfers=2
               - /source
-              - gsc:k8s-pv
+              - gsc:backups
               - -v
-              - --stats=5m
+              - --stats=15s
             image: dvorak/rclone
             imagePullPolicy: Always
             env:
@@ -30,6 +30,10 @@ spec:
                 secretKeyRef:
                   name: rclone-config-password
                   key: RCLONE_CONFIG_PASS
+            - name: PUSH_GATEWAY
+              value: https://pushgateway.k.oneill.net
+            - name: INSTANCE
+              value: backups
             volumeMounts:
             - mountPath: /root/.config/rclone
               name: rclone-config
@@ -42,6 +46,6 @@ spec:
               name: rclone-config
           - nfs:
               server: fs1.oneill.net
-              path: /volume1/k8s-pv
+              path: /volume1/backups
               readOnly: true
             name: source

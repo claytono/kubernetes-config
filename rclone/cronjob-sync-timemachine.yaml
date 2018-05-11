@@ -1,27 +1,27 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: rclone-<%= source %>
+  name: rclone-sync-timemachine
 spec:
-  schedule: "<%= minute %> <%= hour %>/4 * * * "
+  schedule: "0 0/4 * * * "
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   jobTemplate:
     spec:
       template:
-        metadata:
-          name: rclone
         spec:
           restartPolicy: OnFailure
           containers:
           - name: rclone
             command:
-              - rclone
+              - /run-rclone.sh
               - sync
+              - --drive-chunk-size=128M
+              - --transfers=2
               - /source
-              - gsc:<%= source %>
+              - gsc:timemachine
               - -v
-              - --stats=5m
+              - --stats=15s
             image: dvorak/rclone
             imagePullPolicy: Always
             env:
@@ -30,6 +30,10 @@ spec:
                 secretKeyRef:
                   name: rclone-config-password
                   key: RCLONE_CONFIG_PASS
+            - name: PUSH_GATEWAY
+              value: https://pushgateway.k.oneill.net
+            - name: INSTANCE
+              value: timemachine
             volumeMounts:
             - mountPath: /root/.config/rclone
               name: rclone-config
@@ -42,6 +46,6 @@ spec:
               name: rclone-config
           - nfs:
               server: fs1.oneill.net
-              path: /volume1/<%= source %>
+              path: /volume1/timemachine
               readOnly: true
             name: source
