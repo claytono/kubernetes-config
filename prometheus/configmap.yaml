@@ -29,11 +29,6 @@ data:
           - k2.oneill.net:9100
           - k3.oneill.net:9100
 
-    - job_name: 'pushgateway'
-      static_configs:
-        - targets:
-          - pushgateway:9091
-
     - job_name: 'kubernetes-apiservers'
 
       kubernetes_sd_configs:
