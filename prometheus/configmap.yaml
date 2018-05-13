@@ -22,12 +22,6 @@ data:
 
       static_configs:
         - targets: ['localhost:9090']
-    # etcd is living outside of our cluster and we configure
-    # it directly.
-    - job_name: 'etcd'
-      static_configs:
-      - targets:
-        - k1.oneill.net:2379
 
     - job_name: 'node resources'
       static_configs:
