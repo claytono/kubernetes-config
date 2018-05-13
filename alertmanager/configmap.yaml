@@ -41,3 +41,4 @@ data:
     - name: 'default'
       email_configs:
       - to: 'clayton.oneill@gmail.com'
+        send_resolved: true
