@@ -6,7 +6,6 @@ require "digest/md5"
 TEMPLATE = File.join(__dir__, "cronjob-sync.erb")
 SOURCES = [
   "timemachine",
-  "k8s-pv",
   "backups",
 ]
 
