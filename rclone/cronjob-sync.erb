@@ -34,6 +34,12 @@ spec:
               value: https://pushgateway.k.oneill.net
             - name: INSTANCE
               value: <%= source %>
+            - name: LANG
+              value: "en_US.UTF-8"
+            - name: LANGUAGE
+              value: en_US.UTF-8
+            - name: LC_ALL
+              value: en_US.UTF-8
             volumeMounts:
             - mountPath: /root/.config/rclone
               name: rclone-config
