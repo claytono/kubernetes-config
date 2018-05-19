@@ -1,9 +1,9 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: rclone-sync-backups
+  name: rclone-sync-shared
 spec:
-  schedule: "20 1/4 * * * "
+  schedule: "40 2/4 * * * "
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   jobTemplate:
@@ -19,7 +19,7 @@ spec:
               - --drive-chunk-size=128M
               - --transfers=2
               - /source
-              - gsc:backups
+              - gsc:shared
               - -v
               - --stats=15s
             image: dvorak/rclone
@@ -33,7 +33,7 @@ spec:
             - name: PUSH_GATEWAY
               value: https://pushgateway.k.oneill.net
             - name: INSTANCE
-              value: backups
+              value: shared
             - name: LANG
               value: "en_US.UTF-8"
             - name: LANGUAGE
@@ -52,6 +52,6 @@ spec:
               name: rclone-config
           - nfs:
               server: fs1.oneill.net
-              path: /volume1/backups
+              path: /volume1/shared
               readOnly: true
             name: source
