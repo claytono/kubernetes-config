@@ -22,6 +22,7 @@ spec:
               - gsc:shared
               - -v
               - --stats=15s
+              - "--bwlimit=4M"
             image: dvorak/rclone
             imagePullPolicy: Always
             env:

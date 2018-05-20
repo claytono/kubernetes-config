@@ -4,21 +4,23 @@ require "erb"
 require "digest/md5"
 
 TEMPLATE = File.join(__dir__, "cronjob-sync.erb")
-SOURCES = [
-  "timemachine",
-  "backups",
-  "shared",
-]
+SOURCES = {
+  "timemachine" => [],
+  "backups" => [],
+  "shared" => ["--bwlimit=4M"]
+}
 
 MINUTES_BETWEEN_JOBS=4 * 60
 
 template = File.read(TEMPLATE)
 SOURCES.each_with_index do |source, i|
+  name, args = source
   minutes_offset = i * (MINUTES_BETWEEN_JOBS / SOURCES.length)
   hour = minutes_offset / 60
   minute = minutes_offset % 60
-  cj = ERB.new(template)
-  filename = File.join(__dir__, "cronjob-sync-#{source}.yaml")
+  puts "ARGS: #{args}"
+  cj = ERB.new(template, nil, "-")
+  filename = File.join(__dir__, "cronjob-sync-#{name}.yaml")
   puts "Writing #{filename}"
   File.write(filename, cj.result(binding))
 end

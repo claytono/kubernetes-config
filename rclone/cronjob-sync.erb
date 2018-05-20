@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: rclone-sync-<%= source %>
+  name: rclone-sync-<%= name %>
 spec:
   schedule: "<%= minute %> <%= hour %>/4 * * * "
   concurrencyPolicy: Forbid
@@ -19,9 +19,12 @@ spec:
               - --drive-chunk-size=128M
               - --transfers=2
               - /source
-              - gsc:<%= source %>
+              - gsc:<%= name %>
               - -v
               - --stats=15s
+              <%- args.each do |arg| -%>
+              - "<%= arg %>"
+              <%- end -%>
             image: dvorak/rclone
             imagePullPolicy: Always
             env:
@@ -33,7 +36,7 @@ spec:
             - name: PUSH_GATEWAY
               value: https://pushgateway.k.oneill.net
             - name: INSTANCE
-              value: <%= source %>
+              value: <%= name %>
             - name: LANG
               value: "en_US.UTF-8"
             - name: LANGUAGE
@@ -52,6 +55,6 @@ spec:
               name: rclone-config
           - nfs:
               server: fs1.oneill.net
-              path: /volume1/<%= source %>
+              path: /volume1/<%= name %>
               readOnly: true
             name: source
