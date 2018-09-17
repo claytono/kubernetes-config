@@ -7,7 +7,7 @@ TEMPLATE = File.join(__dir__, "cronjob-sync.erb")
 SOURCES = {
   "timemachine" => [],
   "backups" => [],
-  "shared" => ["--bwlimit=4M"]
+  "shared" => ["--bwlimit=3M"]
 }
 
 MINUTES_BETWEEN_JOBS=4 * 60
