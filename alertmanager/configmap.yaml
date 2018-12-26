@@ -42,3 +42,6 @@ data:
       email_configs:
       - to: 'clayton.oneill@gmail.com'
         send_resolved: true
+      webhook_configs:
+        # admin view: https://webhook.site/#/49de981e-b39b-48b0-a889-d053cd0a025d
+        - url: https://webhook.site/49de981e-b39b-48b0-a889-d053cd0a025d

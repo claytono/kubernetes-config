@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: netatmo-exporter
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: netatmo-exporter
+  template:
+    metadata:
+      name: netatmo-exporter
+      labels:
+        app: netatmo-exporter
+    spec:
+      containers:
+      - name: netatmp-exporter
+        image: xperimental/netatmo-exporter:1.2.0
+        envFrom:
+          - secretRef:
+              name: netatmo-exporter
+        ports:
+        - name: alertmanager
+          containerPort: 9093
