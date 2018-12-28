@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: octobox-redis
+  name: octobox-redis
+spec:
+  selector:
+    app: octobox-redis
+  ports:
+  - name: octobox-redis
+    protocol: TCP
+    port: 6379

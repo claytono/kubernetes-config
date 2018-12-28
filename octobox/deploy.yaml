@@ -1,0 +1,65 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: octobox
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: octobox
+    spec:
+      containers:
+      - name: octobox
+        image: octoboxio/octobox:latest
+        imagePullPolicy: Always
+        env:
+          - name: GITHUB_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: octobox-secrets
+                key: GITHUB_CLIENT_ID
+          - name: GITHUB_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: octobox-secrets
+                key: GITHUB_CLIENT_SECRET
+          - name: OCTOBOX_DATABASE_HOST
+            value: octobox-postgresql
+          - name: OCTOBOX_DATABASE_NAME
+            value: postgres
+          - name: OCTOBOX_DATABASE_USERNAME
+            value: postgres
+          - name: OCTOBOX_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: octobox-secrets
+                key: POSTGRES_PASSWORD
+          - name: REDIS_URL
+            value: redis://octobox-redis
+          - name: MINIMUM_REFRESH_INTERVAL
+            value: "1"
+          - name: FETCH_SUBJECT
+            value: "true"
+          - name: PERSONAL_ACCESS_TOKENS_ENABLED
+            value: "1"
+          - name: RAILS_MAX_THREADS
+            value: "5"
+          - name: RAILS_ENV
+            value: "development"
+          # These two are needed if running rails in production mode
+          - name: RAILS_SERVE_STATIC_FILES
+            value: "true"
+          - name: SECRET_KEY_BASE
+            valueFrom:
+              secretKeyRef:
+                name: octobox-secrets
+                key: SECRET_KEY_BASE
+          # This is my github id
+          - name: ADMIN_GITHUB_IDS
+            value: "27088"
+          #- name: OCTOBOX_SIDEKIQ_SCHEDULE_ENABLED
+          #value: "true"
+          #- name: OCTOBOX_BACKGROUND_JOBS_ENABLED
+          #value: "true"

@@ -1,0 +1,31 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: octobox-postgresql
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: octobox-postgresql
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:10.6-alpine
+        imagePullPolicy: Always
+        env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: octobox-secrets
+                key: POSTGRES_PASSWORD
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: octobox-postgresql
+      volumes:
+      - name: octobox-postgresql
+        persistentVolumeClaim:
+          claimName: octobox-postgresql
