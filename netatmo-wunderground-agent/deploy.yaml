@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: netatmo-wunderground-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: netatmo-wunderground-agent
+  template:
+    metadata:
+      name: netatmo-wunderground-agent
+      labels:
+        app: netatmo-wunderground-agent
+    spec:
+      containers:
+      - name: netatmo-wunderground-agent
+        image: dvorak/netatmo-wunderground-agent:latest
+        envFrom:
+          - secretRef:
+              name: netatmo-wunderground-agent
