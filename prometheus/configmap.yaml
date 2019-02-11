@@ -264,11 +264,11 @@ data:
           - alert: ExporterDown
             expr: up == 0
             for: 5m
-            labels:
-              severity: sev1
+          - alert: CO2_PPM_Too_High
+            expr: netatmo_sensor_co2_ppm > 1000
+            for: 5m
             annotations:
-              message: |
-                Free form message
-
-                This can be multiple lines.
-              runbook: https://ops.githubapp.com/docs/playbooks
+              message: "Open a window or door!"
+          - alert: Netatmo_Battery_Low
+            expr: netatmo_sensor_battery_percent < 20
+            for: 2h
