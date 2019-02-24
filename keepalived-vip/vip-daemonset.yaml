@@ -14,7 +14,7 @@ spec:
       hostNetwork: true
       serviceAccountName: keepalived-vip
       containers:
-        - image: aledbf/kube-keepalived-vip:0.16
+        - image: aledbf/kube-keepalived-vip:0.32
           name: kube-keepalived-vip
           imagePullPolicy: Always
           securityContext:
@@ -39,7 +39,6 @@ spec:
           args:
           - --services-configmap=kube-system/vip-configmap
           - --alsologtostderr
-          - --watch-all-namespaces
           # unicast uses the ip of the nodes instead of multicast
           # this is useful if running in cloud providers (like AWS)
           #- --use-unicast=true
