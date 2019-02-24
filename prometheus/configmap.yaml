@@ -36,6 +36,18 @@ data:
         - targets:
           - netatmo-exporter:9210
 
+    - job_name: 'awair'
+      scrape_interval: 300s
+      static_configs:
+        - targets:
+          - awair-exporter:8000
+    - job_name: 'vera'
+      scrape_interval: 15s
+      metrics_path: '/data_request?id=lr_prometheus_metrics'
+      static_configs:
+        - targets:
+          - 'veraplus.oneill.net:3480'
+
     - job_name: 'kubernetes-apiservers'
 
       kubernetes_sd_configs:
@@ -265,7 +277,7 @@ data:
             expr: up == 0
             for: 5m
           - alert: CO2_PPM_Too_High
-            expr: netatmo_sensor_co2_ppm > 1000
+            expr: awair_sensor_co2 > 1000
             for: 5m
             annotations:
               message: "Open a window or door!"

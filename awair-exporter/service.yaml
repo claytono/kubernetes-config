@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: awair-exporter
+  name: awair-exporter
+  namespace: kube-system
+spec:
+  selector:
+    app: awair-exporter
+  ports:
+  - name: awair-exporter
+    protocol: TCP
+    port: 8000
