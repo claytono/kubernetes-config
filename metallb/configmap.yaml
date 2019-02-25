@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - 172.19.74.32/27
+    - name: static
+      protocol: layer2
+      addresses:
+      - 172.19.74.20/32
+      - 172.19.74.21/32
+      auto-assign: false
+
