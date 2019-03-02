@@ -24,11 +24,11 @@ spec:
             - name: PROVISIONER_NAME
               value: nfs
             - name: NFS_SERVER
-              value: fs1.oneill.net
+              value: fs2.oneill.net
             - name: NFS_PATH
               value: /volume1/k8s-pv
       volumes:
         - name: nfs-client-root
           nfs:
-            server: fs1.oneill.net
+            server: fs2.oneill.net
             path: /volume1/k8s-pv
