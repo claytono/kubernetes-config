@@ -7,6 +7,8 @@ metadata:
     k8s-app: tautulli
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -14,10 +16,18 @@ spec:
     spec:
       containers:
       - name: tautulli
-        image: linuxserver/tautulli
+        image: tautulli/tautulli
         imagePullPolicy: Always
         ports:
         - containerPort: 8181
+        env:
+          - name: TZ
+            value: "EST5EDT"
+        livenessProbe:
+          failureThreshold: 10000
+          httpGet:
+            path: /
+            port: 8181
         volumeMounts:
           - mountPath: "/config"
             name: config
