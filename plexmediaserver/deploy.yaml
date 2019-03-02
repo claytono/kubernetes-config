@@ -33,6 +33,11 @@ spec:
           protocol: "UDP"
         - containerPort: 32414
           protocol: "UDP"
+        livenessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /web/index.html
+            port: 32400
         env:
           - name: HOSTNAME
             value: "kube-pms"
