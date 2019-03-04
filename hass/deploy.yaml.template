@@ -1,0 +1,59 @@
+{{ file.Read ".warning.txt" }}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hass
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: hass
+      annotations:
+        config-map-hash: {{ .cm.metadata.labels.hash }}
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      initContainers:
+      - name: config-setup
+        image: instrumentisto/rsync-ssh
+        imagePullPolicy: Always
+        args: [ 'rsync', '-av', '/config-map/', '/config/' ]
+        volumeMounts:
+        - name: config-map
+          mountPath: /config-map
+        - name: config
+          mountPath: /config
+      containers:
+      - name: hass
+        image: homeassistant/home-assistant
+        imagePullPolicy: Always
+        env:
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: hass-secrets
+                key: MYSQL_PASSWORD
+          - name: DB_URL
+            value: "mysql://hass:$(MYSQL_PASSWORD)@hass-mysql/hass?charset=utf8"
+        volumeMounts:
+        - name: config
+          mountPath: /config
+        - name: config-map
+          mountPath: /config-map
+      volumes:
+      - name: config-map
+        configMap:
+          name: hass
+      - name: config
+        persistentVolumeClaim:
+          claimName: hass-config
+      - name: dbus-socket
+        hostPath:
+          path: /var/run/dbus
+          type: Directory
+# vi: ft=yaml
+

@@ -1,0 +1,40 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hass-mysql
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hass-mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mariadb:10.4
+        imagePullPolicy: Always
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: hass-secrets
+                key: MYSQL_ROOT_PASSWORD
+          - name: MYSQL_USER
+            value: hass
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: hass-secrets
+                key: MYSQL_PASSWORD
+          - name: MYSQL_DATABASE
+            value: hass
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: hass-mysql
+      volumes:
+      - name: hass-mysql
+        persistentVolumeClaim:
+          claimName: hass-mysql
