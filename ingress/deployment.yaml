@@ -12,6 +12,9 @@ spec:
     metadata:
       labels:
         k8s-app: nginx-ingress-lb
+      annotations:
+        prometheus.io/port: "10254"
+        prometheus.io/scrape: "true"
     spec:
       serviceAccountName: nginx-ingress-serviceaccount
       hostNetwork: true
