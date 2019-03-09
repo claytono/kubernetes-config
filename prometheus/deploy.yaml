@@ -30,12 +30,18 @@ spec:
         volumeMounts:
         - name: config
           mountPath: /etc/prometheus
+        - name: secrets
+          mountPath: /secrets
+          readOnly: true
         - name: data
           mountPath: /prometheus/data
       volumes:
       - name: config
         configMap:
           name: prometheus
+      - name: secrets
+        secret:
+          secretName: prometheus
       - name: data
         persistentVolumeClaim:
           claimName: prometheus-data

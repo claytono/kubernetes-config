@@ -36,6 +36,14 @@ data:
         - targets:
           - netatmo-exporter:9210
 
+    - job_name: 'hass'
+      bearer_token_file: /secrets/HASS_BEARER_TOKEN
+      metrics_path: /api/prometheus
+      static_configs:
+        - targets:
+          - hass.default:8123
+
+
     - job_name: 'awair'
       scrape_interval: 300s
       static_configs:
