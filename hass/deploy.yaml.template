@@ -21,7 +21,7 @@ spec:
       - name: config-setup
         image: instrumentisto/rsync-ssh
         imagePullPolicy: Always
-        args: [ 'rsync', '-av', '/config-map/', '/config/' ]
+        args: [ 'rsync', '-av', '--copy-links', '/config-map/', '/config/' ]
         volumeMounts:
         - name: config-map
           mountPath: /config-map
