@@ -51,9 +51,5 @@ spec:
       - name: config
         persistentVolumeClaim:
           claimName: hass-config
-      - name: dbus-socket
-        hostPath:
-          path: /var/run/dbus
-          type: Directory
 # vi: ft=yaml
 
