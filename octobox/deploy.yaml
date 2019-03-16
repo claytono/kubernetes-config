@@ -42,6 +42,8 @@ spec:
             value: "1"
           - name: FETCH_SUBJECT
             value: "true"
+          - name: INCLUDE_COMMENTS
+            value: "true"
           - name: PERSONAL_ACCESS_TOKENS_ENABLED
             value: "1"
           - name: RAILS_MAX_THREADS
