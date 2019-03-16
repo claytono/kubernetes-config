@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: mosquitto
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: mqtt.k.oneill.net
+  name: mosquitto
+spec:
+  type: LoadBalancer
+  selector:
+    app: mosquitto
+  ports:
+  - name: mqtt
+    protocol: TCP
+    port: 1883
+  - name: mqtt-websockets
+    protocol: TCP
+    port: 9001
