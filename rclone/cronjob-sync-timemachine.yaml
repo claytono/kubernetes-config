@@ -52,6 +52,6 @@ spec:
               name: rclone-config
           - nfs:
               server: fs1.oneill.net
-              path: /volume1/timemachine
+              path: /volume2/timemachine
               readOnly: true
             name: source

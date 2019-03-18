@@ -72,6 +72,6 @@ spec:
           persistentVolumeClaim:
             claimName: plexmediaserver-transcode
         - nfs:
-            server: fs1.oneill.net
-            path: /volume1/shared/video
+            server: fs2.oneill.net
+            path: /volume2/shared/video
           name: video

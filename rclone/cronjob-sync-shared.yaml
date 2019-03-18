@@ -53,6 +53,6 @@ spec:
               name: rclone-config
           - nfs:
               server: fs1.oneill.net
-              path: /volume1/shared
+              path: /volume2/shared
               readOnly: true
             name: source

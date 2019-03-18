@@ -44,7 +44,7 @@ spec:
               path: /etc/kubernetes
             name: k8s
           - nfs:
-              server: fs1.oneill.net
+              server: fs2.oneill.net
               path: /volume1/k8s-pv/backups
             name: backups
           restartPolicy: OnFailure
