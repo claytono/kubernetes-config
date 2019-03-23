@@ -52,7 +52,7 @@ spec:
             configMap:
               name: rclone-config
           - nfs:
-              server: fs1.oneill.net
+              server: fs2.oneill.net
               path: /volume2/shared
               readOnly: true
             name: source
