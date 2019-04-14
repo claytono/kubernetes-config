@@ -1,0 +1,17 @@
+#!/bin/bash -e
+
+BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $BASEDIR
+
+# Get sorted list of all directories with yaml in them
+DIRS=$(find . -name '*.yaml'|cut -d / -f2-2|sort|uniq)
+
+for dir in $DIRS; do 
+    if [ -r "$dir/kustomization.yaml" ]; then
+        CMD="kubectl apply -k $dir"
+    else
+        CMD="kubectl apply -Rf $dir"
+    fi
+    echo "# Running: $CMD"
+    $CMD
+done
