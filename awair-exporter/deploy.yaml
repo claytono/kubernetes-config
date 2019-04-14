@@ -1,18 +1,13 @@
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: awair-exporter
-  namespace: kube-system
+  name: exporter
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: awair-exporter
   template:
     metadata:
       name: awair-exporter
-      labels:
-        app: awair-exporter
     spec:
       containers:
       - name: awair-exporter
