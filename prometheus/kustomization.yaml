@@ -1,0 +1,25 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-system
+
+resources:
+ - deploy.yaml
+ - ingress.yaml
+ - pvc.yaml
+ - rbac.yaml
+ - service.yaml
+
+commonLabels:
+  app: prometheus
+
+configMapGenerator:
+ - name: prometheus
+   files:
+     - config/prometheus.yml
+     - config/rules.yml
+
+secretGenerator:
+  - name: prometheus
+    env: secret.txt
+    type: Opaque
