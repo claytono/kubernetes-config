@@ -15,6 +15,6 @@ spec:
         imagePullPolicy: Always
         envFrom:
           - secretRef:
-              name: awair-exporter
+              name: exporter
         ports:
         - containerPort: 8000
