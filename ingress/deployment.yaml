@@ -20,7 +20,7 @@ spec:
       hostNetwork: true
       containers:
         - name: nginx-ingress-controller
-          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.22.0
+          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.24.1
           imagePullPolicy: Always
           readinessProbe:
             httpGet:
