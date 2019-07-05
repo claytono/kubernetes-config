@@ -1,9 +1,12 @@
 groups:
   - name: alert.rules
     rules:
-      - alert: ExporterDown
-        expr: up == 0
+      - alert: NodeDown
+        expr: up{job="node resources"} == 0
         for: 5m
+      - alert: ExporterDown
+        expr: up{job!="node resources"} == 0
+        for: 15m
       - alert: CO2_PPM_Too_High
         expr: awair_sensor_co2 > 1000
         for: 5m
