@@ -1,4 +1,10 @@
 groups:
+  - name: recording.rules
+    rules:
+      # Records whether or not distance from bottom of desk to floor is greater
+      # than one meter.
+      - record: desk_up
+        expr: hass_desk_ultrasonic_sensor >  bool 1
   - name: alert.rules
     rules:
       - alert: NodeDown
