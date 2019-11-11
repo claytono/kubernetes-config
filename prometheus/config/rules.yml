@@ -15,3 +15,11 @@ groups:
       - alert: Netatmo_Battery_Low
         expr: netatmo_sensor_battery_percent < 20
         for: 2h
+      - alert: LessThanAnInchOfRain
+        # (sum_over_time(netatmo_sensor_rain_amount_mm[7d]) *25.4 /300) < bool 1 and (max_over_time(netatmo_sensor_temperature_celsius{module="Outdoor"}[7d])*9/5 + 32)  > bool 65
+        expr: sum_over_time(netatmo_sensor_rain_amount_mm[7d]) *25.4 /300 < 1
+        for: 1h
+        labels:
+          realert: daily
+        annotations:
+          message: "There has been less than an inch of rain in the last week.  Maybe water the yard?"

@@ -34,6 +34,9 @@ data:
       # The child route trees.
       routes:
       - match:
+          realert: daily
+        repeat_interval: 1d
+      - match:
           severity: email
         receiver: default
 
