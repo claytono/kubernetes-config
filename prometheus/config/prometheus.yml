@@ -36,12 +36,6 @@ scrape_configs:
     - targets:
       - hass.default:8123
 
-
-- job_name: 'awair'
-  scrape_interval: 300s
-  static_configs:
-    - targets:
-      - awair-exporter:8000
 - job_name: 'vera'
   scrape_interval: 15s
   metrics_path: '/data_request?id=lr_prometheus_metrics'
