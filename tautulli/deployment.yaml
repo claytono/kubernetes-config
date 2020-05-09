@@ -1,21 +1,26 @@
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tautulli
   labels:
-    k8s-app: tautulli
+    app: tautulli
 spec:
   replicas: 1
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app: tautulli
   template:
     metadata:
       labels:
-        k8s-app: tautulli
+        app: tautulli
     spec:
       containers:
       - name: tautulli
+        securityContext:
+          privileged: true
         image: tautulli/tautulli
         imagePullPolicy: Always
         ports:

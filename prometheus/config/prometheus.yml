@@ -23,6 +23,23 @@ scrape_configs:
       - k2.oneill.net:9100
       - k3.oneill.net:9100
 
+- job_name: 'blackbox'
+  metrics_path: /probe
+  params:
+    module: [icmp]
+  static_configs:
+    - targets:
+      - gc100.oneill.net
+      - veraplus.oneill.net
+      - cloudkey.oneill.net
+  relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: blackbox-exporter:9115  # The blackbox exporter's real hostname:port.
+
 - job_name: 'netatmo'
   scrape_interval: 90s
   static_configs:

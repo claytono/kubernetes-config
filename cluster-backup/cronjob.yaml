@@ -16,27 +16,26 @@ spec:
         spec:
           containers:
           - name: cluster-backup
-            command:
-            - /backup.sh
-            image: dvorak/kubernetes-backup:latest
+            image: debian:stable
             imagePullPolicy: Always
+            command:
+            - /script/backup.sh
             volumeMounts:
-            - mountPath: /etc/ssl/certs
-              name: certs
+            - name: script
+              mountPath: /script
+            - name: etcd
+              mountPath: /var/lib/etcd
               readOnly: true
-            - mountPath: /var/lib/etcd
-              name: etcd
+            - name: k8s
+              mountPath: /etc/kubernetes
               readOnly: true
-            - mountPath: /etc/kubernetes
-              name: k8s
-              readOnly: true
-            - mountPath: /backups
-              name: backups
-          hostNetwork: true
+            - name: backups
+              mountPath: /backups
           volumes:
-          - hostPath:
-              path: /etc/ssl/certs
-            name: certs
+          - name: script
+            configMap:
+              name: cluster-backup
+              defaultMode: 0744
           - hostPath:
               path: /var/lib/etcd
             name: etcd

@@ -29,3 +29,15 @@ groups:
           realert: daily
         annotations:
           message: "There has been less than an inch of rain in the last week.  Maybe water the yard?"
+      - alert: OfficeHumidityLow
+        # Check if humidity in the office is low and the humidifier power draw
+        # is low.  If so, the humidifier is probably out of water.
+        expr: >
+          (
+            sum(hass_sensor_unit_percent{entity="sensor.office_humidity_bme280"} < bool 30)
+            +
+            sum(electricity_usage_w{description="Humidifier"} < bool 1)
+          ) >= 2
+        for: 5m
+        annotations:
+          message: "Humidity in the office is low and the humidifier is not running.  Check water levels."
