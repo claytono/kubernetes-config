@@ -10,6 +10,9 @@ groups:
       - alert: NodeDown
         expr: up{job="node resources"} == 0
         for: 5m
+      - alert: ICMPUnreachable
+        expr: probe_success == 0
+        for: 20m
       - alert: ExporterDown
         expr: up{job!="node resources"} == 0
         for: 15m
