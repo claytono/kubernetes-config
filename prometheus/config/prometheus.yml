@@ -32,6 +32,8 @@ scrape_configs:
       - gc100.oneill.net
       - veraplus.oneill.net
       - cloudkey.oneill.net
+      - basement-guardian.oneill.net
+      - ups.oneill.net
   relabel_configs:
     - source_labels: [__address__]
       target_label: __param_target
