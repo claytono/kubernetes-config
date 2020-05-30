@@ -32,7 +32,7 @@ spec:
           mountPath: /config
       containers:
       - name: hass
-        image: homeassistant/home-assistant:0.108.9
+        image: homeassistant/home-assistant:0.109.6
         imagePullPolicy: Always
         env:
           - name: MYSQL_PASSWORD
