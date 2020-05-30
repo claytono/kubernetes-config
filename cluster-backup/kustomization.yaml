@@ -1,0 +1,15 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-system
+
+resources:
+ - cronjob.yaml
+
+commonLabels:
+  app: cluster-backup
+
+configMapGenerator:
+ - name: cluster-backup
+   files:
+     - backup.sh
