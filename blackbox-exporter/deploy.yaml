@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exporter
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: blackbox-exporter
+    spec:
+      containers:
+      - name: blackbox-exporter
+        image: prom/blackbox-exporter:v0.16.0
+        imagePullPolicy: Always
+        args: [ "--config.file=/config/config.yaml" ]
+        volumeMounts:
+        - name: config
+          mountPath: /config
+        ports:
+        - containerPort: 9115
+      volumes:
+      - name: config
+        configMap:
+          name: config
