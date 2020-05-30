@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+spec:
+  acme:
+    email: clayton@oneill.net
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: issuer-account-key
+    solvers:
+    - dns01:
+        route53:
+          region: us-east-1
+          accessKeyID: AKIAJKAXEQX5E3OWSFHQ
+          secretAccessKeySecretRef:
+            name: cert-manager
+            key: aws-secret-access-key
