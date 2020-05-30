@@ -1,16 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: kube-cert-manager
   name: kube-cert-manager
-  namespace: kube-system
 spec:
   replicas: 1
   template:
     metadata:
-      labels:
-        app: kube-cert-manager
       name: kube-cert-manager
     spec:
       serviceAccount: kube-cert-manager
@@ -41,12 +36,12 @@ spec:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: kube-cert-manager-dns-aws-creds
+                  name: kube-cert-manager
                   key: AWS_ACCESS_KEY_ID
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: kube-cert-manager-dns-aws-creds
+                  name: kube-cert-manager
                   key: AWS_SECRET_ACCESS_KEY
       volumes:
         - name: data
