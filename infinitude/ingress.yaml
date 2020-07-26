@@ -1,0 +1,23 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: infinitude
+  labels:
+    app: infinitude
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt"
+spec:
+  tls:
+    - hosts:
+      - "infinitude.k.oneill.net"
+      secretName: "infinitude-tls"
+  rules:
+    - host: "infinitude.k.oneill.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: infinitude
+              servicePort: 3000
