@@ -1,18 +1,21 @@
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: smokeping
   labels:
-    k8s-app: smokeping
+    app: smokeping
 spec:
   strategy:
     type: Recreate
   replicas: 1
+  selector:
+    matchLabels:
+      app: smokeping
   template:
     metadata:
       labels:
-        k8s-app: smokeping
+        app: smokeping
     spec:
       containers:
       - name: smokeping

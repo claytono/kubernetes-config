@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: smokeping
   labels:
-    k8s-app: smokeping
+    app: smokeping
 spec:
   ports:
   - port: 80
@@ -12,4 +12,4 @@ spec:
     protocol: TCP
     name: http
   selector:
-    k8s-app: smokeping
+    app: smokeping
