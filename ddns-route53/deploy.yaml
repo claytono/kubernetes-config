@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddns-route53
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      name: ddns-route53
+    spec:
+      containers:
+      - name: oneill
+        image: ghcr.io/crazy-max/ddns-route53
+        args:
+          - '--schedule=*/5 * * * *'
+        envFrom:
+          - secretRef:
+              name: ddns-route53-oneill
+      - name: fnord
+        image: ghcr.io/crazy-max/ddns-route53
+        args:
+          - '--schedule=*/5 * * * *'
+        envFrom:
+          - secretRef:
+              name: ddns-route53-fnord

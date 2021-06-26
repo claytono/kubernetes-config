@@ -44,3 +44,8 @@ groups:
         for: 5m
         annotations:
           message: "Humidity in the office is low and the humidifier is not running.  Check water levels."
+      - alert: DryboxHumidityHigh
+        expr: hass_sensor_unit_percent{entity="sensor.drybox_humidity"} > 30
+        for: 24h
+        labels:
+          realert: daily

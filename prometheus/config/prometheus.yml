@@ -30,7 +30,8 @@ scrape_configs:
     module: [icmp]
   static_configs:
     - targets:
-      - gc100.oneill.net
+      - og-left-door.oneill.net
+      - og-right-door.oneill.net
       - veraplus.oneill.net
       - cloudkey.oneill.net
       - basement-guardian.oneill.net
