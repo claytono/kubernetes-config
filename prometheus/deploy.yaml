@@ -18,7 +18,7 @@ spec:
         args:
           - '--config.file=/etc/prometheus/prometheus.yml'
           - "--web.external-url=https://prometheus.k.oneill.net"
-          - "--storage.tsdb.retention.time=180d"
+          - "--storage.tsdb.retention.time=450d"
         ports:
         - name: web
           containerPort: 9090
