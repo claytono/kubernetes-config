@@ -6,6 +6,9 @@ metadata:
   namespace: kube-system
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: nfs-client-provisioner
   strategy:
     type: Recreate
   template:

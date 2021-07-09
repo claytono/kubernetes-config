@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole-dns-tcp
+  annotations:
+    metallb.universe.tf/allow-shared-ip: plexmediaserver
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 172.19.74.21
+  ports:
+  - name: pihole-dns-tcp
+    protocol: TCP
+    port: 53
+    targetPort: 53

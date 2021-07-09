@@ -1,0 +1,21 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pihole
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt"
+spec:
+  tls:
+    - hosts:
+      - "pihole.k.oneill.net"
+      secretName: "pihole-tls"
+  rules:
+    - host: "pihole.k.oneill.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: pihole
+              servicePort: 8000
