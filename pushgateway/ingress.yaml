@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: pushgateway
@@ -19,6 +19,9 @@ spec:
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: pushgateway
-              servicePort: 9091
+              service:
+                name: pushgateway
+                port:
+                  number: 9091

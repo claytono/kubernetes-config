@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: tautulli
@@ -18,6 +18,9 @@ spec:
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: tautulli
-              servicePort: 8181
+              service:
+                name: tautulli
+                port:
+                  number: 8181
