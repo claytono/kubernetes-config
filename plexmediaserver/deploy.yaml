@@ -7,12 +7,15 @@ metadata:
     k8s-app: plexmediaserver
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: plexmediaserver
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        k8s-app: plexmediaserver
+        app: plexmediaserver
     spec:
       hostNetwork: true
       containers:

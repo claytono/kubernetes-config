@@ -6,11 +6,14 @@ metadata:
   namespace: kube-system
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
   template:
     metadata:
       labels:
         task: monitoring
-        k8s-app: grafana
+        app: grafana
     spec:
       containers:
       - name: grafana
