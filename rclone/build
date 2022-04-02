@@ -5,7 +5,7 @@ require "digest/md5"
 
 TEMPLATE = File.join(__dir__, "cronjob-sync.erb")
 SOURCES = {
-  "timemachine" => [],
+  "timemachine-xtal" => [],
   "backups" => [],
   "shared" => ["--bwlimit=3M"]
 }

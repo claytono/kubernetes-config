@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: rclone-sync-timemachine
+  name: rclone-sync-timemachine-xtal
 spec:
   schedule: "0 0/4 * * * "
   concurrencyPolicy: Forbid
@@ -19,7 +19,7 @@ spec:
               - --drive-chunk-size=128M
               - --transfers=2
               - /source
-              - gsc:timemachine
+              - gsc:timemachine-xtal
               - -v
               - --stats=15s
             image: dvorak/rclone
@@ -33,7 +33,7 @@ spec:
             - name: PUSH_GATEWAY
               value: https://pushgateway.k.oneill.net
             - name: INSTANCE
-              value: timemachine
+              value: timemachine-xtal
             - name: LANG
               value: "en_US.UTF-8"
             - name: LANGUAGE
@@ -52,6 +52,6 @@ spec:
               name: rclone-config
           - nfs:
               server: fs2.oneill.net
-              path: /volume2/timemachine
+              path: /volume2/timemachine-xtal
               readOnly: true
             name: source
