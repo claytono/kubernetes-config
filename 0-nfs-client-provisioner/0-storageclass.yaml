@@ -7,4 +7,8 @@ metadata:
   name: nfs
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
-provisioner: nfs
+provisioner: nfs # or choose another name, must match deployment's env PROVISIONER_NAME'
+parameters:
+  archiveOnDelete: "false"
+  onDelete: "retain"
+  pathPattern: "${.PVC.namespace}-${.PVC.name}"
