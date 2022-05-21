@@ -11,4 +11,7 @@ secretGenerator:
   namespace: cert-manager
   env: secret.txt
   type: Opaque
+  options:
+    # Disabled because kustomize doesn't properly replace the reference in the cluster issuer CRD
+    disableNameSuffixHash: true
 
