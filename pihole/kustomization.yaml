@@ -12,7 +12,7 @@ resources:
  - ingress.yaml
 
 commonLabels:
-  app: prometheus
+  app: pihole
 
 secretGenerator:
   - name: pihole
