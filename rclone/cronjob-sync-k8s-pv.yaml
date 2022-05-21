@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: rclone-sync-timemachine-xtal
+  name: rclone-sync-k8s-pv
 spec:
   schedule: "0 0/4 * * * "
   concurrencyPolicy: Forbid
@@ -18,11 +18,14 @@ spec:
               - sync
               - --drive-chunk-size=128M
               - --transfers=2
+              - --links
+              - --fast-list
               - /source
-              - gsc:timemachine-xtal
+              - gsc:k8s-pv
               - -v
               - --stats=15s
-            image: dvorak/rclone
+              - "--bwlimit=3M"
+            image: ghcr.io/claytono/rclone:latest
             imagePullPolicy: Always
             env:
             - name: RCLONE_CONFIG_PASS
@@ -33,7 +36,7 @@ spec:
             - name: PUSH_GATEWAY
               value: https://pushgateway.k.oneill.net
             - name: INSTANCE
-              value: timemachine-xtal
+              value: k8s-pv
             - name: LANG
               value: "en_US.UTF-8"
             - name: LANGUAGE
@@ -52,6 +55,6 @@ spec:
               name: rclone-config
           - nfs:
               server: fs2.oneill.net
-              path: /volume2/timemachine-xtal
+              path: /volume1/k8s-pv
               readOnly: true
             name: source

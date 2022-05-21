@@ -5,22 +5,26 @@ require "digest/md5"
 
 TEMPLATE = File.join(__dir__, "cronjob-sync.erb")
 SOURCES = {
-  "timemachine-xtal" => [],
-  "backups" => [],
-  "shared" => ["--bwlimit=3M"]
+  "k8s-pv" => {mount_path: "/volume1/k8s-pv", args: "--bwlimit=3M"},
+  "backups" => {},
+  "shared" => {args: "--bwlimit=3M"}
 }
 
 MINUTES_BETWEEN_JOBS=4 * 60
 
 template = File.read(TEMPLATE)
 SOURCES.each_with_index do |source, i|
-  name, args = source
+  name, params = source
+  args = Array(params[:args])
+  mount_path = params[:mount_path] || "/volume2/#{name}"
+
   minutes_offset = i * (MINUTES_BETWEEN_JOBS / SOURCES.length)
   hour = minutes_offset / 60
   minute = minutes_offset % 60
+
   puts "ARGS: #{args}"
-  cj = ERB.new(template, nil, "-")
+  cronjob_erb = ERB.new(template, nil, "-")
   filename = File.join(__dir__, "cronjob-sync-#{name}.yaml")
   puts "Writing #{filename}"
-  File.write(filename, cj.result(binding))
+  File.write(filename, cronjob_erb.result(binding))
 end

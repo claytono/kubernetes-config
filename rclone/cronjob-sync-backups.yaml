@@ -18,11 +18,13 @@ spec:
               - sync
               - --drive-chunk-size=128M
               - --transfers=2
+              - --links
+              - --fast-list
               - /source
               - gsc:backups
               - -v
               - --stats=15s
-            image: dvorak/rclone
+            image: ghcr.io/claytono/rclone:latest
             imagePullPolicy: Always
             env:
             - name: RCLONE_CONFIG_PASS

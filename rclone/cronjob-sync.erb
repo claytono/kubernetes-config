@@ -18,6 +18,8 @@ spec:
               - sync
               - --drive-chunk-size=128M
               - --transfers=2
+              - --links
+              - --fast-list
               - /source
               - gsc:<%= name %>
               - -v
@@ -25,7 +27,7 @@ spec:
               <%- args.each do |arg| -%>
               - "<%= arg %>"
               <%- end -%>
-            image: dvorak/rclone
+            image: ghcr.io/claytono/rclone:latest
             imagePullPolicy: Always
             env:
             - name: RCLONE_CONFIG_PASS
@@ -55,6 +57,6 @@ spec:
               name: rclone-config
           - nfs:
               server: fs2.oneill.net
-              path: /volume2/<%= name %>
+              path: <%= mount_path %>
               readOnly: true
             name: source
