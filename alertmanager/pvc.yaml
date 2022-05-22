@@ -3,7 +3,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: alertmanager-data
-  namespace: kube-system
   labels:
     k8s-app: alertmanager
 spec:

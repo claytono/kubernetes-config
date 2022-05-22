@@ -6,7 +6,6 @@ metadata:
   labels:
     name: alertmanager
   name: alertmanager
-  namespace: kube-system
 spec:
   selector:
     app: alertmanager
