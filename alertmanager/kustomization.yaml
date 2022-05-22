@@ -1,0 +1,26 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+ - deploy.yaml
+ - ingress.yaml
+ - service.yaml
+ - pvc.yaml
+
+commonLabels:
+  app: alertmanager
+
+configMapGenerator:
+ - name: alertmanager
+   files:
+     - config.template.yaml
+ - name: alertmanager-templates
+   files:
+      - templates/default.tmpl
+      - templates/slack.tmpl
+
+secretGenerator:
+  - name: alertmanager
+    env: secret.txt
+    type: Opaque

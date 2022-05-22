@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: alertmanager
-  namespace: kube-system
 spec:
   replicas: 1
   selector:
@@ -19,9 +18,9 @@ spec:
         image: hairyhenderson/gomplate
         args:
          - "--file"
-         - "/etc/alertmanager/config.yml.template"
+         - "/etc/alertmanager/config.template.yaml"
          - "--out"
-         - "/config/config.yml"
+         - "/config/config.yaml"
         env:
         - name: SMTP_PASSWORD
           valueFrom:
@@ -37,7 +36,7 @@ spec:
       - name: alertmanager
         image: prom/alertmanager:latest
         args:
-          - '--config.file=/config/config.yml'
+          - '--config.file=/config/config.yaml'
           - '--storage.path=/alertmanager'
           - '--web.external-url=https://alertmanager.k.oneill.net'
         ports:
