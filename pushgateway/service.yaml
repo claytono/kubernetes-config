@@ -6,7 +6,6 @@ metadata:
   labels:
     name: pushgateway
   name: pushgateway
-  namespace: kube-system
 spec:
   selector:
     app: pushgateway
