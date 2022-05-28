@@ -1,0 +1,11 @@
+persistence:
+  enabled: true
+config:
+  compactor:
+    retention_enabled: true
+  limits_config:
+    retention_period: 30d
+    ingestion_rate_mb: 32
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "http-metrics"

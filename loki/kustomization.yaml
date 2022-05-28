@@ -1,0 +1,25 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: default
+
+resources:
+ - helm/loki/templates/statefulset.yaml
+ - helm/loki/templates/serviceaccount.yaml
+ - helm/loki/templates/service.yaml
+
+commonLabels:
+  app: loki
+
+#configMapGenerator:
+# - name: prometheus
+#   files:
+#     - config/prometheus.yml
+#     - config/rules.yml
+
+secretGenerator:
+  - name: loki
+    files:
+      - loki.yaml=helm/loki.dist.yaml
+    type: Opaque
