@@ -1,0 +1,8 @@
+config:
+  lokiAddress: http://loki:3100/loki/api/v1/push
+  snippets:
+    pipelineStages:
+      - docker: {}
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "http-metrics"
