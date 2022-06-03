@@ -12,6 +12,9 @@ helm template loki loki \
   --values values.yaml \
   --output-dir helm
 
+# Delete the PSP since it's a deprecated resource and we don't need the warnings.
+rm -f helm/loki/templates/podsecuritypolicy.yaml
+
 yq '.data."loki.yaml" | @base64d' \
   helm/loki/templates/secret.yaml \
   > helm/loki.dist.yaml
