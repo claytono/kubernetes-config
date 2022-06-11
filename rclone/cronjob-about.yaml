@@ -19,7 +19,7 @@ spec:
               - /run-rclone.sh
               - about
               - "gsc:"
-            image: dvorak/rclone
+            image: ghcr.io/claytono/rclone:latest
             imagePullPolicy: Always
             env:
             - name: RCLONE_CONFIG_PASS
