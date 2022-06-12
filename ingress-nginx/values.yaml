@@ -1,0 +1,5 @@
+---
+controller:
+  hostNetwork: true
+  admissionWebhooks:
+    enabled: false
