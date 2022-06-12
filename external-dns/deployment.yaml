@@ -2,13 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: external-dns
-  namespace: kube-system
 spec:
   strategy:
     type: Recreate
   template:
     metadata:
-      namespace: kube-system
       labels:
         app: external-dns
     spec:
