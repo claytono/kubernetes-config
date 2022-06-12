@@ -5,7 +5,9 @@ namespace: kube-system
 
 resources:
  - deployment.yaml
- - rbac.yaml
+ - external-dns-clusterrole.yaml
+ - external-dns-serviceaccount.yaml
+ - external-dns-clusterrolebinding.yaml
 
 commonLabels:
   app: external-dns
