@@ -1,0 +1,16 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-system
+
+resources:
+ - deployment.yaml
+ - rbac.yaml
+
+commonLabels:
+  app: external-dns
+
+secretGenerator:
+  - name: external-dns
+    env: secret.txt
+    type: Opaque
