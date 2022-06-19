@@ -1,0 +1,54 @@
+---
+# Source: vpa/templates/tests/crd-available.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vpa-checkpoint-crd-available
+  labels:
+    helm.sh/chart: vpa-1.4.0
+    app.kubernetes.io/name: vpa
+    app.kubernetes.io/instance: vpa
+    app.kubernetes.io/version: "0.10.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+    "helm.sh/hook-weight": "50"
+spec:
+  serviceAccountName:  vpa-test
+  containers:
+    - name: test
+      image: quay.io/reactiveops/ci-images:v11-alpine
+      command: ['kubectl']
+      args:
+        - get
+        - crd
+        - verticalpodautoscalercheckpoints.autoscaling.k8s.io
+  restartPolicy: Never
+---
+# Source: vpa/templates/tests/crd-available.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vpa-crd-available
+  labels:
+    helm.sh/chart: vpa-1.4.0
+    app.kubernetes.io/name: vpa
+    app.kubernetes.io/instance: vpa
+    app.kubernetes.io/version: "0.10.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+    "helm.sh/hook-weight": "50"
+spec:
+  serviceAccountName: vpa-test
+  containers:
+    - name: test
+      image: quay.io/reactiveops/ci-images:v11-alpine
+      command: ['kubectl']
+      args:
+        - get
+        - crd
+        - verticalpodautoscalers.autoscaling.k8s.io
+  restartPolicy: Never

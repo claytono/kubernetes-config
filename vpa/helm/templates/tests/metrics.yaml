@@ -1,0 +1,27 @@
+---
+# Source: vpa/templates/tests/metrics.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vpa-metrics-api-available
+  labels:
+    helm.sh/chart: vpa-1.4.0
+    app.kubernetes.io/name: vpa
+    app.kubernetes.io/instance: vpa
+    app.kubernetes.io/version: "0.10.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
+    "helm.sh/hook-weight": "70"
+spec:
+  serviceAccountName: vpa-test
+  containers:
+    - name: test
+      image: quay.io/reactiveops/ci-images:v11-alpine
+      command: ['kubectl']
+      args:
+        - get
+        - --raw
+        - "/apis/metrics.k8s.io/v1beta1/nodes"
+  restartPolicy: Never

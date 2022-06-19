@@ -1,0 +1,22 @@
+---
+# Source: metrics-server/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: metrics-server
+  labels:
+    helm.sh/chart: metrics-server-3.8.2
+    app.kubernetes.io/name: metrics-server
+    app.kubernetes.io/instance: metrics-server
+    app.kubernetes.io/version: "0.6.1"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: https
+  selector:
+    app.kubernetes.io/name: metrics-server
+    app.kubernetes.io/instance: metrics-server
