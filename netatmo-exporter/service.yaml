@@ -4,7 +4,6 @@ metadata:
   labels:
     name: netatmo-exporter
   name: netatmo-exporter
-  namespace: kube-system
 spec:
   selector:
     app: netatmo-exporter
