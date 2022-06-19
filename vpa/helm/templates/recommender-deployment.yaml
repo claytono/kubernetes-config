@@ -1,0 +1,70 @@
+---
+# Source: vpa/templates/recommender-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vpa-recommender
+  labels:
+    app.kubernetes.io/component: recommender
+    helm.sh/chart: vpa-1.4.0
+    app.kubernetes.io/name: vpa
+    app.kubernetes.io/instance: vpa
+    app.kubernetes.io/version: "0.10.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: recommender
+      app.kubernetes.io/name: vpa
+      app.kubernetes.io/instance: vpa
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: recommender
+        app.kubernetes.io/name: vpa
+        app.kubernetes.io/instance: vpa
+    spec:
+      serviceAccountName: vpa-recommender
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+      containers:
+        - name: vpa
+          securityContext:
+            {}
+          image: "k8s.gcr.io/autoscaling/vpa-recommender:0.10.0"
+          imagePullPolicy: Always
+          args:
+            - --pod-recommendation-min-cpu-millicores=15
+            - --pod-recommendation-min-memory-mb=100
+            - --v=4
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /health-check
+              port: metrics
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          readinessProbe:
+            failureThreshold: 120
+            httpGet:
+              path: /health-check
+              port: metrics
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          ports:
+            - name: metrics
+              containerPort: 8942
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 200m
+              memory: 1000Mi
+            requests:
+              cpu: 50m
+              memory: 500Mi

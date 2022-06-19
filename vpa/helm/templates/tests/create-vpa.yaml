@@ -1,0 +1,46 @@
+---
+# Source: vpa/templates/tests/create-vpa.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vpa-test-create-vpa
+  labels:
+    helm.sh/chart: vpa-1.4.0
+    app.kubernetes.io/name: vpa
+    app.kubernetes.io/instance: vpa
+    app.kubernetes.io/version: "0.10.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
+    "helm.sh/hook-weight": "100"
+spec:
+  serviceAccountName: vpa-test
+  containers:
+    - name: test
+      image: quay.io/reactiveops/ci-images:v11-alpine
+      command: ['bash']
+      args:
+        - -c
+        - |
+          #!/bin/bash
+
+          set -e
+          set -x
+          cat <<EOF | kubectl -n default apply -f -
+          apiVersion: autoscaling.k8s.io/v1
+          kind: VerticalPodAutoscaler
+          metadata:
+            name: test-vpa
+          spec:
+            targetRef:
+              apiVersion: "apps/v1"
+              kind:       Deployment
+              name:       my-app
+            updatePolicy:
+              updateMode: "Off"
+          EOF
+
+          kubectl -n default describe vpa test-vpa
+          kubectl -n default delete vpa test-vpa
+  restartPolicy: Never
