@@ -1,0 +1,27 @@
+---
+controller:
+  rbac:
+    enableArgoproj: false
+  resources:
+    limits:
+      memory: 256Mi
+dashboard:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 256Mi
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt"
+    hosts:
+    - host: "goldilocks.k.oneill.net"
+      paths:
+        - path: /
+          type: Prefix
+    tls:
+      - secretName: goldilocks-tls
+        hosts: [ "goldilocks.k.oneill.net" ]
+

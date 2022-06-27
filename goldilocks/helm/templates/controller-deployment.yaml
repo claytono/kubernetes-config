@@ -1,0 +1,52 @@
+---
+# Source: goldilocks/templates/controller-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goldilocks-controller
+  labels:
+    app.kubernetes.io/name: goldilocks
+    helm.sh/chart: goldilocks-6.1.3
+    app.kubernetes.io/instance: goldilocks
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: goldilocks
+      app.kubernetes.io/instance: goldilocks
+      app.kubernetes.io/component: controller
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: goldilocks
+        app.kubernetes.io/instance: goldilocks
+        app.kubernetes.io/component: controller
+    spec:
+      serviceAccountName: goldilocks-controller
+      securityContext:
+        {}
+      containers:
+        - name: goldilocks
+          image: "us-docker.pkg.dev/fairwinds-ops/oss/goldilocks:v4.3.3"
+          imagePullPolicy: Always
+          command:
+            - /goldilocks
+            - controller
+            - -v2
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 10324
+          resources:
+            limits:
+              cpu: 25m
+              memory: 256Mi
+            requests:
+              cpu: 25m
+              memory: 32Mi

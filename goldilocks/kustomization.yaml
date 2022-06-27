@@ -1,0 +1,20 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: default
+
+resources:
+ - helm/templates/controller-clusterrole.yaml
+ - helm/templates/controller-clusterrolebinding.yaml
+ - helm/templates/controller-deployment.yaml
+ - helm/templates/controller-serviceaccount.yaml
+ - helm/templates/dashboard-clusterrole.yaml
+ - helm/templates/dashboard-clusterrolebinding.yaml
+ - helm/templates/dashboard-deployment.yaml
+ - helm/templates/dashboard-ingress.yaml
+ - helm/templates/dashboard-service.yaml
+ - helm/templates/dashboard-serviceaccount.yaml
+
+commonLabels:
+  app: goldilocks

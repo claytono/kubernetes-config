@@ -1,0 +1,23 @@
+---
+# Source: goldilocks/templates/dashboard-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: goldilocks-dashboard
+  labels:
+    app.kubernetes.io/name: goldilocks
+    helm.sh/chart: goldilocks-6.1.3
+    app.kubernetes.io/instance: goldilocks
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: dashboard
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: goldilocks
+    app.kubernetes.io/instance: goldilocks
+    app.kubernetes.io/component: dashboard

@@ -1,0 +1,31 @@
+---
+# Source: goldilocks/templates/dashboard-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: goldilocks-dashboard
+  labels:
+    app.kubernetes.io/name: goldilocks
+    helm.sh/chart: goldilocks-6.1.3
+    app.kubernetes.io/instance: goldilocks
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: dashboard
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - "goldilocks.k.oneill.net"
+      secretName: goldilocks-tls
+  rules:
+    - host: "goldilocks.k.oneill.net"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: goldilocks-dashboard
+                port:
+                  name: http
