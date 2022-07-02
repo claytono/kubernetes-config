@@ -3,8 +3,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: plexmediaserver-config
-  labels:
-    k8s-app: plexmediaserver
 spec:
   accessModes:
     - ReadWriteOnce
@@ -16,8 +14,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: plexmediaserver-transcode
-  labels:
-    k8s-app: plexmediaserver
 spec:
   accessModes:
     - ReadWriteOnce
