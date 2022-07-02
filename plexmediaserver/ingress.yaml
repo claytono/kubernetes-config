@@ -3,8 +3,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: plexmediaserver
-  labels:
-    k8s-app: plexmediaserver
   annotations:
     kubernetes.io/ingress.class: "nginx"
     cert-manager.io/cluster-issuer: "letsencrypt"

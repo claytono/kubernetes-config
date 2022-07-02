@@ -20,3 +20,5 @@ secretGenerator:
   - name: plex-chap-secret
     env: iscsi-secret.txt
     type: kubernetes.io/iscsi-chap
+    options:
+      disableNameSuffixHash: true

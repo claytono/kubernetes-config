@@ -3,8 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: plexmediaserver
-  labels:
-    k8s-app: plexmediaserver
 spec:
   replicas: 1
   selector:
@@ -17,7 +15,6 @@ spec:
       labels:
         app: plexmediaserver
     spec:
-      hostNetwork: true
       containers:
       - name: plexmediaserver
         image: plexinc/pms-docker:plexpass
@@ -37,18 +34,11 @@ spec:
           protocol: "UDP"
         - containerPort: 32414
           protocol: "UDP"
-        livenessProbe:
-          failureThreshold: 10
-          httpGet:
-            path: /web/index.html
-            port: 32400
         env:
           - name: HOSTNAME
             value: "kube-pms"
           - name: TZ
             value: "EST5EDT"
-          - name: DEBUG
-            value: "true"
           - name: PLEX_CLAIM
             valueFrom:
               secretKeyRef:
