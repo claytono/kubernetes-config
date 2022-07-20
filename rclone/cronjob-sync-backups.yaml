@@ -24,6 +24,7 @@ spec:
               - gsc:backups
               - -v
               - --stats=15s
+              - "--bwlimit=3M"
             image: ghcr.io/claytono/rclone:latest
             imagePullPolicy: Always
             env:
