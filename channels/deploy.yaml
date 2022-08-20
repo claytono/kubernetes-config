@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: channels
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: channels
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: channels
+    spec:
+      hostname: channels
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+      - name: channels
+        image: fancybits/channels-dvr:tve
+        imagePullPolicy: Always
+        env:
+          - name: TZ
+            value: "EST5EDT"
+        volumeMounts:
+          - mountPath: "/channels-dvr"
+            name: config
+          - mountPath: "/recordings"
+            name: recordings
+          - name: dev-dri
+            mountPath: /dev/dri
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: channels-config
+        - nfs:
+            server: fs2.oneill.net
+            path: /volume2/shared/video/channels
+          name: recordings
+        - name: dev-dri
+          hostPath:
+              path: /dev/dri
