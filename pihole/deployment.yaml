@@ -16,7 +16,7 @@ spec:
         app: pihole
         name: pihole
     spec:
-      #hostNetwork: true
+      hostNetwork: true
       containers:
       - name: pihole
         image: pihole/pihole:latest
