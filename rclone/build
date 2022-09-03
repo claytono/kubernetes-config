@@ -6,7 +6,7 @@ require "digest/md5"
 TEMPLATE = File.join(__dir__, "cronjob-sync.erb")
 SOURCES = {
   "k8s-pv" => {mount_path: "/volume1/k8s-pv", args: "--bwlimit=3M"},
-  "backups" => {args: "--bwlimit=3M"},
+  "backups" => {args: ["--exclude restic/**", "--bwlimit=3M"]},
   "shared" => {args: "--bwlimit=3M"}
 }
 
