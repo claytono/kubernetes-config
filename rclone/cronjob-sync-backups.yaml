@@ -20,10 +20,12 @@ spec:
               - --transfers=2
               - --links
               - --fast-list
+              - --delete-excluded
               - /source
               - gsc:backups
               - -v
               - --stats=15s
+              - "--exclude restic/**"
               - "--bwlimit=3M"
             image: ghcr.io/claytono/rclone:latest
             imagePullPolicy: Always

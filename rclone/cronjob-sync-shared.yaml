@@ -20,6 +20,7 @@ spec:
               - --transfers=2
               - --links
               - --fast-list
+              - --delete-excluded
               - /source
               - gsc:shared
               - -v
