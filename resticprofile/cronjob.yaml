@@ -1,0 +1,71 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: resticprofile
+spec:
+  schedule: "0 * * * *"
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          hostname: rp-kube
+          restartPolicy: OnFailure
+          containers:
+          - name: resticprofile
+            command:
+              - resticprofile
+              - -c
+              - /resticprofile-config/profiles.yaml
+              - --lock-wait
+              - 1h
+              - backup
+            image: ghcr.io/claytono/resticprofile:0.18.0
+            imagePullPolicy: IfNotPresent
+            env:
+              - name: RESTIC_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: resticprofile
+                    key: RESTIC_PASSWORD
+            volumeMounts:
+            - mountPath: /rclone-config
+              name: rclone-config
+            - mountPath: /resticprofile-config
+              name: resticprofile-config
+            - mountPath: /tmp
+              name: scratch
+            - mountPath: /cache
+              name: cache
+            - mountPath: /source/k8s-pv
+              name: k8s-pv
+              readOnly: true
+            - mountPath: /source/backups
+              name: backups
+              readOnly: true
+          volumes:
+          - name: rclone-config
+            secret:
+              secretName: resticprofile-rclone-config
+              items:
+              - key: rclone-config-secret.txt
+                path: rclone.conf
+          - name: resticprofile-config
+            configMap:
+              name: resticprofile-config
+          - name: scratch
+            emptyDir: {}
+          - name: cache
+            persistentVolumeClaim:
+              claimName: resticprofile-cache
+          - nfs:
+              server: fs2.oneill.net
+              path: /volume1/k8s-pv
+              readOnly: true
+            name: k8s-pv
+          - nfs:
+              server: fs2.oneill.net
+              path: /volume2/backups
+              readOnly: true
+            name: backups
