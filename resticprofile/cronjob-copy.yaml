@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: resticprofile
+  name: resticprofile-copy
 spec:
   schedule: "0 * * * *"
   concurrencyPolicy: Forbid
@@ -12,19 +12,34 @@ spec:
         spec:
           hostname: rp-kube
           restartPolicy: OnFailure
+          securityContext:
+            runAsUser: 10007
+            runAsGroup: 10007
           containers:
           - name: resticprofile
             command:
               - resticprofile
               - -c
               - /resticprofile-config/profiles.yaml
+              - -n 
+              - copy-main
               - --lock-wait
               - 1h
-              - backup
-            image: ghcr.io/claytono/resticprofile:0.18.0
+              - copy
+            image: creativeprojects/resticprofile
             imagePullPolicy: IfNotPresent
             env:
               - name: RESTIC_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: resticprofile
+                    key: RESTIC_PASSWORD
+              - name: RESTIC_FROM_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: resticprofile
+                    key: RESTIC_PASSWORD
+              - name: RESTIC_PASSWORD2
                 valueFrom:
                   secretKeyRef:
                     name: resticprofile
@@ -38,12 +53,8 @@ spec:
               name: scratch
             - mountPath: /cache
               name: cache
-            - mountPath: /source/k8s-pv
-              name: k8s-pv
-              readOnly: true
-            - mountPath: /source/backups
+            - mountPath: /source/backups/restic/repos
               name: backups
-              readOnly: true
           volumes:
           - name: rclone-config
             secret:
@@ -58,14 +69,8 @@ spec:
             emptyDir: {}
           - name: cache
             persistentVolumeClaim:
-              claimName: resticprofile-cache
+              claimName: resticprofile-cache-copy
           - nfs:
               server: fs2.oneill.net
-              path: /volume1/k8s-pv
-              readOnly: true
-            name: k8s-pv
-          - nfs:
-              server: fs2.oneill.net
-              path: /volume2/backups
-              readOnly: true
+              path: /volume2/backups/restic/repos
             name: backups
