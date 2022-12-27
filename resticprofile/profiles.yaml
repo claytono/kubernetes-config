@@ -34,6 +34,39 @@ default:
         keep-monthly: 24
         keep-weekly: 12
         prune: true
-#  check:
-#    read-data-subset: "1%"
+    check:
+      read-data-subset: "50M"
+
+copy-main:
+    compression: max
+    repository: /source/backups/restic/repos/main
+    verbose: true
+    pack-size: 64
+
+    env:
+        RCLONE_BWLIMIT: 3M
+        RCLONE_CONFIG: /rclone-config/rclone.conf
+        RESTIC_PROGRESS_FPS: "0.1"
+        RESTIC_CACHE_DIR: "/cache"
+
+    copy:
+      repository: rclone:gsc:restic
+    forget:
+        keep-hourly: 24
+        keep-daily: 14
+        keep-monthly: 24
+        keep-weekly: 12
+        prune: true
+    prometheus-labels:
+    -   host: 'kubernetes'
+    prometheus-push: https://pushgateway.k.oneill.net/
+    retention:
+        after-backup: true
+        keep-hourly: 24
+        keep-daily: 14
+        keep-monthly: 24
+        keep-weekly: 12
+        prune: true
+    check:
+      read-data-subset: "50M"
 
