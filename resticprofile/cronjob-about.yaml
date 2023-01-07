@@ -22,11 +22,6 @@ spec:
             image: ghcr.io/claytono/rclone:latest
             imagePullPolicy: Always
             env:
-            - name: RCLONE_CONFIG_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: rclone-config-password
-                  key: RCLONE_CONFIG_PASS
             - name: PUSH_GATEWAY
               value: https://pushgateway.k.oneill.net
             - name: INSTANCE
@@ -36,5 +31,8 @@ spec:
               name: rclone-config
           volumes:
           - name: rclone-config
-            configMap:
-              name: rclone-config
+            secret:
+              secretName: resticprofile-rclone-config
+              items:
+              - key: rclone-config-secret.txt
+                path: rclone.conf
