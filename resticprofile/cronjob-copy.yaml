@@ -12,16 +12,23 @@ spec:
         spec:
           hostname: rp-kube
           restartPolicy: OnFailure
-          securityContext:
-            runAsUser: 10007
-            runAsGroup: 10007
+          initContainers:
+            - name: generate-uuid
+              image: alpine
+              command: ['sh', '-c', 'apk add --no-cache util-linux; uuidgen >/tmp/uuid']
+              volumeMounts:
+                - mountPath: /tmp
+                  name: scratch
           containers:
           - name: resticprofile
+            securityContext:
+              runAsUser: 10007
+              runAsGroup: 10007
             command:
               - resticprofile
               - -c
               - /resticprofile-config/profiles.yaml
-              - -n 
+              - -n
               - copy-main
               - --lock-wait
               - 1h
@@ -44,6 +51,10 @@ spec:
                   secretKeyRef:
                     name: resticprofile
                     key: RESTIC_PASSWORD
+              - name: RUN_ID
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
             volumeMounts:
             - mountPath: /rclone-config
               name: rclone-config
