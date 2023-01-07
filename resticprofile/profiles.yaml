@@ -7,7 +7,7 @@ default:
     pack-size: 64
 
     env:
-        RCLONE_BWLIMIT: 3M
+        RCLONE_BWLIMIT: 7M
         RCLONE_CONFIG: /rclone-config/rclone.conf
         RESTIC_PROGRESS_FPS: "0.1"
         RESTIC_CACHE_DIR: "/cache"
@@ -16,14 +16,29 @@ default:
         source:
         - /source
         exclude:
-        - /source/backup/borg
-        - /source/backup/restic
+        - /source/backups/borg
+        - /source/backups/restic
+        no-error-on-warning: true
+        run-before: &run_before |
+          wget "https://hc-ping.com/FW89_Ui4S7Xe4QLa96f98A/kube-restic-${PROFILE_NAME}-${PROFILE_COMMAND}/start?rid=$(cat /tmp/uuid)" -O - -S --post-data "Profile: $PROFILE_NAME
+          Command: $PROFILE_COMMAND
+          "
+        run-finally: &run_finally |
+          rc="${ERROR_EXIT_CODE:-0}";
+          wget "https://hc-ping.com/FW89_Ui4S7Xe4QLa96f98A/kube-restic-${PROFILE_NAME}-${PROFILE_COMMAND}/${rc}?rid=$(cat /tmp/uuid)" -O - -S --post-data "Profile: $PROFILE_NAME
+          Command: $PROFILE_COMMAND
+          Message: $ERROR_MESSAGE
+          Command-line: $ERROR_COMANDLINE
+          Stderr: $ERROR_STDERR
+          "
     forget:
-        keep-hourly: 24
-        keep-daily: 14
-        keep-monthly: 24
-        keep-weekly: 12
-        prune: true
+      keep-hourly: 24
+      keep-daily: 14
+      keep-monthly: 24
+      keep-weekly: 12
+      prune: true
+      run-before: *run_before
+      run-finally: *run_finally
     prometheus-labels:
     -   host: 'kubernetes'
     prometheus-push: https://pushgateway.k.oneill.net/
@@ -44,19 +59,23 @@ copy-main:
     pack-size: 64
 
     env:
-        RCLONE_BWLIMIT: 3M
+        RCLONE_BWLIMIT: 7M
         RCLONE_CONFIG: /rclone-config/rclone.conf
         RESTIC_PROGRESS_FPS: "0.1"
         RESTIC_CACHE_DIR: "/cache"
 
     copy:
       repository: rclone:gsc:restic
+      run-before: *run_before
+      run-finally: *run_finally
     forget:
-        keep-hourly: 24
-        keep-daily: 14
-        keep-monthly: 24
-        keep-weekly: 12
-        prune: true
+      keep-hourly: 24
+      keep-daily: 14
+      keep-monthly: 24
+      keep-weekly: 12
+      prune: true
+      run-before: *run_before
+      run-finally: *run_finally
     prometheus-labels:
     -   host: 'kubernetes'
     prometheus-push: https://pushgateway.k.oneill.net/
