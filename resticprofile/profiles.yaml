@@ -18,6 +18,7 @@ default:
         exclude:
         - /source/backups/borg
         - /source/backups/restic
+        - /source/k8s-pv/default-resticprofile-cache*
         no-error-on-warning: true
         run-before: &run_before |
           wget "https://hc-ping.com/FW89_Ui4S7Xe4QLa96f98A/kube-restic-${PROFILE_NAME}-${PROFILE_COMMAND}/start?rid=$(cat /tmp/uuid)" -O - -S --post-data "Profile: $PROFILE_NAME
