@@ -2,7 +2,7 @@
 
 set -eu -o pipefail
 
-image=$(yq .spec.jobTemplate.spec.template.spec.containers[0].image <cronjob-synology.yaml)
+image=$(yq .spec.jobTemplate.spec.template.spec.containers[0].image <cronjob-default.yaml)
 
 mkdir -p "$(pwd)/.cache"
 mkdir -p "$(pwd)/.tmp"

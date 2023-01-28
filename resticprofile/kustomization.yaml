@@ -4,8 +4,8 @@ kind: Kustomization
 
 resources:
  - cronjob-about.yaml
- - cronjob-synology.yaml
- - cronjob-copy.yaml
+ - cronjob-default.yaml
+ - cronjob-copy-main.yaml
  - pvc.yaml
 
 commonLabels:
