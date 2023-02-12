@@ -3,7 +3,24 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- cert-manager.yaml
+- helm/templates/crds.yaml
+- helm/templates/deployment.yaml
+- helm/templates/webhook-deployment.yaml
+- helm/templates/webhook-serviceaccount.yaml
+- helm/templates/cainjector-deployment.yaml
+- helm/templates/webhook-service.yaml
+- helm/templates/startupapicheck-serviceaccount.yaml
+- helm/templates/startupapicheck-job.yaml
+- helm/templates/service.yaml
+- helm/templates/rbac.yaml
+- helm/templates/webhook-mutating-webhook.yaml
+- helm/templates/webhook-config.yaml
+- helm/templates/webhook-rbac.yaml
+- helm/templates/serviceaccount.yaml
+- helm/templates/cainjector-rbac.yaml
+- helm/templates/startupapicheck-rbac.yaml
+- helm/templates/webhook-validating-webhook.yaml
+- helm/templates/cainjector-serviceaccount.yaml
 - clusterissuer.yaml
 
 secretGenerator:
