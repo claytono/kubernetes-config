@@ -1,0 +1,194 @@
+---
+# Source: authentik/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentik-server
+  labels:
+    helm.sh/chart: authentik-2023.1.2
+    app.kubernetes.io/name: authentik
+    app.kubernetes.io/instance: authentik
+    app.kubernetes.io/version: "2023.1.2"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: "server"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: authentik
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/component: "server"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: authentik
+        app.kubernetes.io/instance: authentik
+        app.kubernetes.io/component: "server"
+        app.kubernetes.io/version: "2023.1.2"
+    spec:
+      serviceAccountName: authentik
+      enableServiceLinks: true
+      priorityClassName: 
+      securityContext:
+        {}
+      containers:
+        - name: authentik
+          image: "ghcr.io/goauthentik/server:2023.1.2"
+          imagePullPolicy: "IfNotPresent"
+          args: ["server"]
+          env:            
+            - name: AUTHENTIK_AVATARS
+              value: "gravatar"
+            - name: AUTHENTIK_EMAIL__FROM
+              value: "clayton@oneill.net"
+            - name: AUTHENTIK_EMAIL__HOST
+              value: "smtp.gmail.com"
+            - name: AUTHENTIK_EMAIL__PASSWORD
+              value: "SMTP_PASSWORD"
+            - name: AUTHENTIK_EMAIL__PORT
+              value: "587"
+            - name: AUTHENTIK_EMAIL__TIMEOUT
+              value: "30"
+            - name: AUTHENTIK_EMAIL__USE_SSL
+              value: "false"
+            - name: AUTHENTIK_EMAIL__USE_TLS
+              value: "false"
+            - name: AUTHENTIK_EMAIL__USERNAME
+              value: "clayton.oneill@gmail.com"
+            - name: AUTHENTIK_ERROR_REPORTING__ENABLED
+              value: "false"
+            - name: AUTHENTIK_ERROR_REPORTING__ENVIRONMENT
+              value: "k8s"
+            - name: AUTHENTIK_ERROR_REPORTING__SEND_PII
+              value: "false"
+            - name: AUTHENTIK_GEOIP
+              value: "/geoip/GeoLite2-City.mmdb"
+            - name: AUTHENTIK_LOG_LEVEL
+              value: "info"
+            - name: AUTHENTIK_OUTPOSTS__CONTAINER_IMAGE_BASE
+              value: "ghcr.io/goauthentik/%(type)s:%(version)s"
+            - name: AUTHENTIK_POSTGRESQL__HOST
+              value: "authentik-postgresql"
+            - name: AUTHENTIK_POSTGRESQL__NAME
+              value: "authentik"
+            - name: AUTHENTIK_POSTGRESQL__PASSWORD
+              value: "ThisIsNotASecurePassword"
+            - name: AUTHENTIK_POSTGRESQL__PORT
+              value: "5432"
+            - name: AUTHENTIK_POSTGRESQL__USER
+              value: "authentik"
+            - name: AUTHENTIK_REDIS__HOST
+              value: "authentik-redis-master"
+            - name: AUTHENTIK_SECRET_KEY
+              value: "PleaseGenerateA50CharKey"
+          volumeMounts:
+      
+          ports:
+            - name: http
+              containerPort: 9000
+              protocol: TCP
+            - name: http-metrics
+              containerPort: 9300
+              protocol: TCP
+            - name: https
+              containerPort: 9443
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /-/health/live/
+              port: http
+            initialDelaySeconds: 50
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /-/health/ready/
+              port: http
+            initialDelaySeconds: 50
+            periodSeconds: 10
+      volumes:
+---
+# Source: authentik/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentik-worker
+  labels:
+    helm.sh/chart: authentik-2023.1.2
+    app.kubernetes.io/name: authentik
+    app.kubernetes.io/instance: authentik
+    app.kubernetes.io/version: "2023.1.2"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: "worker"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: authentik
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/component: "worker"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: authentik
+        app.kubernetes.io/instance: authentik
+        app.kubernetes.io/component: "worker"
+        app.kubernetes.io/version: "2023.1.2"
+    spec:
+      serviceAccountName: authentik
+      enableServiceLinks: true
+      priorityClassName: 
+      securityContext:
+        {}
+      containers:
+        - name: authentik
+          image: "ghcr.io/goauthentik/server:2023.1.2"
+          imagePullPolicy: "IfNotPresent"
+          args: ["worker"]
+          env:            
+            - name: AUTHENTIK_AVATARS
+              value: "gravatar"
+            - name: AUTHENTIK_EMAIL__FROM
+              value: "clayton@oneill.net"
+            - name: AUTHENTIK_EMAIL__HOST
+              value: "smtp.gmail.com"
+            - name: AUTHENTIK_EMAIL__PASSWORD
+              value: "SMTP_PASSWORD"
+            - name: AUTHENTIK_EMAIL__PORT
+              value: "587"
+            - name: AUTHENTIK_EMAIL__TIMEOUT
+              value: "30"
+            - name: AUTHENTIK_EMAIL__USE_SSL
+              value: "false"
+            - name: AUTHENTIK_EMAIL__USE_TLS
+              value: "false"
+            - name: AUTHENTIK_EMAIL__USERNAME
+              value: "clayton.oneill@gmail.com"
+            - name: AUTHENTIK_ERROR_REPORTING__ENABLED
+              value: "false"
+            - name: AUTHENTIK_ERROR_REPORTING__ENVIRONMENT
+              value: "k8s"
+            - name: AUTHENTIK_ERROR_REPORTING__SEND_PII
+              value: "false"
+            - name: AUTHENTIK_GEOIP
+              value: "/geoip/GeoLite2-City.mmdb"
+            - name: AUTHENTIK_LOG_LEVEL
+              value: "info"
+            - name: AUTHENTIK_OUTPOSTS__CONTAINER_IMAGE_BASE
+              value: "ghcr.io/goauthentik/%(type)s:%(version)s"
+            - name: AUTHENTIK_POSTGRESQL__HOST
+              value: "authentik-postgresql"
+            - name: AUTHENTIK_POSTGRESQL__NAME
+              value: "authentik"
+            - name: AUTHENTIK_POSTGRESQL__PASSWORD
+              value: "ThisIsNotASecurePassword"
+            - name: AUTHENTIK_POSTGRESQL__PORT
+              value: "5432"
+            - name: AUTHENTIK_POSTGRESQL__USER
+              value: "authentik"
+            - name: AUTHENTIK_REDIS__HOST
+              value: "authentik-redis-master"
+            - name: AUTHENTIK_SECRET_KEY
+              value: "PleaseGenerateA50CharKey"
+          volumeMounts:
+      
+      volumes:
