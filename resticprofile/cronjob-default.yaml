@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: resticprofile-default
 spec:
-  schedule: "0 * * * *"
+  schedule: "34 */4 * * *"
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   jobTemplate:
