@@ -1,0 +1,36 @@
+---
+authentik:
+    secret_key: "PleaseGenerateA50CharKey"
+    # This sends anonymous usage-data, stack traces on errors and
+    # performance data to sentry.io, and is fully opt-in
+    error_reporting:
+        enabled: false
+    postgresql:
+        password: "ThisIsNotASecurePassword"
+    email:
+      host: "smtp.gmail.com"
+      port: 587
+      username: "clayton.oneill@gmail.com"
+      password: SMTP_PASSWORD
+      from: "clayton@oneill.net"
+
+ingress:
+    enabled: true
+    ingressClassName: nginx
+    tls:
+      - hosts:
+        - "authentik.k.oneill.net"
+        secretName: "authentik-tls"
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt"
+    hosts:
+        - host: authentik.k.oneill.net
+          paths:
+              - path: "/"
+                pathType: Prefix
+
+postgresql:
+    enabled: true
+    postgresqlPassword: "ThisIsNotASecurePassword"
+redis:
+    enabled: true

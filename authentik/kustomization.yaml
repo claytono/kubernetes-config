@@ -1,0 +1,27 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: authentik
+
+bases:
+ - ./redis
+ - ./postgresql
+
+resources:
+ - namespace.yaml
+ - helm/templates/deployment.yaml
+ - helm/templates/ingress.yaml
+ - helm/templates/rbac.yaml
+ - helm/templates/service.yaml
+
+patches:
+  - path: patches/authentik.deployment.secret.yaml
+    target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: authentik.*
+
+commonLabels:
+  app: authentik
