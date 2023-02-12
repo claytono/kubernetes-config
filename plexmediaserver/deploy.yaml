@@ -51,6 +51,10 @@ spec:
             name: transcode
           - mountPath: "/data"
             name: video
+        resources:
+          requests:
+            memory: "8192Mi"
+            cpu: "2000m"
       volumes:
         - name: config
           iscsi:
