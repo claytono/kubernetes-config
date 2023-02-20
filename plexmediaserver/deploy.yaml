@@ -19,6 +19,11 @@ spec:
       - name: plexmediaserver
         image: plexinc/pms-docker:plexpass
         imagePullPolicy: Always
+        livenessProbe:
+          exec:
+            command: [ "dd", "if=/dev/zero", "of=/config/health-check", "bs=1M", "count=1" ]
+          periodSeconds: 120
+          timeoutSeconds: 15
         ports:
           # See
           # https://support.plex.tv/hc/en-us/articles/201543147-What-network-ports-do-I-need-to-allow-through-my-firewall
