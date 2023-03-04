@@ -5,10 +5,10 @@ kind: Ingress
 metadata:
   name: authentik
   labels:
-    helm.sh/chart: authentik-2023.1.2
+    helm.sh/chart: authentik-2023.2.2
     app.kubernetes.io/name: authentik
     app.kubernetes.io/instance: authentik
-    app.kubernetes.io/version: "2023.1.2"
+    app.kubernetes.io/version: "2023.2.2"
     app.kubernetes.io/managed-by: Helm
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt

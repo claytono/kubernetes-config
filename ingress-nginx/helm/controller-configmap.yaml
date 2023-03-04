@@ -15,3 +15,4 @@ metadata:
   namespace: ingress-nginx
 data:
   allow-snippet-annotations: "true"
+  proxy-body-size: "5m"

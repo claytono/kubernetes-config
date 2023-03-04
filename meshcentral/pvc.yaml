@@ -1,0 +1,22 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: meshcentral-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: meshcentral-files
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi

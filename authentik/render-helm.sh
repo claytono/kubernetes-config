@@ -9,7 +9,7 @@ rm -rf helm tmp
 mkdir tmp helm
 helm template authentik authentik \
   --repo https://charts.goauthentik.io/ \
-  --version 2023.1.2 \
+  --version 2023.2.2 \
   --values values.yaml \
   --output-dir tmp
 

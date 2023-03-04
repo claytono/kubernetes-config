@@ -21,6 +21,9 @@ spec:
       app.kubernetes.io/component: controller
   replicas: 1
   revisionHistoryLimit: 10
+  strategy:
+    
+    type: Recreate
   minReadySeconds: 0
   template:
     metadata:
