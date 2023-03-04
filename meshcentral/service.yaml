@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: meshcentral
+spec:
+  ports:
+  - name: meshcentral
+    protocol: TCP
+    port: 80
+    targetPort: 443

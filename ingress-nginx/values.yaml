@@ -1,5 +1,9 @@
 ---
 controller:
   hostNetwork: true
+  config:
+    proxy-body-size: "5m"
   admissionWebhooks:
     enabled: false
+  updateStrategy:
+    type: Recreate

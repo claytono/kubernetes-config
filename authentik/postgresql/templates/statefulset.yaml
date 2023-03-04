@@ -102,6 +102,8 @@ spec:
               value: "error"
             - name: POSTGRESQL_SHARED_PRELOAD_LIBRARIES
               value: "pgaudit"
+            - name: POSTGRESQL_MAX_CONNECTIONS
+              value: "500"
           ports:
             - name: tcp-postgresql
               containerPort: 5432

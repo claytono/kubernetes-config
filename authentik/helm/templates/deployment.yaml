@@ -5,10 +5,10 @@ kind: Deployment
 metadata:
   name: authentik-server
   labels:
-    helm.sh/chart: authentik-2023.1.2
+    helm.sh/chart: authentik-2023.2.2
     app.kubernetes.io/name: authentik
     app.kubernetes.io/instance: authentik
-    app.kubernetes.io/version: "2023.1.2"
+    app.kubernetes.io/version: "2023.2.2"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: "server"
 spec:
@@ -24,7 +24,7 @@ spec:
         app.kubernetes.io/name: authentik
         app.kubernetes.io/instance: authentik
         app.kubernetes.io/component: "server"
-        app.kubernetes.io/version: "2023.1.2"
+        app.kubernetes.io/version: "2023.2.2"
     spec:
       serviceAccountName: authentik
       enableServiceLinks: true
@@ -33,7 +33,7 @@ spec:
         {}
       containers:
         - name: authentik
-          image: "ghcr.io/goauthentik/server:2023.1.2"
+          image: "ghcr.io/goauthentik/server:2023.2.2"
           imagePullPolicy: "IfNotPresent"
           args: ["server"]
           env:            
@@ -113,10 +113,10 @@ kind: Deployment
 metadata:
   name: authentik-worker
   labels:
-    helm.sh/chart: authentik-2023.1.2
+    helm.sh/chart: authentik-2023.2.2
     app.kubernetes.io/name: authentik
     app.kubernetes.io/instance: authentik
-    app.kubernetes.io/version: "2023.1.2"
+    app.kubernetes.io/version: "2023.2.2"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: "worker"
 spec:
@@ -132,7 +132,7 @@ spec:
         app.kubernetes.io/name: authentik
         app.kubernetes.io/instance: authentik
         app.kubernetes.io/component: "worker"
-        app.kubernetes.io/version: "2023.1.2"
+        app.kubernetes.io/version: "2023.2.2"
     spec:
       serviceAccountName: authentik
       enableServiceLinks: true
@@ -141,7 +141,7 @@ spec:
         {}
       containers:
         - name: authentik
-          image: "ghcr.io/goauthentik/server:2023.1.2"
+          image: "ghcr.io/goauthentik/server:2023.2.2"
           imagePullPolicy: "IfNotPresent"
           args: ["worker"]
           env:            
