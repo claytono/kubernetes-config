@@ -7,7 +7,6 @@ metadata:
     metallb.universe.tf/allow-shared-ip: channels
 spec:
   type: LoadBalancer
-  loadBalancerIP: 172.19.74.23
   ports:
   - port: 8089
     targetPort: 8089
