@@ -10,7 +10,7 @@ mkdir tmp helm
 helm template external-dns external-dns \
   --repo https://kubernetes-sigs.github.io/external-dns/ \
   --include-crds \
-  --version 1.7.1 \
+  --version 1.12.1 \
   --values values.yaml \
   --output-dir tmp
 
