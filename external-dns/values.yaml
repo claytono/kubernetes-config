@@ -1,0 +1,16 @@
+---
+policy: sync
+txtPrefix: extdns-
+domainFilters:
+- k.oneill.net.
+env:
+- name: AWS_ACCESS_KEY_ID
+  valueFrom:
+    secretKeyRef:
+      name: external-dns-aws-creds
+      key: AWS_ACCESS_KEY_ID
+- name: AWS_SECRET_ACCESS_KEY
+  valueFrom:
+    secretKeyRef:
+      name: external-dns-aws-creds
+      key: AWS_SECRET_ACCESS_KEY
