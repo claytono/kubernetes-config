@@ -15,6 +15,7 @@ spec:
       labels:
         app: plexmediaserver
     spec:
+      hostNetwork: true
       containers:
       - name: plexmediaserver
         image: plexinc/pms-docker:plexpass
