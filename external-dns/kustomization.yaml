@@ -4,10 +4,11 @@ kind: Kustomization
 namespace: kube-system
 
 resources:
- - deployment.yaml
- - external-dns-clusterrole.yaml
- - external-dns-serviceaccount.yaml
- - external-dns-clusterrolebinding.yaml
+ - helm/templates/deployment.yaml
+ - helm/templates/service.yaml
+ - helm/templates/clusterrole.yaml
+ - helm/templates/serviceaccount.yaml
+ - helm/templates/clusterrolebinding.yaml
 
 commonLabels:
   app: external-dns
