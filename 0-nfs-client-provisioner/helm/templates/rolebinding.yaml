@@ -1,0 +1,19 @@
+---
+# Source: nfs-subdir-external-provisioner/templates/rolebinding.yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  labels:
+    chart: nfs-subdir-external-provisioner-4.0.18
+    heritage: Helm
+    app: nfs-subdir-external-provisioner
+    release: nfs-subdir-external-provisioner
+  name: leader-locking-nfs-subdir-external-provisioner
+subjects:
+  - kind: ServiceAccount
+    name: nfs-subdir-external-provisioner
+    namespace: default
+roleRef:
+  kind: Role
+  name: leader-locking-nfs-subdir-external-provisioner
+  apiGroup: rbac.authorization.k8s.io
