@@ -1,0 +1,15 @@
+---
+# Source: nfs-subdir-external-provisioner/templates/role.yaml
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  labels:
+    chart: nfs-subdir-external-provisioner-4.0.18
+    heritage: Helm
+    app: nfs-subdir-external-provisioner
+    release: nfs-subdir-external-provisioner
+  name: leader-locking-nfs-subdir-external-provisioner
+rules:
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
