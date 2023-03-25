@@ -5,6 +5,8 @@ controller:
   resources:
     limits:
       memory: 256Mi
+  flags:
+    on-by-default: true
 dashboard:
   replicaCount: 1
   resources:
