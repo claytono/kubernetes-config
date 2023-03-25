@@ -7,7 +7,7 @@ cd "$BASEDIR"
 
 REPO=https://charts.fairwinds.com/stable
 NAME=goldilocks
-VERSION=6.1.3
+VERSION=6.5.1
 
 if [ ! -f values.yaml ]; then
   touch values.yaml

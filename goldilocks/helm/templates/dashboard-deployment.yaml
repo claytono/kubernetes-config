@@ -6,7 +6,7 @@ metadata:
   name: goldilocks-dashboard
   labels:
     app.kubernetes.io/name: goldilocks
-    helm.sh/chart: goldilocks-6.1.3
+    helm.sh/chart: goldilocks-6.5.1
     app.kubernetes.io/instance: goldilocks
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: dashboard
@@ -29,7 +29,7 @@ spec:
         {}
       containers:
         - name: goldilocks
-          image: "us-docker.pkg.dev/fairwinds-ops/oss/goldilocks:v4.3.3"
+          image: "us-docker.pkg.dev/fairwinds-ops/oss/goldilocks:v4.6.3"
           imagePullPolicy: Always
           command:
             - /goldilocks
