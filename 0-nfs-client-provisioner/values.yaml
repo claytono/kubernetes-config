@@ -1,0 +1,14 @@
+---
+image:
+  tag: v4.0.18
+nfs:
+  server: fs2.oneill.net
+  path: /volume1/k8s-pv
+  volumeName: nfs-client-root
+storageClass:
+  name: nfs
+  provisionerName: nfs
+  defaultClass: true
+  archiveOnDelete: false
+  onDelete: retain
+  pathPattern: "${.PVC.namespace}-${.PVC.name}"
