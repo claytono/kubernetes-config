@@ -1,0 +1,97 @@
+---
+# Source: metallb/templates/controller.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metallb-controller
+  labels:
+    helm.sh/chart: metallb-0.13.9
+    app.kubernetes.io/name: metallb
+    app.kubernetes.io/instance: metallb
+    app.kubernetes.io/version: "v0.13.9"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: controller
+spec:
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: metallb
+      app.kubernetes.io/instance: metallb
+      app.kubernetes.io/component: controller
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "7472"
+      labels:
+        app.kubernetes.io/name: metallb
+        app.kubernetes.io/instance: metallb
+        app.kubernetes.io/component: controller
+    spec:
+      serviceAccountName: metallb-controller
+      terminationGracePeriodSeconds: 0
+      securityContext:
+        fsGroup: 65534
+        runAsNonRoot: true
+        runAsUser: 65534
+      containers:
+      - name: controller
+        image: quay.io/metallb/controller:v0.13.9
+        args:
+        - --port=7472
+        - --log-level=info
+        - --cert-service-name=metallb-webhook-service
+        env:
+        - name: METALLB_ML_SECRET_NAME
+          value: metallb-memberlist
+        - name: METALLB_DEPLOYMENT
+          value: metallb-controller
+        ports:
+        - name: monitoring
+          containerPort: 7472
+        - containerPort: 9443
+          name: webhook-server
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /tmp/k8s-webhook-server/serving-certs
+          name: cert
+          readOnly: true
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: monitoring
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /metrics
+            port: monitoring
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+      nodeSelector:
+        "kubernetes.io/os": linux
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+        operator: Exists
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/control-plane
+        operator: Exists
+      volumes:
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: webhook-server-cert
