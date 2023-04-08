@@ -1,0 +1,111 @@
+---
+# Source: metallb/templates/speaker.yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: metallb-speaker
+  labels:
+    helm.sh/chart: metallb-0.13.9
+    app.kubernetes.io/name: metallb
+    app.kubernetes.io/instance: metallb
+    app.kubernetes.io/version: "v0.13.9"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: speaker
+spec:
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: metallb
+      app.kubernetes.io/instance: metallb
+      app.kubernetes.io/component: speaker
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "7472"
+      labels:
+        app.kubernetes.io/name: metallb
+        app.kubernetes.io/instance: metallb
+        app.kubernetes.io/component: speaker
+    spec:
+      serviceAccountName: metallb-speaker
+      terminationGracePeriodSeconds: 0
+      hostNetwork: true
+      volumes:
+        - name: memberlist
+          secret:
+            secretName: metallb-memberlist
+            defaultMode: 420
+      containers:
+      - name: speaker
+        image: quay.io/metallb/speaker:v0.13.9
+        args:
+        - --port=7472
+        - --log-level=info
+        env:
+        - name: METALLB_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: METALLB_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: METALLB_ML_BIND_ADDR
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: METALLB_ML_LABELS
+          value: "app.kubernetes.io/name=metallb,app.kubernetes.io/component=speaker"
+        - name: METALLB_ML_BIND_PORT
+          value: "7946"
+        - name: METALLB_ML_SECRET_KEY_PATH
+          value: "/etc/ml_secret_key"
+        ports:
+        - name: monitoring
+          containerPort: 7472
+        - name: memberlist-tcp
+          containerPort: 7946
+          protocol: TCP
+        - name: memberlist-udp
+          containerPort: 7946
+          protocol: UDP
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: monitoring
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /metrics
+            port: monitoring
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+            add:
+            - NET_RAW
+        volumeMounts:
+          - name: memberlist 
+            mountPath: /etc/ml_secret_key
+      nodeSelector:
+        "kubernetes.io/os": linux
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+        operator: Exists
+      - key: node-role.kubernetes.io/control-plane
+        effect: NoSchedule
+        operator: Exists
