@@ -17,6 +17,7 @@ spec:
   - 172.19.74.20/32
   - 172.19.74.21/32
   - 172.19.74.22/32
+  - 172.19.74.23/32
   autoAssign: false
 ---
 apiVersion: metallb.io/v1beta1

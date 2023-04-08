@@ -3,10 +3,11 @@ kind: Service
 metadata:
   name: pihole-dns-tcp
   annotations:
-    metallb.universe.tf/allow-shared-ip: plexmediaserver
+    metallb.universe.tf/allow-shared-ip: pihole
 spec:
   type: LoadBalancer
-  loadBalancerIP: 172.19.74.21
+  loadBalancerIP: 172.19.74.23
+  externalTrafficPolicy: Local
   ports:
   - name: pihole-dns-tcp
     protocol: TCP
