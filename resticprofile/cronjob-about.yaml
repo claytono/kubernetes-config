@@ -14,25 +14,25 @@ spec:
         spec:
           restartPolicy: OnFailure
           containers:
-          - name: rclone
-            command:
-              - /run-rclone.sh
-              - about
-              - "gsc:"
-            image: ghcr.io/claytono/rclone:latest
-            imagePullPolicy: Always
-            env:
-            - name: PUSH_GATEWAY
-              value: https://pushgateway.k.oneill.net
-            - name: INSTANCE
-              value: total
-            volumeMounts:
-            - mountPath: /root/.config/rclone
-              name: rclone-config
+            - name: rclone
+              command:
+                - /run-rclone.sh
+                - about
+                - "gsc:"
+              image: ghcr.io/claytono/rclone:latest
+              imagePullPolicy: Always
+              env:
+                - name: PUSH_GATEWAY
+                  value: https://pushgateway.k.oneill.net
+                - name: INSTANCE
+                  value: total
+              volumeMounts:
+                - mountPath: /root/.config/rclone
+                  name: rclone-config
           volumes:
-          - name: rclone-config
-            secret:
-              secretName: resticprofile-rclone-config
-              items:
-              - key: rclone-config-secret.txt
-                path: rclone.conf
+            - name: rclone-config
+              secret:
+                secretName: resticprofile-rclone-config
+                items:
+                  - key: rclone-config-secret.txt
+                    path: rclone.conf

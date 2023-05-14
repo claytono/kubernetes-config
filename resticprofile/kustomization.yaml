@@ -3,18 +3,19 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
- - cronjob-about.yaml
- - cronjob-default.yaml
- - cronjob-copy-main.yaml
- - pvc.yaml
+  - cronjob-about.yaml
+  - cronjob-default.yaml
+  - cronjob-azure.yaml
+  - cronjob-copy-main.yaml
+  - pvc.yaml
 
 commonLabels:
   app: resticprofile
 
 configMapGenerator:
- - name: resticprofile-config
-   files:
-     - profiles.yaml
+  - name: resticprofile-config
+    files:
+      - profiles.yaml
 
 secretGenerator:
   - name: resticprofile
@@ -22,5 +23,5 @@ secretGenerator:
     type: Opaque
   - name: resticprofile-rclone-config
     files:
-     - rclone-config-secret.txt
+      - rclone-config-secret.txt
     type: Opaque
