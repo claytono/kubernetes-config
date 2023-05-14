@@ -1,9 +1,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: resticprofile-copy-main
+  name: resticprofile-azure
 spec:
-  schedule: "0 * * * *"
+  schedule: "4 */4 * * *"
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   jobTemplate:
@@ -11,7 +11,7 @@ spec:
       template:
         metadata:
           labels:
-            resticprofile: "copy-main"
+            resticprofile: "azure"
           annotations:
             prometheus.io/scrape: "true"
             prometheus.io/path: "/metrics"
@@ -28,18 +28,15 @@ spec:
                   name: scratch
           containers:
           - name: resticprofile
-            securityContext:
-              runAsUser: 10007
-              runAsGroup: 10007
             command:
               - resticprofile
               - -c
               - /resticprofile-config/profiles.yaml
               - -n
-              - copy-main
+              - azure
               - --lock-wait
               - 1h
-              - copy
+              - backup
             image: creativeprojects/resticprofile
             imagePullPolicy: IfNotPresent
             env:
@@ -58,10 +55,6 @@ spec:
                   secretKeyRef:
                     name: resticprofile
                     key: RESTIC_PASSWORD
-              - name: RUN_ID
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.name
             volumeMounts:
             - mountPath: /rclone-config
               name: rclone-config
@@ -71,8 +64,15 @@ spec:
               name: scratch
             - mountPath: /cache
               name: cache
-            - mountPath: /source/backups/restic/repos
+            - mountPath: /source/k8s-pv
+              name: k8s-pv
+              readOnly: true
+            - mountPath: /source/backups
               name: backups
+              readOnly: true
+            - mountPath: /source/shared
+              name: shared
+              readOnly: true
           volumes:
           - name: rclone-config
             secret:
@@ -87,8 +87,19 @@ spec:
             emptyDir: {}
           - name: cache
             persistentVolumeClaim:
-              claimName: resticprofile-cache-copy
+              claimName: resticprofile-cache-synology
           - nfs:
               server: fs2.oneill.net
-              path: /volume2/backups/restic/repos
+              path: /volume1/k8s-pv
+              readOnly: true
+            name: k8s-pv
+          - nfs:
+              server: fs2.oneill.net
+              path: /volume2/backups
+              readOnly: true
             name: backups
+          - nfs:
+              server: fs2.oneill.net
+              path: /volume2/shared
+              readOnly: true
+            name: shared
