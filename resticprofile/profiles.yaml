@@ -72,6 +72,7 @@ azure:
     RCLONE_RC: true
     RCLONE_RC_ADDR: '0.0.0.0:5572'
     RCLONE_RC_ENABLE_METRICS: true
+    RCLONE_FAST_LIST:  true
     RESTIC_PROGRESS_FPS: "0.1"
     RESTIC_CACHE_DIR: "/cache"
 
