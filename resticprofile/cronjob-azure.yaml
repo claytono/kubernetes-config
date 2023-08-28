@@ -3,9 +3,10 @@ kind: CronJob
 metadata:
   name: resticprofile-azure
 spec:
-  schedule: "4 */4 * * *"
+  schedule: "4 18 * * *"
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
+  failedJobsHistoryLimit: 3
   jobTemplate:
     spec:
       template:

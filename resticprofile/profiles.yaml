@@ -22,6 +22,7 @@ default:
       - /source/backups/arq
       - /source/backups/restic
       - /source/k8s-pv/default-resticprofile-cache*
+      - /source/k8s-pv/default-prometheus-data/
       - /source/shared/video/tv
       - /source/shared/video/channels
       - /source/shared/video/movies
@@ -83,6 +84,7 @@ azure:
       - /source/backups/arq
       - /source/backups/restic
       - /source/k8s-pv/default-resticprofile-cache*
+      - /source/k8s-pv/default-prometheus-data/
       - /source/shared/video/tv
       - /source/shared/video/channels
       - /source/shared/video/movies
@@ -137,7 +139,7 @@ copy-main:
     RESTIC_CACHE_DIR: "/cache"
 
   copy:
-    repository: rclone:gsc:restic
+    repository: "rclone:azc:"
     run-before: *run_before
     run-finally: *run_finally
   forget:
