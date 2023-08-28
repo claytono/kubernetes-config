@@ -4,7 +4,6 @@ kind: Kustomization
 
 resources:
   - cronjob-about.yaml
-  - cronjob-default.yaml
   - cronjob-azure.yaml
   - cronjob-copy-main.yaml
   - pvc.yaml

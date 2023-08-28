@@ -10,7 +10,6 @@ uuidgen >"$(pwd)/.tmp/uuid"
 
 docker run -it --rm \
     --env-file secret.txt \
-    -p 5572:5572 \
     -e RCLONE_RC_NO_AUTH=true \
     -v "$(pwd)/.cache:/cache" \
     -v "$(pwd)/.tmp:/tmp" \
