@@ -20,6 +20,8 @@ spec:
       - name: plexmediaserver
         image: plexinc/pms-docker:plexpass
         imagePullPolicy: Always
+        securityContext:
+          privileged: true
         livenessProbe:
           exec:
             command: [ "dd", "if=/dev/zero", "of=/config/health-check", "bs=1M", "count=1" ]
