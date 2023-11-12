@@ -1,0 +1,22 @@
+---
+# Source: node-feature-discovery/templates/role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: release-name-node-feature-discovery-worker
+  namespace: node-feature-discovery
+  labels:
+    helm.sh/chart: node-feature-discovery-0.14.3
+    app.kubernetes.io/name: node-feature-discovery
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "v0.14.3"
+    app.kubernetes.io/managed-by: Helm
+rules:
+- apiGroups:
+  - nfd.k8s-sigs.io
+  resources:
+  - nodefeatures
+  verbs:
+  - create
+  - get
+  - update

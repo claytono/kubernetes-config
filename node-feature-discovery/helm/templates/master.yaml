@@ -1,0 +1,114 @@
+---
+# Source: node-feature-discovery/templates/master.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  release-name-node-feature-discovery-master
+  namespace: node-feature-discovery
+  labels:
+    helm.sh/chart: node-feature-discovery-0.14.3
+    app.kubernetes.io/name: node-feature-discovery
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "v0.14.3"
+    app.kubernetes.io/managed-by: Helm
+    role: master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: node-feature-discovery
+      app.kubernetes.io/instance: release-name
+      role: master
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: node-feature-discovery
+        app.kubernetes.io/instance: release-name
+        role: master
+    spec:
+      serviceAccountName: release-name-node-feature-discovery
+      enableServiceLinks: false
+      securityContext:
+        {}
+      containers:
+        - name: master
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+          image: "registry.k8s.io/nfd/node-feature-discovery:v0.14.3"
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - "/usr/bin/grpc_health_probe"
+              - "-addr=:8080"
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            exec:
+              command:
+              - "/usr/bin/grpc_health_probe"
+              - "-addr=:8080"
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 10
+          ports:
+          - containerPort: 8080
+            name: grpc
+          - containerPort: 8081
+            name: metrics
+          env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          command:
+            - "nfd-master"
+          resources:
+            {}
+          args:
+            - "-port=8080"
+            ## By default, disable crd controller for other than the default instances
+            - "-crd-controller=true"
+            - "-metrics=8081"
+          volumeMounts:
+            - name: nfd-master-conf
+              mountPath: "/etc/kubernetes/node-feature-discovery"
+              readOnly: true
+      volumes:
+        - name: nfd-master-conf
+          configMap:
+            name: release-name-node-feature-discovery-master-conf
+            items:
+              - key: nfd-master.conf
+                path: nfd-master.conf
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - preference:
+              matchExpressions:
+              - key: node-role.kubernetes.io/master
+                operator: In
+                values:
+                - ""
+            weight: 1
+          - preference:
+              matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: In
+                values:
+                - ""
+            weight: 1
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Equal
+          value: ""
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Equal
+          value: ""
