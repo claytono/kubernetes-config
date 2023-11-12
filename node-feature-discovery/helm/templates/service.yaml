@@ -1,0 +1,25 @@
+---
+# Source: node-feature-discovery/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-name-node-feature-discovery-master
+  namespace: node-feature-discovery
+  labels:
+    helm.sh/chart: node-feature-discovery-0.14.3
+    app.kubernetes.io/name: node-feature-discovery
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "v0.14.3"
+    app.kubernetes.io/managed-by: Helm
+    role: master
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: grpc
+      protocol: TCP
+      name: grpc
+  selector:
+    app.kubernetes.io/name: node-feature-discovery
+    app.kubernetes.io/instance: release-name
+    role: master

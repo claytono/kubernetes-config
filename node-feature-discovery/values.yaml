@@ -1,0 +1,7 @@
+# Tolerate master taint for nfd workers so we get labels for the apiserver.  We
+# don't need this, but it's interesting.
+worker:
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
+    operator: Equal
