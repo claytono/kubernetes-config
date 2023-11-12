@@ -1,0 +1,30 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ezshare-sync
+spec:
+  schedule: "*/10 * * * *"
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: ezshare-sync
+            image: ghcr.io/claytono/ezshare-sync:latest
+            env:
+            - name: whiteList
+              value: ".log|.crc|.tgt|.dat|.edf|DATALOG|SETTINGS"
+            - name: mode
+              value: "soft"
+            volumeMounts:
+            - name: cpap-data
+              mountPath: /ezshare-data
+          volumes:
+          - name: cpap-data
+            nfs:
+              server: fs2.oneill.net
+              path: /volume1/drive/cpap-data
+          restartPolicy: Never
