@@ -11,6 +11,9 @@ spec:
     spec:
       template:
         spec:
+          priorityClassName: high-priority
+          nodeSelector:
+            feature.node.kubernetes.io/usb-ff_148f_7601.present: "true"
           containers:
           - name: ezshare-sync
             image: ghcr.io/claytono/ezshare-sync:latest
