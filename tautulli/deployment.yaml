@@ -3,8 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tautulli
-  labels:
-    app: tautulli
 spec:
   replicas: 1
   strategy:
@@ -13,9 +11,6 @@ spec:
     matchLabels:
       app: tautulli
   template:
-    metadata:
-      labels:
-        app: tautulli
     spec:
       containers:
       - name: tautulli

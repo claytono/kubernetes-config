@@ -1,0 +1,38 @@
+---
+# Source: homepage/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage
+  labels:
+    helm.sh/chart: homepage-1.2.3
+    app.kubernetes.io/name: homepage
+    app.kubernetes.io/instance: homepage
+    app.kubernetes.io/version: "v0.6.10"
+    app.kubernetes.io/managed-by: Helm
+    
+data:
+  bookmarks.yaml: |
+    - Developer:
+      - Github:
+        - abbr: GH
+          href: https://github.com/
+  docker.yaml: ""
+  kubernetes.yaml: |
+    mode: cluster
+  services.yaml: |
+    - Media: null
+  settings.yaml: ""
+  widgets.yaml: |
+    - kubernetes:
+        cluster:
+          cpu: true
+          label: cluster
+          memory: true
+          show: true
+          showLabel: true
+        nodes:
+          cpu: true
+          memory: true
+          show: true
+          showLabel: true

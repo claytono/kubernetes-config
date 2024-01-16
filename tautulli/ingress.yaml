@@ -8,6 +8,11 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
     cert-manager.io/cluster-issuer: "letsencrypt"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Tautulli"
+    gethomepage.dev/description: "Plex Monitoring and Statistics"
+    gethomepage.dev/group: "Media"
+    gethomepage.dev/icon: "tautulli.png"
 spec:
   tls:
     - hosts:
