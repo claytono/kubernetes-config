@@ -12,6 +12,11 @@ metadata:
     app.kubernetes.io/component: dashboard
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+    gethomepage.dev/description: VPA generation and web UI
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Monitoring
+    gethomepage.dev/icon: mdi-eye-outline
+    gethomepage.dev/name: Goldilocks
 spec:
   ingressClassName: nginx
   tls:
