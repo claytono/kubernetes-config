@@ -1,0 +1,68 @@
+---
+# Source: descheduler/templates/cronjob.yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: descheduler
+  namespace: default
+  labels:
+    app.kubernetes.io/name: descheduler
+    helm.sh/chart: descheduler-0.26.0
+    app.kubernetes.io/instance: descheduler
+    app.kubernetes.io/version: "0.26.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  schedule: "17 7 * * *"
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: descheduler
+          annotations:
+            checksum/config: df346a66294de3461c4c553422a22366fc7036d9c782856710204d25a79d4020
+          labels:
+            app.kubernetes.io/name: descheduler
+            app.kubernetes.io/instance: descheduler
+        spec:
+          priorityClassName: system-cluster-critical
+          serviceAccountName: descheduler
+          restartPolicy: "Never"
+          containers:
+            - name: descheduler
+              image: "registry.k8s.io/descheduler/descheduler:v0.26.0"
+              imagePullPolicy: IfNotPresent
+              command:
+                - "/bin/descheduler"
+              args:
+                - "--policy-config-file"
+                - "/policy-dir/policy.yaml"
+                - "--v"
+                - "3"
+              livenessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /healthz
+                  port: 10258
+                  scheme: HTTPS
+                initialDelaySeconds: 3
+                periodSeconds: 10
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 256Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                privileged: false
+                readOnlyRootFilesystem: true
+                runAsNonRoot: true
+              volumeMounts:
+                - mountPath: /policy-dir
+                  name: policy-volume
+          volumes:
+          - name: policy-volume
+            configMap:
+              name: descheduler

@@ -1,0 +1,31 @@
+---
+# Source: descheduler/templates/clusterrole.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: descheduler
+  labels:
+    app.kubernetes.io/name: descheduler
+    helm.sh/chart: descheduler-0.26.0
+    app.kubernetes.io/instance: descheduler
+    app.kubernetes.io/version: "0.26.0"
+    app.kubernetes.io/managed-by: Helm
+rules:
+- apiGroups: ["events.k8s.io"]
+  resources: ["events"]
+  verbs: ["create", "update"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list", "delete"]
+- apiGroups: [""]
+  resources: ["pods/eviction"]
+  verbs: ["create"]
+- apiGroups: ["scheduling.k8s.io"]
+  resources: ["priorityclasses"]
+  verbs: ["get", "watch", "list"]
