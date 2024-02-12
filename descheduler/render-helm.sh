@@ -9,7 +9,7 @@ rm -rf helm tmp
 mkdir tmp helm
 helm template descheduler descheduler \
   --repo https://kubernetes-sigs.github.io/descheduler/ \
-  --version 0.26.0 \
+  --version 0.29.0 \
   --values values.yaml \
   --output-dir tmp
 

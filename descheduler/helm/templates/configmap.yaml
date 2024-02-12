@@ -7,14 +7,15 @@ metadata:
   namespace: default
   labels:
     app.kubernetes.io/name: descheduler
-    helm.sh/chart: descheduler-0.26.0
+    helm.sh/chart: descheduler-0.29.0
     app.kubernetes.io/instance: descheduler
-    app.kubernetes.io/version: "0.26.0"
+    app.kubernetes.io/version: "0.29.0"
     app.kubernetes.io/managed-by: Helm
 data:
   policy.yaml: |
     apiVersion: "descheduler/v1alpha1"
     kind: "DeschedulerPolicy"
+    maxNoOfPodsToEvictPerNode: 2
     strategies:
       LowNodeUtilization:
         enabled: true
@@ -28,6 +29,13 @@ data:
               cpu: 20
               memory: 20
               pods: 20
+      PodLifeTime:
+        enabled: true
+        params:
+          podLifeTime:
+            maxPodLifeTimeSeconds: 1209600
+            states:
+            - Running
       RemoveDuplicates:
         enabled: true
       RemovePodsHavingTooManyRestarts:
