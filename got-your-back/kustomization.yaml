@@ -1,0 +1,25 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+ - cronjob-full.yaml
+ - cronjob-incremental.yaml
+ - pvc.yaml
+
+commonLabels:
+  app: got-your-back
+
+configMapGenerator:
+  - name: run-script
+    files:
+      - run.sh
+
+secretGenerator:
+  - name: got-your-back-account
+    files:
+      - account.secret.json
+  - name: got-your-back-secret
+    env: secret.txt
+    type: Opaque
+
