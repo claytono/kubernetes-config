@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: got-your-back-incremental
+spec:
+  schedule: "13 */4 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: got-your-back
+            image: debian:stable-slim
+            command: ["/run.sh", "--fast-incremental"]
+            imagePullPolicy: Always
+            env:
+            - name: EMAIL_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  name: got-your-back-secret
+                  key: email
+            - name: PING_URL
+              valueFrom:
+                secretKeyRef:
+                  name: got-your-back-secret
+                  key: incremental_ping_url
+            volumeMounts:
+            - name: config
+              mountPath: "/config"
+            - name: config-source
+              mountPath: "/config-source/account.secret.json"
+              subPath: account.secret.json
+            - name: run-script
+              mountPath: "/run.sh"
+              subPath: run.sh
+            - name: got-your-back-data
+              mountPath: "/data"
+          volumes:
+          - name: config
+            emptyDir: {}
+          - name: config-source
+            secret:
+              secretName: got-your-back-account
+          - name: run-script
+            configMap:
+              name: run-script
+              defaultMode: 0755
+          - name: got-your-back-data
+            persistentVolumeClaim:
+              claimName: got-your-back-data
+          restartPolicy: OnFailure
