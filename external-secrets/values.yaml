@@ -1,0 +1,7 @@
+webhook:
+  certManager:
+    enabled: true
+    cert:
+      issuerRef:
+        name: my-ca-issuer
+        kind: ClusterIssuer

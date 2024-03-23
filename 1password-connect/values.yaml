@@ -1,0 +1,3 @@
+connect:
+  credentials: test # not used
+  serviceType: ClusterIP
