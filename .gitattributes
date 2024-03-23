@@ -6,3 +6,4 @@ secret*.txt filter=git-crypt diff=git-crypt
 *secret.json filter=git-crypt diff=git-crypt
 *secret.yml filter=git-crypt diff=git-crypt
 *secret.txt filter=git-crypt diff=git-crypt
+externalsecret*.yaml !filter !diff
