@@ -1,0 +1,22 @@
+---
+# Source: connect/templates/tests/health-check.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "connect-health-check"
+  namespace: 1password
+  labels:
+    helm.sh/chart: connect-1.15.0
+    app.kubernetes.io/name: connect
+    app.kubernetes.io/instance: connect
+    app.kubernetes.io/version: "1.7.2"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    helm.sh/hook: test
+    helm.sh/hook-weight: "1"
+spec:
+  restartPolicy: Never
+  containers:
+    - name: curl
+      image: curlimages/curl
+      command: ["curl", "http://onepassword-connect:8080/health"]

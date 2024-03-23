@@ -21,7 +21,8 @@ resources:
 - helm/templates/startupapicheck-rbac.yaml
 - helm/templates/webhook-validating-webhook.yaml
 - helm/templates/cainjector-serviceaccount.yaml
-- clusterissuer.yaml
+- letsencrypt.yaml
+- self-signed.yaml
 
 secretGenerator:
 - name: cert-manager
