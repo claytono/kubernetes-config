@@ -9,6 +9,7 @@ resources:
  - pvc.yaml
  - rbac.yaml
  - service.yaml
+ - externalsecret.yaml
 
 commonLabels:
   app: prometheus
@@ -18,8 +19,3 @@ configMapGenerator:
    files:
      - config/prometheus.yml
      - config/rules.yml
-
-secretGenerator:
-  - name: prometheus
-    env: secret.txt
-    type: Opaque

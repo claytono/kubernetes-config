@@ -54,7 +54,7 @@ scrape_configs:
       - netatmo-exporter:9210
 
 - job_name: 'hass'
-  bearer_token_file: /secrets/HASS_BEARER_TOKEN
+  bearer_token_file: /secrets/hass-bearer-token
   metrics_path: /api/prometheus
   static_configs:
     - targets:
