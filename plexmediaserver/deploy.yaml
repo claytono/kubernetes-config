@@ -73,7 +73,7 @@ spec:
             chapAuthDiscovery: false
             chapAuthSession: true
             secretRef:
-              name: plex-chap-secret
+              name: iscsi-chap-secret
         - name: transcode
           persistentVolumeClaim:
             claimName: plexmediaserver-transcode

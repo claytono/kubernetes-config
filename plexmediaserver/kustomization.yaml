@@ -17,8 +17,3 @@ secretGenerator:
   - name: plexmediaserver
     env: secret.txt
     type: Opaque
-  - name: plex-chap-secret
-    env: iscsi-secret.txt
-    type: kubernetes.io/iscsi-chap
-    options:
-      disableNameSuffixHash: true
