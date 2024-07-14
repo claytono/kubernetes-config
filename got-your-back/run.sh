@@ -1,8 +1,8 @@
 #!/bin/bash -xve
 
-VERSION=1.80
+VERSION=1.81
 ARCH=$(uname -m)
-URL="https://github.com/GAM-team/got-your-back/releases/download/v1.80/gyb-${VERSION}-linux-${ARCH}-glibc2.31.tar.xz"
+URL="https://github.com/GAM-team/got-your-back/releases/download/v${VERSION}/gyb-${VERSION}-linux-${ARCH}-glibc2.31.tar.xz"
 
 cd /tmp
 apt update
