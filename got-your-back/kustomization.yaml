@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
  - cronjob-full.yaml
  - cronjob-incremental.yaml
+ - externalsecret.yaml
  - pvc.yaml
 
 commonLabels:
@@ -14,12 +15,4 @@ configMapGenerator:
   - name: run-script
     files:
       - run.sh
-
-secretGenerator:
-  - name: got-your-back-account
-    files:
-      - account.secret.json
-  - name: got-your-back-secret
-    env: secret.txt
-    type: Opaque
 

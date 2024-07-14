@@ -15,22 +15,16 @@ spec:
             command: ["/run.sh"]
             imagePullPolicy: Always
             env:
-            - name: EMAIL_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  name: got-your-back-secret
-                  key: email
             - name: PING_URL
               valueFrom:
                 secretKeyRef:
-                  name: got-your-back-secret
+                  name: got-your-back
                   key: full_ping_url
             volumeMounts:
             - name: config
               mountPath: "/config"
             - name: config-source
-              mountPath: "/config-source/account.secret.json"
-              subPath: account.secret.json
+              mountPath: "/config-source"
             - name: run-script
               mountPath: "/run.sh"
               subPath: run.sh
@@ -41,7 +35,7 @@ spec:
             emptyDir: {}
           - name: config-source
             secret:
-              secretName: got-your-back-account
+              secretName: got-your-back
           - name: run-script
             configMap:
               name: run-script
