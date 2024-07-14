@@ -47,12 +47,6 @@ scrape_configs:
     - target_label: __address__
       replacement: blackbox-exporter:9115  # The blackbox exporter's real hostname:port.
 
-- job_name: 'netatmo'
-  scrape_interval: 90s
-  static_configs:
-    - targets:
-      - netatmo-exporter:9210
-
 - job_name: 'hass'
   bearer_token_file: /secrets/hass-bearer-token
   metrics_path: /api/prometheus
