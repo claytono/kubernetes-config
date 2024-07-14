@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: channels
+  name: channels-dvr
 spec:
   replicas: 1
   selector:
@@ -22,9 +22,12 @@ spec:
       - name: channels
         image: fancybits/channels-dvr:tve
         imagePullPolicy: Always
+#        command: ['sleep', 'infinity']
         env:
           - name: TZ
             value: "EST5EDT"
+          - name: CHANNELS_PORT
+            value: "8089"
         volumeMounts:
           - mountPath: "/channels-dvr"
             name: config
