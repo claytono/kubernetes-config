@@ -15,7 +15,17 @@ spec:
     spec:
       containers:
       - name: netatmo-exporter
-        image: ghcr.io/xperimental/netatmo-exporter:1.4.0
+        image: ghcr.io/xperimental/netatmo-exporter:2.0.1
+        env:
+          - name: NETATMO_EXPORTER_TOKEN_FILE
+            value: /data/token.json
         envFrom:
           - secretRef:
               name: netatmo-exporter
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: netatmo-exporter-data

@@ -6,11 +6,10 @@ namespace: default
 resources:
  - deploy.yaml
  - service.yaml
+ - ingress.yaml
+ - pvc.yaml
+ - externalsecret.yaml
 
 commonLabels:
   app: netatmo-exporter
 
-secretGenerator:
-  - name: netatmo-exporter
-    env: secret.txt
-    type: Opaque

@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: netatmo-exporter
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+spec:
+  ingressClassName: "nginx"
+  tls:
+    - hosts:
+      - "netatmo-exporter.k.oneill.net"
+      secretName: "netatmo-exporter-tls"
+  rules:
+    - host: "netatmo-exporter.k.oneill.net"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: netatmo-exporter
+                port:
+                  number: 9210
