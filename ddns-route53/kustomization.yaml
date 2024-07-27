@@ -4,14 +4,8 @@ kind: Kustomization
 
 resources:
  - deploy.yaml
+ - externalsecret.yaml
 
 commonLabels:
   app: ddns-route53
 
-secretGenerator:
-  - name: ddns-route53-oneill
-    env: secret-oneill.txt
-    type: Opaque
-  - name: ddns-route53-fnord
-    env: secret-fnord.txt
-    type: Opaque

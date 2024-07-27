@@ -12,7 +12,7 @@ spec:
       name: ddns-route53
     spec:
       containers:
-      - name: oneill
+      - name: ddns-route53
         image: ghcr.io/crazy-max/ddns-route53
         args:
           - '--schedule=*/5 * * * *'
