@@ -15,7 +15,17 @@ spec:
     spec:
       containers:
       - name: netatmo-wunderground-agent
-        image: dvorak/netatmo-wunderground-agent:latest
+        image: brbeaird/netatmo-wunderground-agent
+        env:
+          - name: netamo_tokenFileDirectory
+            value: /data
         envFrom:
           - secretRef:
               name: netatmo-wunderground-agent
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: netatmo-exporter-data
