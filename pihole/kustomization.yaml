@@ -10,11 +10,8 @@ resources:
  - service-dns-tcp.yaml
  - service-dns-udp.yaml
  - ingress.yaml
+ - externalsecret.yaml
 
 commonLabels:
   app: pihole
 
-secretGenerator:
-  - name: pihole
-    env: secret.txt
-    type: Opaque
