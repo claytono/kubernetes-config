@@ -11,8 +11,6 @@ ingester:
   chunk_retain_period: 1m
   lifecycler:
     ring:
-      kvstore:
-        store: inmemory
       replication_factor: 1
   max_transfer_retries: 0
   wal:
@@ -24,6 +22,9 @@ limits_config:
   reject_old_samples: true
   reject_old_samples_max_age: 168h
   retention_period: 30d
+memberlist:
+  join_members:
+  - 'loki-memberlist'
 schema_config:
   configs:
   - from: "2020-10-24"
@@ -34,6 +35,7 @@ schema_config:
     schema: v11
     store: boltdb-shipper
 server:
+  grpc_listen_port: 9095
   http_listen_port: 3100
 storage_config:
   boltdb_shipper:

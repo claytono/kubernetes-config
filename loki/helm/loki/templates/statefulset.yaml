@@ -7,7 +7,7 @@ metadata:
   namespace: default
   labels:
     app: loki
-    chart: loki-2.11.1
+    chart: loki-2.16.0
     release: loki
     heritage: Helm
   annotations:
@@ -29,7 +29,7 @@ spec:
         name: loki
         release: loki
       annotations:
-        checksum/config: 82d8e50d01a55c3350e4896815e2c296f6912479fc4abd2e2ade10deeb9c029d
+        checksum/config: 0d1bf922013941d83e96f6269a97cf7e4711572f47d72112a4c2f9bf7a1c65ce
         prometheus.io/port: http-metrics
         prometheus.io/scrape: "true"
     spec:
@@ -43,7 +43,7 @@ spec:
         []
       containers:
         - name: loki
-          image: "grafana/loki:2.5.0"
+          image: "grafana/loki:2.6.1"
           imagePullPolicy: IfNotPresent
           args:
             - "-config.file=/etc/loki/loki.yaml"
@@ -58,6 +58,12 @@ spec:
           ports:
             - name: http-metrics
               containerPort: 3100
+              protocol: TCP
+            - name: grpc
+              containerPort: 9095
+              protocol: TCP
+            - name: memberlist-port
+              containerPort: 7946
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -90,6 +96,8 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: storage
+      labels:
+        {}
       annotations:
         {}
     spec:

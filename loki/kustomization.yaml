@@ -8,15 +8,10 @@ resources:
  - helm/loki/templates/statefulset.yaml
  - helm/loki/templates/serviceaccount.yaml
  - helm/loki/templates/service.yaml
+ - helm/loki/templates/service-memberlist.yaml
 
 commonLabels:
   app: loki
-
-#configMapGenerator:
-# - name: prometheus
-#   files:
-#     - config/prometheus.yml
-#     - config/rules.yml
 
 secretGenerator:
   - name: loki

@@ -7,9 +7,9 @@ metadata:
   namespace: default
   labels:
     app: loki
-    chart: loki-2.11.1
-    heritage: Helm
+    chart: loki-2.16.0
     release: loki
+    heritage: Helm
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role

@@ -7,7 +7,7 @@ cd "$BASEDIR"
 
 rm -rf helm
 helm template loki loki \
-  --version 2.11.1 \
+  --version 2.16.0 \
   --repo https://grafana.github.io/helm-charts \
   --values values.yaml \
   --output-dir helm
