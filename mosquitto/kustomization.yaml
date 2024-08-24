@@ -5,6 +5,7 @@ namespace: default
 
 resources:
  - deploy.yaml
+ - externalsecret.yaml
  - pvc.yaml
  - service.yaml
 
@@ -14,10 +15,7 @@ commonLabels:
 configMapGenerator:
  - name: mosquitto
    files:
-     - mosquitto.conf 
-
-secretGenerator:
-  - name: mosquitto
-    files:
-      - passwd=secret.txt
-    type: Opaque
+    - mosquitto.conf
+ - name: create-password-file-script
+   files:
+    - create-password-file.sh
