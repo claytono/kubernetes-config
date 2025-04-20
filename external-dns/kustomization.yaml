@@ -9,11 +9,7 @@ resources:
  - helm/templates/clusterrole.yaml
  - helm/templates/serviceaccount.yaml
  - helm/templates/clusterrolebinding.yaml
+ - externalsecret.yaml
 
 commonLabels:
   app: external-dns
-
-secretGenerator:
-  - name: external-dns
-    env: secret.txt
-    type: Opaque
