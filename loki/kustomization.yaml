@@ -18,3 +18,12 @@ secretGenerator:
     files:
       - loki.yaml=helm/loki.dist.yaml
     type: Opaque
+
+patches:
+  - target:
+      kind: StatefulSet
+      name: loki
+    patch: |-
+      - op: replace
+        path: /spec/template/metadata/annotations/prometheus.io~1port
+        value: "3100"
