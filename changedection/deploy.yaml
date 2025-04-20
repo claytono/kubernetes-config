@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: changedetection
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: changedetection
+  template:
+    metadata:
+      name: changedetection
+      labels:
+        app: changedetection
+    spec:
+      containers:
+      - name: changedetection
+        image: dgtlmoon/changedetection.io:latest
+        ports:
+        - name: changedetection
+          containerPort: 5000
+        volumeMounts:
+        - name: changedetection-data
+          mountPath: /datastore
+        env:
+        - name: PLAYWRIGHT_DRIVER_URL
+          value: "ws://localhost:3000/"
+      - name: browserless
+        image: dgtlmoon/sockpuppetbrowser:latest
+        resources:
+          limits:
+            memory: "2Gi"
+          requests:
+            cpu: "500m"
+            memory: "2Gi"
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: shm
+          mountPath: /dev/shm
+        livenessProbe:
+          httpGet:
+            path: /stats
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /stats
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+      volumes:
+      - name: changedetection-data
+        persistentVolumeClaim:
+          claimName: changedetection-data
+      - name: shm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 2Gi

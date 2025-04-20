@@ -1,0 +1,30 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: changedetection
+  labels:
+    k8s-app: changedetection
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "ChangeDetection"
+    gethomepage.dev/group: "Miscellanous"
+    gethomepage.dev/icon: "changedetection"
+spec:
+  ingressClassName: "nginx"
+  tls:
+    - hosts:
+      - "changedetection.k.oneill.net"
+      secretName: "changedetection-tls"
+  rules:
+    - host: "changedetection.k.oneill.net"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: changedetection
+                port:
+                  number: 5000
