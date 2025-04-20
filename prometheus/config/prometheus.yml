@@ -26,6 +26,14 @@ scrape_configs:
       - k4.oneill.net:9100
       - k5.oneill.net:9100
 
+# scrape szamar via http on port 10445
+- job_name: 'hwinfo gaming pc'
+  static_configs:
+    - targets:
+      - szamar.oneill.net:10445
+      - szamar.oneill.net:4445
+      - szamar.oneill.net:9835
+
 - job_name: 'blackbox'
   metrics_path: /probe
   params:
