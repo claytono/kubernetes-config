@@ -214,6 +214,9 @@ scrape_configs:
   - source_labels: [__meta_kubernetes_service_name]
     action: replace
     target_label: kubernetes_name
+  - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape_interval]
+    action: replace
+    target_label: scrape_interval
 
 # Example scrape config for probing services via the Blackbox Exporter.
 #
