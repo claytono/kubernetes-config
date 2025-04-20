@@ -13,3 +13,15 @@ resources:
 
 commonLabels:
   app: external-dns
+
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: external-dns
+      annotations:
+        reloader.stakater.com/auto: "true"
+  target:
+    kind: Deployment
+    name: external-dns

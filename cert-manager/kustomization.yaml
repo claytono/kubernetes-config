@@ -26,3 +26,35 @@ resources:
 - letsencrypt.yaml
 - self-signed.yaml
 - externalsecret.yaml
+
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: cert-manager
+      annotations:
+        reloader.stakater.com/auto: "true"
+  target:
+    kind: Deployment
+    name: cert-manager
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: cert-manager-webhook
+      annotations:
+        reloader.stakater.com/auto: "true"
+  target:
+    kind: Deployment
+    name: cert-manager-webhook
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: cert-manager-cainjector
+      annotations:
+        reloader.stakater.com/auto: "true"
+  target:
+    kind: Deployment
+    name: cert-manager-cainjector
