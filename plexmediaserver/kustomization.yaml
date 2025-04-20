@@ -9,11 +9,7 @@ resources:
  - ingress.yaml
  - pvc.yaml
  - service.yaml
+ - externalsecret.yaml
 
 commonLabels:
   app: plexmediaserver
-
-secretGenerator:
-  - name: plexmediaserver
-    env: secret.txt
-    type: Opaque
