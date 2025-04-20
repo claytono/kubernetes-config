@@ -7,11 +7,7 @@ namePrefix: awair-
 resources:
  - deploy.yaml
  - service.yaml
+ - externalsecret.yaml
 
 commonLabels:
   app: awair-exporter
-
-secretGenerator:
-  - name: exporter
-    env: secret.txt
-    type: Opaque
