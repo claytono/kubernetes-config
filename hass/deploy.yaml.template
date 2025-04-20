@@ -30,9 +30,22 @@ spec:
           mountPath: /config-map
         - name: config
           mountPath: /config
+      - name: ssh-setup
+        image: busybox
+        command:
+          - sh
+          - -c
+          - |
+            mkdir -p /root/.ssh
+            cp /ssh-key/id_ed25519 /root/.ssh/id_ed25519
+            chmod 600 /root/.ssh/id_ed25519
+            chmod 700 /root/.ssh
+        volumeMounts:
+        - name: ssh-key
+          mountPath: /ssh-key
       containers:
       - name: hass
-        image: ghcr.io/home-assistant/home-assistant:2024.1
+        image: ghcr.io/home-assistant/home-assistant:2024.8
         imagePullPolicy: Always
         env:
           - name: MYSQL_PASSWORD
@@ -47,6 +60,9 @@ spec:
           mountPath: /config
         - name: config-map
           mountPath: /config-map
+        - name: ssh-key
+          mountPath: /root/.ssh/
+          readOnly: true
       volumes:
       - name: config-map
         configMap:
@@ -54,5 +70,11 @@ spec:
       - name: config
         persistentVolumeClaim:
           claimName: hass-config
+      - name: ssh-key
+        secret:
+          secretName: hass-ssh-key
+          defaultMode: 0400
+          items:
+            - key: ssh-privatekey
+              path: id_ed25519
 # vi: ft=yaml
-
