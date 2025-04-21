@@ -42,26 +42,18 @@ spec:
               - copy
             image: creativeprojects/resticprofile
             imagePullPolicy: IfNotPresent
+            envFrom:
+            - secretRef:
+                name: resticprofile
+            - secretRef:
+                name: resticprofile-rclone
             env:
-              - name: RESTIC_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: resticprofile
-                    key: RESTIC_PASSWORD
-              - name: RESTIC_FROM_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: resticprofile
-                    key: RESTIC_PASSWORD
-              - name: RESTIC_PASSWORD2
-                valueFrom:
-                  secretKeyRef:
-                    name: resticprofile
-                    key: RESTIC_PASSWORD
               - name: RUN_ID
                 valueFrom:
                   fieldRef:
                     fieldPath: metadata.name
+              - name: RCLONE_CONFIG
+                value: /rclone-config/rclone.conf
             volumeMounts:
             - mountPath: /rclone-config
               name: rclone-config
@@ -75,11 +67,11 @@ spec:
               name: backups
           volumes:
           - name: rclone-config
-            secret:
-              secretName: resticprofile-rclone-config
+            configMap:
+              name: rclone-template
               items:
-              - key: rclone-config-secret.txt
-                path: rclone.conf
+                - key: rclone.conf.template
+                  path: rclone.conf
           - name: resticprofile-config
             configMap:
               name: resticprofile-config

@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: rclone-about
 spec:
-  schedule: "*/10 * * * * "
+  schedule: "*/10 * * * *"
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   jobTemplate:
@@ -16,23 +16,28 @@ spec:
           containers:
             - name: rclone
               command:
-                - /run-rclone.sh
-                - about
-                - "gsc:"
+                - rclone
+                - lsd
+                - "azc:"
               image: ghcr.io/claytono/rclone:latest
               imagePullPolicy: Always
+              envFrom:
+              - secretRef:
+                  name: resticprofile-rclone
               env:
                 - name: PUSH_GATEWAY
                   value: https://pushgateway.k.oneill.net
                 - name: INSTANCE
                   value: total
+                - name: RCLONE_CONFIG
+                  value: /etc/rclone/rclone.conf
               volumeMounts:
-                - mountPath: /root/.config/rclone
+                - mountPath: /etc/rclone
                   name: rclone-config
           volumes:
             - name: rclone-config
-              secret:
-                secretName: resticprofile-rclone-config
+              configMap:
+                name: rclone-template
                 items:
-                  - key: rclone-config-secret.txt
+                  - key: rclone.conf.template
                     path: rclone.conf

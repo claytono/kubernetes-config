@@ -1,0 +1,11 @@
+[azure]
+type = azureblob
+account = cmorestic
+# key will come from environment variables
+
+[azc]
+type = crypt
+remote = azure:garbage
+filename_encryption = standard
+directory_name_encryption = true
+# password and password2 will come from environment variables

@@ -7,6 +7,7 @@ resources:
   - cronjob-azure.yaml
   - cronjob-copy-main.yaml
   - pvc.yaml
+  - externalsecret.yaml
 
 commonLabels:
   app: resticprofile
@@ -15,12 +16,6 @@ configMapGenerator:
   - name: resticprofile-config
     files:
       - profiles.yaml
-
-secretGenerator:
-  - name: resticprofile
-    env: secret.txt
-    type: Opaque
-  - name: resticprofile-rclone-config
+  - name: rclone-template
     files:
-      - rclone-config-secret.txt
-    type: Opaque
+      - rclone.conf.template
