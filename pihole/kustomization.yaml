@@ -3,13 +3,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
- - deployment.yaml
- - pvc-config.yaml
- - pvc-dnsmasq.yaml
+ - deploy.yaml
  - service.yaml
  - service-dns-tcp.yaml
  - service-dns-udp.yaml
  - ingress.yaml
+ - pvc-config.yaml
+ - pvc-dnsmasq.yaml
  - externalsecret.yaml
 
 commonLabels:
