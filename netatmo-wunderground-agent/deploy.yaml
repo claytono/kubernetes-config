@@ -19,7 +19,7 @@ spec:
       - name: netatmo-wunderground-agent
         image: brbeaird/netatmo-wunderground-agent
         env:
-          - name: netamo_tokenFileDirectory
+          - name: netatmo_tokenFileDirectory
             value: /data
         envFrom:
           - secretRef:
@@ -30,4 +30,4 @@ spec:
       volumes:
       - name: data-volume
         persistentVolumeClaim:
-          claimName: netatmo-exporter-data
+          claimName: netatmo-wunderground-agent-data

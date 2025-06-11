@@ -4,8 +4,8 @@ kind: Kustomization
 
 resources:
  - deploy.yaml
- - externalsecret.yaml
  - pvc.yaml
+ - externalsecret.yaml
 
 commonLabels:
   app: netatmo-wunderground-agent
