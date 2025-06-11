@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: vrroom-daily-reboot
+spec:
+  schedule: "0 5 * * *" # 5:00 AM daily in local time
+  timeZone: "America/New_York"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: vrroom-daily-reboot
+            image: alpine
+            command: ["/bin/sh", "-c", 'echo "set reboot" | nc vrroom-37.oneill.net 2222']
+          restartPolicy: Never
