@@ -45,7 +45,7 @@ spec:
           mountPath: /ssh-key
       containers:
       - name: hass
-        image: ghcr.io/home-assistant/home-assistant:2024.8
+        image: ghcr.io/home-assistant/home-assistant:2024.11
         imagePullPolicy: Always
         env:
           - name: MYSQL_PASSWORD
