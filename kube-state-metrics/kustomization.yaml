@@ -9,5 +9,6 @@ resources:
  - helm/templates/deployment.yaml
  - helm/templates/service.yaml
 
-commonLabels:
-  app: kube-state-metrics
+labels:
+  - pairs:
+      app: kube-state-metrics

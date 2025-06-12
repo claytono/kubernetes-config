@@ -9,5 +9,6 @@ resources:
  - service.yaml
  - externalsecret.yaml
 
-commonLabels:
-  app: awair-exporter
+labels:
+  - pairs:
+      app: awair-exporter

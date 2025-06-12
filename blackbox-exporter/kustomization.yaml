@@ -7,8 +7,9 @@ resources:
  - deploy.yaml
  - service.yaml
 
-commonLabels:
-  app: blackbox-exporter
+labels:
+  - pairs:
+      app: blackbox-exporter
 
 configMapGenerator:
   - name: config

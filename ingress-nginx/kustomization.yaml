@@ -16,5 +16,6 @@ resources:
  - helm/controller-service.yaml
  - helm/controller-serviceaccount.yaml
 
-commonLabels:
-  app: ingress-nginx
+labels:
+  - pairs:
+      app: ingress-nginx

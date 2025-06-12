@@ -7,5 +7,6 @@ resources:
  - ingress.yaml
  - service.yaml
 
-commonLabels:
-  app: push-gateway
+labels:
+  - pairs:
+      app: push-gateway

@@ -8,5 +8,6 @@ resources:
  - ingress.yaml
  - service.yaml
 
-commonLabels:
-  app: grafana
+labels:
+  - pairs:
+      app: grafana

@@ -12,6 +12,7 @@ resources:
  - pvc-dnsmasq.yaml
  - externalsecret.yaml
 
-commonLabels:
-  app: pihole
+labels:
+  - pairs:
+      app: pihole
 

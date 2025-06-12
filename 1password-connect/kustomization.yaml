@@ -8,8 +8,9 @@ resources:
  - helm/connect/templates/connect-deployment.yaml
  - helm/connect/templates/service.yaml
 
-commonLabels:
-  app: 1password-connect
+labels:
+  - pairs:
+      app: 1password-connect
 
 secretGenerator:
   - name: op-credentials

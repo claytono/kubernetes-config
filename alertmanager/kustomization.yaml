@@ -9,8 +9,9 @@ resources:
  - pvc.yaml
  - externalsecret.yaml
 
-commonLabels:
-  app: alertmanager
+labels:
+  - pairs:
+      app: alertmanager
 
 configMapGenerator:
  - name: alertmanager

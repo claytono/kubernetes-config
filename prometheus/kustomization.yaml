@@ -11,8 +11,9 @@ resources:
  - service.yaml
  - externalsecret.yaml
 
-commonLabels:
-  app: prometheus
+labels:
+  - pairs:
+      app: prometheus
 
 configMapGenerator:
  - name: prometheus

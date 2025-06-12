@@ -12,6 +12,7 @@ resources:
 - helm/templates/clusterrolebinding.yaml
 - helm/templates/deployment.yaml
 
-commonLabels:
-  app: nfs-subdir-external-provisioner
+labels:
+  - pairs:
+      app: nfs-subdir-external-provisioner
 

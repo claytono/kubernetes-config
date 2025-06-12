@@ -14,6 +14,7 @@ resources:
  - helm/rolebinding.yaml
  - helm/service.yaml
  - helm/serviceaccount.yaml
- 
-commonLabels:
-  app: metrics-server
+
+labels:
+  - pairs:
+      app: metrics-server

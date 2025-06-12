@@ -7,5 +7,6 @@ resources:
  - deploy.yaml
  - externalsecret.yaml
 
-commonLabels:
-  app: mqtt-log
+labels:
+  - pairs:
+      app: mqtt-log

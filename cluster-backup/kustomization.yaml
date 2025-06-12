@@ -6,8 +6,9 @@ namespace: kube-system
 resources:
  - cronjob.yaml
 
-commonLabels:
-  app: cluster-backup
+labels:
+  - pairs:
+      app: cluster-backup
 
 configMapGenerator:
  - name: cluster-backup

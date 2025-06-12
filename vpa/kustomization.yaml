@@ -11,5 +11,6 @@ resources:
  - helm/templates/recommender-deployment.yaml
  - helm/templates/recommender-service-account.yaml
 
-commonLabels:
-  app: metrics-server
+labels:
+  - pairs:
+      app: vpa

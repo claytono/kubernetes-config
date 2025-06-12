@@ -8,5 +8,6 @@ resources:
  - ingress.yaml
  - pvc.yaml
 
-commonLabels:
-  app: meshcentral
+labels:
+  - pairs:
+      app: meshcentral

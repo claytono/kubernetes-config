@@ -14,5 +14,6 @@ resources:
 - helm/templates/webhooks.yaml
 - config.yaml
 
-commonLabels:
-  app: metallb
+labels:
+  - pairs:
+      app: metallb

@@ -8,6 +8,7 @@ resources:
  - pvc.yaml
  - service.yaml
 
-commonLabels:
-  app: tautulli
+labels:
+  - pairs:
+      app: tautulli
 

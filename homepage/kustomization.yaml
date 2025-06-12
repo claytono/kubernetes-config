@@ -6,8 +6,9 @@ resources:
  - helm/templates/rbac.yaml
  - helm/templates/common.yaml
 
-commonLabels:
-  app: homepage
+labels:
+  - pairs:
+      app: homepage
 
 configMapGenerator:
 - name: homepage

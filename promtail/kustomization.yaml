@@ -10,8 +10,9 @@ resources:
  - helm/promtail/templates/daemonset.yaml
  - helm/promtail/templates/serviceaccount.yaml
 
-commonLabels:
-  app: promtail
+labels:
+  - pairs:
+      app: promtail
 
 secretGenerator:
   - name: promtail

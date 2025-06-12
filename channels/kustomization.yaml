@@ -10,5 +10,6 @@ resources:
  - pvc.yaml
  - service.yaml
 
-commonLabels:
-  app: channels
+labels:
+  - pairs:
+      app: channels

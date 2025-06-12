@@ -20,5 +20,6 @@ resources:
 - helm/templates/serviceaccount.yaml
 - helm/templates/worker.yaml
 
-commonLabels:
-  app: node-feature-discovery
+labels:
+  - pairs:
+      app: node-feature-discovery

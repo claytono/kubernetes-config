@@ -11,5 +11,6 @@ resources:
  - service.yaml
  - externalsecret.yaml
 
-commonLabels:
-  app: plexmediaserver
+labels:
+  - pairs:
+      app: plexmediaserver

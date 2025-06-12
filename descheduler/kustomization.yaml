@@ -11,5 +11,6 @@ resources:
  - helm/templates/cronjob.yaml
  - helm/templates/configmap.yaml
 
-commonLabels:
-  app: descheduler
+labels:
+  - pairs:
+      app: descheduler

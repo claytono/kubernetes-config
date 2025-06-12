@@ -8,8 +8,9 @@ resources:
  - externalsecret.yaml
  - pvc.yaml
 
-commonLabels:
-  app: got-your-back
+labels:
+  - pairs:
+      app: got-your-back
 
 configMapGenerator:
   - name: run-script

@@ -28,8 +28,9 @@ resources:
  - clusterstore.yaml
  - iscsi-external-secret.yaml
 
-commonLabels:
-  app: external-secrets
+labels:
+  - pairs:
+      app: external-secrets
 
 secretGenerator:
   - name: secrets
