@@ -5,7 +5,13 @@ kind: Kustomization
 resources:
  - deploy.yaml
  - externalsecret.yaml
+ - ingress.yaml
+ - mysql-deploy.yaml
+ - mysql-pvc.yaml
+ - mysql-service.yaml
+ - pvc.yaml
+ - service.yaml
 
 labels:
  - pairs:
-     app: hass 
+     app: hass
