@@ -10,7 +10,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "Home Assistant"
-    gethomepage.dev/group: "Miscellanous"
+    gethomepage.dev/group: "Miscellaneous"
     gethomepage.dev/icon: "home-assistant.png"
 spec:
   tls:

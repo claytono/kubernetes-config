@@ -15,8 +15,8 @@ configMapGenerator:
   literals:
     - docker.yaml=""
     - bookmarks.yaml=""
-    - services.yaml=""
   files:
     - kubernetes.yaml
     - settings.yaml
     - widgets.yaml
+    - services.yaml

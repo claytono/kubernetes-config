@@ -1,1 +1,5 @@
-- Media: null
+- Miscellaneous:
+    - PeaNUT:
+        href: "https://peanut.k.oneill.net"
+        description: "NUT Web UI"
+        icon: "mdi:battery"
