@@ -11,6 +11,9 @@ spec:
     matchLabels:
       app: tautulli
   template:
+    metadata:
+      labels:
+        app: tautulli
     spec:
       containers:
       - name: tautulli
