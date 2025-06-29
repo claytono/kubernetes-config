@@ -9,3 +9,16 @@ remote = azure:garbage
 filename_encryption = standard
 directory_name_encryption = true
 # password and password2 will come from environment variables
+
+[b2]
+type = b2
+account = ${RCLONE_CONFIG_B2_ACCOUNT}
+key = ${RCLONE_CONFIG_B2_KEY}
+hard_delete = true
+
+[b2c]
+type = crypt
+remote = b2:cmo-restic
+filename_encryption = standard
+directory_name_encryption = true
+# password and password2 will come from environment variables
