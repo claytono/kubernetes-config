@@ -1,7 +1,5 @@
 {
-    "vs-kubernetes": {
-        "disable-linters": [
-            "resource-limits"
-        ],
-    }
+  "vs-kubernetes": {
+    "disable-linters": ["resource-limits"]
+  }
 }

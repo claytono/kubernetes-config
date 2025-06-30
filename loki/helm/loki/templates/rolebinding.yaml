@@ -15,5 +15,5 @@ roleRef:
   kind: Role
   name: loki
 subjects:
-- kind: ServiceAccount
-  name: loki
+  - kind: ServiceAccount
+    name: loki

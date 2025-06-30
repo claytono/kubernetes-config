@@ -36,7 +36,7 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-              - ALL
+                - ALL
             readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 1000
@@ -45,8 +45,8 @@ spec:
           image: ghcr.io/external-secrets/external-secrets:v0.9.13
           imagePullPolicy: IfNotPresent
           args:
-          - --concurrent=1
-          - --metrics-addr=:8080
+            - --concurrent=1
+            - --metrics-addr=:8080
           ports:
             - containerPort: 8080
               protocol: TCP

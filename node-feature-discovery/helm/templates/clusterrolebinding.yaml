@@ -15,9 +15,9 @@ roleRef:
   kind: ClusterRole
   name: release-name-node-feature-discovery
 subjects:
-- kind: ServiceAccount
-  name: release-name-node-feature-discovery
-  namespace: node-feature-discovery
+  - kind: ServiceAccount
+    name: release-name-node-feature-discovery
+    namespace: node-feature-discovery
 ---
 # Source: node-feature-discovery/templates/clusterrolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -35,6 +35,6 @@ roleRef:
   kind: ClusterRole
   name: release-name-node-feature-discovery-gc
 subjects:
-- kind: ServiceAccount
-  name: release-name-node-feature-discovery-gc
-  namespace: node-feature-discovery
+  - kind: ServiceAccount
+    name: release-name-node-feature-discovery-gc
+    namespace: node-feature-discovery

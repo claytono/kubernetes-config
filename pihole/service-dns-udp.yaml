@@ -9,7 +9,7 @@ spec:
   loadBalancerIP: 172.19.74.23
   externalTrafficPolicy: Local
   ports:
-  - name: pihole-dns-udp
-    protocol: UDP
-    port: 53
-    targetPort: 53
+    - name: pihole-dns-udp
+      protocol: UDP
+      port: 53
+      targetPort: 53

@@ -5,11 +5,11 @@ kind: Kustomization
 namespace: kube-system
 
 resources:
- - helm/templates/clusterrole.yaml
- - helm/templates/clusterrolebinding.yaml
- - helm/templates/serviceaccount.yaml
- - helm/templates/cronjob.yaml
- - helm/templates/configmap.yaml
+  - helm/templates/clusterrole.yaml
+  - helm/templates/clusterrolebinding.yaml
+  - helm/templates/serviceaccount.yaml
+  - helm/templates/cronjob.yaml
+  - helm/templates/configmap.yaml
 
 labels:
   - pairs:

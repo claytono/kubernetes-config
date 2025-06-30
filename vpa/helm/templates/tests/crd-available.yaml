@@ -15,11 +15,11 @@ metadata:
     "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
     "helm.sh/hook-weight": "50"
 spec:
-  serviceAccountName:  vpa-test
+  serviceAccountName: vpa-test
   containers:
     - name: test
       image: quay.io/reactiveops/ci-images:v11-alpine
-      command: ['kubectl']
+      command: ["kubectl"]
       args:
         - get
         - crd
@@ -46,7 +46,7 @@ spec:
   containers:
     - name: test
       image: quay.io/reactiveops/ci-images:v11-alpine
-      command: ['kubectl']
+      command: ["kubectl"]
       args:
         - get
         - crd

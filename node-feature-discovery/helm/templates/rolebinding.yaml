@@ -16,6 +16,6 @@ roleRef:
   kind: Role
   name: release-name-node-feature-discovery-worker
 subjects:
-- kind: ServiceAccount
-  name: release-name-node-feature-discovery-worker
-  namespace: node-feature-discovery
+  - kind: ServiceAccount
+    name: release-name-node-feature-discovery-worker
+    namespace: node-feature-discovery

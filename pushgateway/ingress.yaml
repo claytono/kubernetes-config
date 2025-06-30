@@ -11,7 +11,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "pushgateway.k.oneill.net"
+        - "pushgateway.k.oneill.net"
       secretName: "pushgateway-tls"
   rules:
     - host: "pushgateway.k.oneill.net"

@@ -16,18 +16,18 @@ spec:
         app: netatmo-wunderground-agent
     spec:
       containers:
-      - name: netatmo-wunderground-agent
-        image: brbeaird/netatmo-wunderground-agent
-        env:
-          - name: netatmo_tokenFileDirectory
-            value: /data
-        envFrom:
-          - secretRef:
-              name: netatmo-wunderground-agent
-        volumeMounts:
-        - name: data-volume
-          mountPath: /data
+        - name: netatmo-wunderground-agent
+          image: brbeaird/netatmo-wunderground-agent
+          env:
+            - name: netatmo_tokenFileDirectory
+              value: /data
+          envFrom:
+            - secretRef:
+                name: netatmo-wunderground-agent
+          volumeMounts:
+            - name: data-volume
+              mountPath: /data
       volumes:
-      - name: data-volume
-        persistentVolumeClaim:
-          claimName: netatmo-wunderground-agent-data
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: netatmo-wunderground-agent-data

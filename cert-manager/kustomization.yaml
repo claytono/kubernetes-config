@@ -5,59 +5,59 @@ kind: Kustomization
 namespace: cert-manager
 
 resources:
-- helm/templates/crds.yaml
-- helm/templates/deployment.yaml
-- helm/templates/webhook-deployment.yaml
-- helm/templates/webhook-serviceaccount.yaml
-- helm/templates/cainjector-deployment.yaml
-- helm/templates/webhook-service.yaml
-- helm/templates/startupapicheck-serviceaccount.yaml
-- helm/templates/startupapicheck-job.yaml
-- helm/templates/service.yaml
-- helm/templates/rbac.yaml
-- helm/templates/webhook-mutating-webhook.yaml
-- helm/templates/webhook-config.yaml
-- helm/templates/webhook-rbac.yaml
-- helm/templates/serviceaccount.yaml
-- helm/templates/cainjector-rbac.yaml
-- helm/templates/startupapicheck-rbac.yaml
-- helm/templates/webhook-validating-webhook.yaml
-- helm/templates/cainjector-serviceaccount.yaml
-- letsencrypt.yaml
-- self-signed.yaml
-- externalsecret.yaml
+  - helm/templates/crds.yaml
+  - helm/templates/deployment.yaml
+  - helm/templates/webhook-deployment.yaml
+  - helm/templates/webhook-serviceaccount.yaml
+  - helm/templates/cainjector-deployment.yaml
+  - helm/templates/webhook-service.yaml
+  - helm/templates/startupapicheck-serviceaccount.yaml
+  - helm/templates/startupapicheck-job.yaml
+  - helm/templates/service.yaml
+  - helm/templates/rbac.yaml
+  - helm/templates/webhook-mutating-webhook.yaml
+  - helm/templates/webhook-config.yaml
+  - helm/templates/webhook-rbac.yaml
+  - helm/templates/serviceaccount.yaml
+  - helm/templates/cainjector-rbac.yaml
+  - helm/templates/startupapicheck-rbac.yaml
+  - helm/templates/webhook-validating-webhook.yaml
+  - helm/templates/cainjector-serviceaccount.yaml
+  - letsencrypt.yaml
+  - self-signed.yaml
+  - externalsecret.yaml
 
 patches:
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: cert-manager
+        annotations:
+          reloader.stakater.com/auto: "true"
+    target:
+      kind: Deployment
       name: cert-manager
-      annotations:
-        reloader.stakater.com/auto: "true"
-  target:
-    kind: Deployment
-    name: cert-manager
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: cert-manager-webhook
+        annotations:
+          reloader.stakater.com/auto: "true"
+    target:
+      kind: Deployment
       name: cert-manager-webhook
-      annotations:
-        reloader.stakater.com/auto: "true"
-  target:
-    kind: Deployment
-    name: cert-manager-webhook
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: cert-manager-cainjector
+        annotations:
+          reloader.stakater.com/auto: "true"
+    target:
+      kind: Deployment
       name: cert-manager-cainjector
-      annotations:
-        reloader.stakater.com/auto: "true"
-  target:
-    kind: Deployment
-    name: cert-manager-cainjector
 
 labels:
   - pairs:

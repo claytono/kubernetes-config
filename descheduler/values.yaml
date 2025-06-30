@@ -5,9 +5,9 @@ deschedulerPolicy:
   maxNoOfPodsToEvictPerNode: 2
   strategies:
     PodLifeTime:
-     enabled: true
-     params:
-       podLifeTime:
-         maxPodLifeTimeSeconds: 1209600 # 2 weeks
-         states:
-         - "Running"
+      enabled: true
+      params:
+        podLifeTime:
+          maxPodLifeTimeSeconds: 1209600 # 2 weeks
+          states:
+            - "Running"

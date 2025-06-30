@@ -13,7 +13,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "prometheus.k.oneill.net"
+        - "prometheus.k.oneill.net"
       secretName: "prometheus-tls"
   rules:
     - host: "prometheus.k.oneill.net"

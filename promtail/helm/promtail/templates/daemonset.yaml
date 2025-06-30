@@ -16,8 +16,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: promtail
       app.kubernetes.io/instance: promtail
-  updateStrategy:
-    {}
+  updateStrategy: {}
   template:
     metadata:
       labels:
@@ -62,7 +61,7 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-              - ALL
+                - ALL
             readOnlyRootFilesystem: true
           readinessProbe:
             failureThreshold: 5

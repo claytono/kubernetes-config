@@ -25,8 +25,7 @@ spec:
         app.kubernetes.io/component: dashboard
     spec:
       serviceAccountName: goldilocks-dashboard
-      securityContext:
-        {}
+      securityContext: {}
       containers:
         - name: goldilocks
           image: "us-docker.pkg.dev/fairwinds-ops/oss/goldilocks:v4.6.3"
@@ -40,7 +39,7 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-              - ALL
+                - ALL
             readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 10324

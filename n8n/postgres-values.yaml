@@ -1,0 +1,46 @@
+# PostgreSQL Helm Chart Values for n8n
+# Based on Bitnami PostgreSQL chart v15.5.36
+
+# Authentication configuration
+auth:
+  username: n8n
+  database: n8n
+  # Password will come from external secret
+  existingSecret: n8n-postgres-postgresql
+  secretKeys:
+    adminPasswordKey: postgres-password
+    userPasswordKey: postgres-password
+
+# Primary database configuration
+primary:
+  persistence:
+    enabled: true
+    size: 10Gi
+    # Use default storage class (nfs-client)
+  
+  # Resource limits
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+# Security context
+podSecurityContext:
+  enabled: true
+  fsGroup: 1001
+
+containerSecurityContext:
+  enabled: true
+  runAsUser: 1001
+  runAsNonRoot: true
+
+# Networking
+networkPolicy:
+  enabled: false
+
+# Metrics (disabled for now)
+metrics:
+  enabled: false 

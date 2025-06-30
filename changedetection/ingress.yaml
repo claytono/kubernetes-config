@@ -15,7 +15,7 @@ spec:
   ingressClassName: "nginx"
   tls:
     - hosts:
-      - "changedetection.k.oneill.net"
+        - "changedetection.k.oneill.net"
       secretName: "changedetection-tls"
   rules:
     - host: "changedetection.k.oneill.net"

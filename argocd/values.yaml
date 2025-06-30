@@ -1,0 +1,24 @@
+server:
+  extraArgs:
+    - --insecure
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hostname: argocd.k.oneill.net
+    servicePort: 80
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt"
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/name: "Argo CD"
+      gethomepage.dev/description: "GitOps Continuous Delivery"
+      gethomepage.dev/icon: "mdi-git"
+      gethomepage.dev/group: "Platform"
+    path: /
+    pathType: Prefix
+    tls: true
+
+configs:
+  cm:
+    url: https://argocd.k.oneill.net
+  notifications:
+    argocdUrl: https://argocd.k.oneill.net

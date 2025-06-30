@@ -10,7 +10,12 @@ spec:
       template:
         spec:
           containers:
-          - name: vrroom-daily-reboot
-            image: alpine
-            command: ["/bin/sh", "-c", 'echo "set reboot" | nc vrroom-37.oneill.net 2222']
+            - name: vrroom-daily-reboot
+              image: alpine
+              command:
+                [
+                  "/bin/sh",
+                  "-c",
+                  'echo "set reboot" | nc vrroom-37.oneill.net 2222',
+                ]
           restartPolicy: Never

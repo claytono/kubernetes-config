@@ -5,10 +5,10 @@ kind: Kustomization
 namespace: default
 
 resources:
- - deploy.yaml
- - ingress.yaml
- - pvc.yaml
- - service.yaml
+  - deploy.yaml
+  - ingress.yaml
+  - pvc.yaml
+  - service.yaml
 
 labels:
   - pairs:

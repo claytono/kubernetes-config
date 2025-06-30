@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    prometheus.io/scrape: 'true'
+    prometheus.io/scrape: "true"
   labels:
     name: pushgateway
   name: pushgateway
@@ -10,6 +10,6 @@ spec:
   selector:
     app: pushgateway
   ports:
-  - name: pushgateway
-    protocol: TCP
-    port: 9091
+    - name: pushgateway
+      protocol: TCP
+      port: 9091

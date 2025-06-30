@@ -16,28 +16,28 @@ spec:
         app: hass-mysql
     spec:
       containers:
-      - name: mysql
-        image: mariadb:11.1
-        imagePullPolicy: Always
-        env:
-          - name: MYSQL_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: hass-secrets
-                key: MYSQL_ROOT_PASSWORD
-          - name: MYSQL_USER
-            value: hass
-          - name: MYSQL_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: hass-secrets
-                key: MYSQL_PASSWORD
-          - name: MYSQL_DATABASE
-            value: hass
-        volumeMounts:
-        - mountPath: /var/lib/mysql
-          name: hass-mysql
+        - name: mysql
+          image: mariadb:11.1
+          imagePullPolicy: Always
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hass-secrets
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_USER
+              value: hass
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hass-secrets
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_DATABASE
+              value: hass
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: hass-mysql
       volumes:
-      - name: hass-mysql
-        persistentVolumeClaim:
-          claimName: hass-mysql
+        - name: hass-mysql
+          persistentVolumeClaim:
+            claimName: hass-mysql

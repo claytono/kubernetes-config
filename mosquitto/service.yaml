@@ -13,9 +13,9 @@ spec:
   selector:
     app: mosquitto
   ports:
-  - name: mqtt
-    protocol: TCP
-    port: 1883
-  - name: mqtt-websockets
-    protocol: TCP
-    port: 9001
+    - name: mqtt
+      protocol: TCP
+      port: 1883
+    - name: mqtt-websockets
+      protocol: TCP
+      port: 9001

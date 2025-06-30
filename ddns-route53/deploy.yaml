@@ -14,17 +14,17 @@ spec:
       name: ddns-route53
     spec:
       containers:
-      - name: ddns-route53
-        image: ghcr.io/crazy-max/ddns-route53
-        args:
-          - '--schedule=*/5 * * * *'
-        envFrom:
-          - secretRef:
-              name: ddns-route53-oneill
-      - name: fnord
-        image: ghcr.io/crazy-max/ddns-route53
-        args:
-          - '--schedule=*/5 * * * *'
-        envFrom:
-          - secretRef:
-              name: ddns-route53-fnord
+        - name: ddns-route53
+          image: ghcr.io/crazy-max/ddns-route53
+          args:
+            - "--schedule=*/5 * * * *"
+          envFrom:
+            - secretRef:
+                name: ddns-route53-oneill
+        - name: fnord
+          image: ghcr.io/crazy-max/ddns-route53
+          args:
+            - "--schedule=*/5 * * * *"
+          envFrom:
+            - secretRef:
+                name: ddns-route53-fnord

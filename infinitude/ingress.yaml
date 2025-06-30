@@ -11,7 +11,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "infinitude.k.oneill.net"
+        - "infinitude.k.oneill.net"
       secretName: "infinitude-tls"
   rules:
     - host: "infinitude.k.oneill.net"

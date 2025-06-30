@@ -26,13 +26,11 @@ spec:
     spec:
       volumes:
         - name: shared-data
-          emptyDir:
-            {}
+          emptyDir: {}
         - name: credentials
           secret:
             secretName: op-credentials
-      tolerations:
-        []
+      tolerations: []
       containers:
         - name: connect-api
           image: 1password/connect-api:1.7.2
@@ -41,8 +39,7 @@ spec:
             runAsUser: 999
             runAsGroup: 999
             allowPrivilegeEscalation: false
-          resources:
-            {}
+          resources: {}
           env:
             - name: OP_SESSION
               valueFrom:
@@ -83,8 +80,7 @@ spec:
             runAsUser: 999
             runAsGroup: 999
             allowPrivilegeEscalation: false
-          resources:
-            {}
+          resources: {}
           env:
             - name: OP_HTTP_PORT
               value: "8081"

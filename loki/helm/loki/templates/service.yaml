@@ -10,8 +10,7 @@ metadata:
     chart: loki-2.16.0
     release: loki
     heritage: Helm
-  annotations:
-    {}
+  annotations: {}
 spec:
   type: ClusterIP
   ports:

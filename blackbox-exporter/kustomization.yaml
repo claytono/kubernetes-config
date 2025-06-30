@@ -4,8 +4,8 @@ kind: Kustomization
 namePrefix: blackbox-
 
 resources:
- - deploy.yaml
- - service.yaml
+  - deploy.yaml
+  - service.yaml
 
 labels:
   - pairs:

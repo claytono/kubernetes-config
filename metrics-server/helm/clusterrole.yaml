@@ -12,13 +12,13 @@ metadata:
     app.kubernetes.io/managed-by: Helm
 rules:
   - apiGroups:
-    - ""
+      - ""
     resources:
-    - nodes/metrics
+      - nodes/metrics
     verbs:
-    - get
+      - get
   - apiGroups:
-    - ""
+      - ""
     resources:
       - pods
       - nodes

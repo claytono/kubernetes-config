@@ -22,70 +22,75 @@ spec:
           initContainers:
             - name: generate-uuid
               image: alpine
-              command: ['sh', '-c', 'apk add --no-cache util-linux; uuidgen >/tmp/uuid']
+              command:
+                [
+                  "sh",
+                  "-c",
+                  "apk add --no-cache util-linux; uuidgen >/tmp/uuid",
+                ]
               volumeMounts:
                 - mountPath: /tmp
                   name: scratch
             - name: fix-cache-permissions
               image: alpine
-              command: ['sh', '-c', 'chown -R 10007:10007 /cache']
+              command: ["sh", "-c", "chown -R 10007:10007 /cache"]
               volumeMounts:
                 - mountPath: /cache
                   name: cache
           containers:
-          - name: resticprofile
-            securityContext:
-              runAsUser: 10007
-              runAsGroup: 10007
-            command:
-              - resticprofile
-              - -c
-              - /resticprofile-config/profiles.yaml
-              - -n
-              - migrate-azure-to-b2
-              - --lock-wait
-              - 1h
-              - copy
-            image: creativeprojects/resticprofile:latest
-            imagePullPolicy: Always
-            envFrom:
-            - secretRef:
-                name: resticprofile
-            - secretRef:
-                name: resticprofile-rclone
-            env:
-              - name: RUN_ID
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.name
-              - name: RCLONE_CONFIG
-                value: /rclone-config/rclone.conf
-              - name: RESTIC_FROM_PASSWORD
-                valueFrom:
-                  secretKeyRef:
+            - name: resticprofile
+              securityContext:
+                runAsUser: 10007
+                runAsGroup: 10007
+              command:
+                - resticprofile
+                - -c
+                - /resticprofile-config/profiles.yaml
+                - -n
+                - migrate-azure-to-b2
+                - --lock-wait
+                - 1h
+                - copy
+              image: creativeprojects/resticprofile:latest
+              imagePullPolicy: Always
+              envFrom:
+                - secretRef:
                     name: resticprofile
-                    key: RESTIC_PASSWORD
-            volumeMounts:
-            - mountPath: /rclone-config
-              name: rclone-config
-            - mountPath: /resticprofile-config
-              name: resticprofile-config
-            - mountPath: /tmp
-              name: scratch
-            - mountPath: /cache
-              name: cache
+                - secretRef:
+                    name: resticprofile-rclone
+              env:
+                - name: RUN_ID
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.name
+                - name: RCLONE_CONFIG
+                  value: /rclone-config/rclone.conf
+                - name: RESTIC_FROM_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: resticprofile
+                      key: RESTIC_PASSWORD
+              volumeMounts:
+                - mountPath: /rclone-config
+                  name: rclone-config
+                - mountPath: /resticprofile-config
+                  name: resticprofile-config
+                - mountPath: /tmp
+                  name: scratch
+                - mountPath: /cache
+                  name: cache
           volumes:
-          - name: rclone-config
-            configMap:
-              name: rclone-template
-              items:
-                - key: rclone.conf.template
-                  path: rclone.conf
-          - name: resticprofile-config
-            configMap:
-              name: resticprofile-config
-          - name: scratch
-            emptyDir: {}
-          - name: cache
-            persistentVolumeClaim:
-              claimName: resticprofile-cache-migration
+            - name: rclone-config
+              configMap:
+                name: rclone-template
+                items:
+                  - key: rclone.conf.template
+                    path: rclone.conf
+            - name: resticprofile-config
+              configMap:
+                name: resticprofile-config
+            - name: scratch
+              emptyDir: {}
+            - name: cache
+              persistentVolumeClaim:
+                claimName: resticprofile-cache-migration

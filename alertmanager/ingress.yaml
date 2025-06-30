@@ -15,7 +15,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "alertmanager.k.oneill.net"
+        - "alertmanager.k.oneill.net"
       secretName: "alertmanager-tls"
   rules:
     - host: "alertmanager.k.oneill.net"

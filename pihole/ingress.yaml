@@ -13,7 +13,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "pihole.k.oneill.net"
+        - "pihole.k.oneill.net"
       secretName: "pihole-tls"
   rules:
     - host: "pihole.k.oneill.net"

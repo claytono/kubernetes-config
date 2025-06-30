@@ -5,7 +5,7 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-  - 172.19.74.32/27
+    - 172.19.74.32/27
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
@@ -14,10 +14,10 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-  - 172.19.74.20/32
-  - 172.19.74.21/32
-  - 172.19.74.22/32
-  - 172.19.74.23/32
+    - 172.19.74.20/32
+    - 172.19.74.21/32
+    - 172.19.74.22/32
+    - 172.19.74.23/32
   autoAssign: false
 ---
 apiVersion: metallb.io/v1beta1
@@ -30,12 +30,12 @@ spec:
   # tailscale subnet router, so we want to exclude metallb from putting IPS on
   # that host, since tailscale can't reach it.
   nodeSelectors:
-  - matchExpressions:
-      - key: node-role.kubernetes.io/control-plane
-        operator: DoesNotExist
-        values: []
+    - matchExpressions:
+        - key: node-role.kubernetes.io/control-plane
+          operator: DoesNotExist
+          values: []
   ipAddressPools:
-  - default
+    - default
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
@@ -45,9 +45,9 @@ metadata:
 spec:
   # See above
   nodeSelectors:
-  - matchExpressions:
-      - key: node-role.kubernetes.io/control-plane
-        operator: DoesNotExist
-        values: []
+    - matchExpressions:
+        - key: node-role.kubernetes.io/control-plane
+          operator: DoesNotExist
+          values: []
   ipAddressPools:
-  - static
+    - static

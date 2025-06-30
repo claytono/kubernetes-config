@@ -4,11 +4,11 @@ kind: Kustomization
 namespace: default
 
 resources:
- - deploy.yaml
- - service.yaml
- - ingress.yaml
- - pvc.yaml
- - externalsecret.yaml
+  - deploy.yaml
+  - service.yaml
+  - ingress.yaml
+  - pvc.yaml
+  - externalsecret.yaml
 
 labels:
   - pairs:

@@ -5,6 +5,6 @@ metadata:
   name: exporter
 spec:
   ports:
-  - name: awair-exporter
-    protocol: TCP
-    port: 8000
+    - name: awair-exporter
+      protocol: TCP
+      port: 8000

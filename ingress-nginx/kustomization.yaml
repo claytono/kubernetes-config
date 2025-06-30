@@ -5,16 +5,16 @@ kind: Kustomization
 namespace: ingress-nginx
 
 resources:
- - namespace.yaml
- - helm/clusterrole.yaml
- - helm/clusterrolebinding.yaml
- - helm/controller-configmap.yaml
- - helm/controller-deployment.yaml
- - helm/controller-ingressclass.yaml
- - helm/controller-role.yaml
- - helm/controller-rolebinding.yaml
- - helm/controller-service.yaml
- - helm/controller-serviceaccount.yaml
+  - namespace.yaml
+  - helm/clusterrole.yaml
+  - helm/clusterrolebinding.yaml
+  - helm/controller-configmap.yaml
+  - helm/controller-deployment.yaml
+  - helm/controller-ingressclass.yaml
+  - helm/controller-role.yaml
+  - helm/controller-rolebinding.yaml
+  - helm/controller-service.yaml
+  - helm/controller-serviceaccount.yaml
 
 labels:
   - pairs:

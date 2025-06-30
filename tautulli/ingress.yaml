@@ -16,7 +16,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "tautulli.k.oneill.net"
+        - "tautulli.k.oneill.net"
       secretName: "tautulli-tls"
   rules:
     - host: "tautulli.k.oneill.net"

@@ -5,11 +5,11 @@ kind: Kustomization
 namespace: kube-system
 
 resources:
- - helm/crds/vpa-v1-crd.yaml
- - helm/templates/clusterrolebindings.yaml
- - helm/templates/clusterroles.yaml
- - helm/templates/recommender-deployment.yaml
- - helm/templates/recommender-service-account.yaml
+  - helm/crds/vpa-v1-crd.yaml
+  - helm/templates/clusterrolebindings.yaml
+  - helm/templates/clusterroles.yaml
+  - helm/templates/recommender-deployment.yaml
+  - helm/templates/recommender-service-account.yaml
 
 labels:
   - pairs:

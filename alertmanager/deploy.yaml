@@ -16,50 +16,50 @@ spec:
         app: alertmanager
     spec:
       initContainers:
-      - name: gomplate-config
-        image: hairyhenderson/gomplate
-        args:
-         - "--file"
-         - "/etc/alertmanager/config.template.yaml"
-         - "--out"
-         - "/config/config.yaml"
-        env:
-        - name: SMTP_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: alertmanager
-              key: smtp-password
-        volumeMounts:
-        - name: config-template
-          mountPath: /etc/alertmanager
-        - name: alertmanager-config
-          mountPath: /config
+        - name: gomplate-config
+          image: hairyhenderson/gomplate
+          args:
+            - "--file"
+            - "/etc/alertmanager/config.template.yaml"
+            - "--out"
+            - "/config/config.yaml"
+          env:
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: alertmanager
+                  key: smtp-password
+          volumeMounts:
+            - name: config-template
+              mountPath: /etc/alertmanager
+            - name: alertmanager-config
+              mountPath: /config
       containers:
-      - name: alertmanager
-        image: prom/alertmanager:latest
-        args:
-          - '--config.file=/config/config.yaml'
-          - '--storage.path=/alertmanager'
-          - '--web.external-url=https://alertmanager.k.oneill.net'
-        ports:
         - name: alertmanager
-          containerPort: 9093
-        volumeMounts:
-        - name: templates
-          mountPath: /etc/alertmanager-templates
-        - name: alertmanager-config
-          mountPath: /config
-        - name: alertmanager-data
-          mountPath: /alertmanager
+          image: prom/alertmanager:latest
+          args:
+            - "--config.file=/config/config.yaml"
+            - "--storage.path=/alertmanager"
+            - "--web.external-url=https://alertmanager.k.oneill.net"
+          ports:
+            - name: alertmanager
+              containerPort: 9093
+          volumeMounts:
+            - name: templates
+              mountPath: /etc/alertmanager-templates
+            - name: alertmanager-config
+              mountPath: /config
+            - name: alertmanager-data
+              mountPath: /alertmanager
       volumes:
-      - name: config-template
-        configMap:
-          name: alertmanager
-      - name: templates
-        configMap:
-          name: alertmanager-templates
-      - name: alertmanager-config
-        emptyDir: {}
-      - name: alertmanager-data
-        persistentVolumeClaim:
-          claimName: alertmanager-data
+        - name: config-template
+          configMap:
+            name: alertmanager
+        - name: templates
+          configMap:
+            name: alertmanager-templates
+        - name: alertmanager-config
+          emptyDir: {}
+        - name: alertmanager-data
+          persistentVolumeClaim:
+            claimName: alertmanager-data

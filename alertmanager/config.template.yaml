@@ -1,31 +1,30 @@
 global:
-    # The smarthost and SMTP sender used for mail notifications.
-    smtp_smarthost: 'smtp.gmail.com:587'
-    smtp_from: 'clayton@oneill.net'
-    smtp_auth_username: 'clayton.oneill@gmail.com'
-    smtp_auth_password: '{{ .Env.SMTP_PASSWORD }}'
-
+  # The smarthost and SMTP sender used for mail notifications.
+  smtp_smarthost: "smtp.gmail.com:587"
+  smtp_from: "clayton@oneill.net"
+  smtp_auth_username: "clayton.oneill@gmail.com"
+  smtp_auth_password: "{{ .Env.SMTP_PASSWORD }}"
 
 # # The directory from which notification templates are read.
 templates:
-- '/etc/alertmanager-templates/*.tmpl'
+  - "/etc/alertmanager-templates/*.tmpl"
 
 # The root route on which each incoming alert enters.
 route:
-    # The labels by which incoming alerts are grouped together. For example,
-    # multiple alerts coming in for cluster=A and alertname=LatencyHigh would
-    # be batched into a single group.
-    #group_by: ['alertname', 'cluster', 'service']
+  # The labels by which incoming alerts are grouped together. For example,
+  # multiple alerts coming in for cluster=A and alertname=LatencyHigh would
+  # be batched into a single group.
+  #group_by: ['alertname', 'cluster', 'service']
 
-    # A default receiver
-    # If an alert isn't caught by a route, send it to default.
-    receiver: default
+  # A default receiver
+  # If an alert isn't caught by a route, send it to default.
+  receiver: default
 
-    # All the above attributes are inherited by all child routes and can
-    # overwritten on each.
+  # All the above attributes are inherited by all child routes and can
+  # overwritten on each.
 
-    # The child route trees.
-    routes:
+  # The child route trees.
+  routes:
     - match:
         realert: daily
       repeat_interval: 1d
@@ -34,10 +33,10 @@ route:
       receiver: default
 
 receivers:
-- name: 'default'
-  email_configs:
-    - to: 'clayton.oneill@gmail.com'
-      send_resolved: true
-  webhook_configs:
-    # admin view: https://webhook.site/#/49de981e-b39b-48b0-a889-d053cd0a025d
-    - url: https://webhook.site/49de981e-b39b-48b0-a889-d053cd0a025d
+  - name: "default"
+    email_configs:
+      - to: "clayton.oneill@gmail.com"
+        send_resolved: true
+    webhook_configs:
+      # admin view: https://webhook.site/#/49de981e-b39b-48b0-a889-d053cd0a025d
+      - url: https://webhook.site/49de981e-b39b-48b0-a889-d053cd0a025d

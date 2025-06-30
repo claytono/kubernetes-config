@@ -15,7 +15,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "smokeping.k.oneill.net"
+        - "smokeping.k.oneill.net"
       secretName: "smokeping-tls"
   rules:
     - host: "smokeping.k.oneill.net"

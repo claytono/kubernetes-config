@@ -24,16 +24,16 @@ limits_config:
   retention_period: 30d
 memberlist:
   join_members:
-  - 'loki-memberlist'
+    - "loki-memberlist"
 schema_config:
   configs:
-  - from: "2020-10-24"
-    index:
-      period: 24h
-      prefix: index_
-    object_store: filesystem
-    schema: v11
-    store: boltdb-shipper
+    - from: "2020-10-24"
+      index:
+        period: 24h
+        prefix: index_
+      object_store: filesystem
+      schema: v11
+      store: boltdb-shipper
 server:
   grpc_listen_port: 9095
   http_listen_port: 3100

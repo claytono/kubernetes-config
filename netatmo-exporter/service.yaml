@@ -11,6 +11,6 @@ spec:
   selector:
     app: netatmo-exporter
   ports:
-  - name: netatmo-exporter
-    protocol: TCP
-    port: 9210
+    - name: netatmo-exporter
+      protocol: TCP
+      port: 9210

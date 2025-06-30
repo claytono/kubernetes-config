@@ -15,7 +15,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "hass.k.oneill.net"
+        - "hass.k.oneill.net"
       secretName: "hass-tls"
   rules:
     - host: "hass.k.oneill.net"

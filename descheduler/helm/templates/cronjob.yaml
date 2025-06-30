@@ -53,7 +53,7 @@ spec:
                 allowPrivilegeEscalation: false
                 capabilities:
                   drop:
-                  - ALL
+                    - ALL
                 privileged: false
                 readOnlyRootFilesystem: true
                 runAsNonRoot: true
@@ -62,6 +62,6 @@ spec:
                 - mountPath: /policy-dir
                   name: policy-volume
           volumes:
-          - name: policy-volume
-            configMap:
-              name: descheduler
+            - name: policy-volume
+              configMap:
+                name: descheduler

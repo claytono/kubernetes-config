@@ -9,9 +9,9 @@ azure:
     RCLONE_BWLIMIT: 25M
     RCLONE_CONFIG: /rclone-config/rclone.conf
     RCLONE_RC: true
-    RCLONE_RC_ADDR: '0.0.0.0:5572'
+    RCLONE_RC_ADDR: "0.0.0.0:5572"
     RCLONE_RC_ENABLE_METRICS: true
-    RCLONE_FAST_LIST:  true
+    RCLONE_FAST_LIST: true
     RESTIC_PROGRESS_FPS: "0.1"
     RESTIC_CACHE_DIR: "/cache"
 
@@ -71,7 +71,7 @@ copy-main: &copy-main
     RCLONE_BWLIMIT: 7M
     RCLONE_CONFIG: /rclone-config/rclone.conf
     RCLONE_RC: true
-    RCLONE_RC_ADDR: '0.0.0.0:5572'
+    RCLONE_RC_ADDR: "0.0.0.0:5572"
     RCLONE_RC_ENABLE_METRICS: true
     RESTIC_PROGRESS_FPS: "0.1"
     RESTIC_CACHE_DIR: "/cache"
@@ -112,7 +112,7 @@ b2:
     RCLONE_BWLIMIT: 25M
     RCLONE_CONFIG: /rclone-config/rclone.conf
     RCLONE_RC: true
-    RCLONE_RC_ADDR: '0.0.0.0:5572'
+    RCLONE_RC_ADDR: "0.0.0.0:5572"
     RCLONE_RC_ENABLE_METRICS: true
     RCLONE_FAST_LIST: true
     RESTIC_PROGRESS_FPS: "0.1"
@@ -157,7 +157,7 @@ b2:
 # Migration profile - copy from Azure to B2
 migrate-azure-to-b2:
   <<: *copy-main
-  repository: "rclone:azc:restic/main"  # Source: Azure
+  repository: "rclone:azc:restic/main" # Source: Azure
   env:
     RCLONE_BWLIMIT: 25M
     RCLONE_CONFIG: /rclone-config/rclone.conf
@@ -165,7 +165,7 @@ migrate-azure-to-b2:
     RESTIC_PROGRESS_FPS: "0.1"
     RESTIC_CACHE_DIR: "/cache"
   copy:
-    repository: "rclone:b2c:restic/main"  # Destination: B2
+    repository: "rclone:b2c:restic/main" # Destination: B2
     run-before: *run_before
     run-finally: *run_finally
   prometheus-labels:

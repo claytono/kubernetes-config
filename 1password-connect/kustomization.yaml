@@ -4,9 +4,9 @@ kind: Kustomization
 namespace: 1password
 
 resources:
- - namespace.yaml
- - helm/connect/templates/connect-deployment.yaml
- - helm/connect/templates/service.yaml
+  - namespace.yaml
+  - helm/connect/templates/connect-deployment.yaml
+  - helm/connect/templates/service.yaml
 
 labels:
   - pairs:

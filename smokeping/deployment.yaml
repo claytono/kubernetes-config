@@ -18,19 +18,19 @@ spec:
         app: smokeping
     spec:
       containers:
-      - name: smokeping
-        image: dvorak/docker-smokeping
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 80
-        volumeMounts:
-          - mountPath: "/config"
-            name: config
-          - mountPath: "/data"
-            name: data
-        env:
-          - name: TZ
-            value: "America/New_York"
+        - name: smokeping
+          image: dvorak/docker-smokeping
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: "/config"
+              name: config
+            - mountPath: "/data"
+              name: data
+          env:
+            - name: TZ
+              value: "America/New_York"
       volumes:
         - name: config
           persistentVolumeClaim:

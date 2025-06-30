@@ -23,76 +23,81 @@ spec:
           initContainers:
             - name: generate-uuid
               image: alpine
-              command: ['sh', '-c', 'apk add --no-cache util-linux; uuidgen >/tmp/uuid']
+              command:
+                [
+                  "sh",
+                  "-c",
+                  "apk add --no-cache util-linux; uuidgen >/tmp/uuid",
+                ]
               volumeMounts:
                 - mountPath: /tmp
                   name: scratch
           containers:
-          - name: resticprofile
-            command:
-              - resticprofile
-              - -c
-              - /resticprofile-config/profiles.yaml
-              - -n
-              - azure
-              - --lock-wait
-              - 1h
-              - backup
-            image: creativeprojects/resticprofile
-            imagePullPolicy: IfNotPresent
-            envFrom:
-            - secretRef:
-                name: resticprofile
-            - secretRef:
-                name: resticprofile-rclone
-            env:
-              - name: RCLONE_CONFIG
-                value: /rclone-config/rclone.conf
-            volumeMounts:
-            - mountPath: /rclone-config
-              name: rclone-config
-            - mountPath: /resticprofile-config
-              name: resticprofile-config
-            - mountPath: /tmp
-              name: scratch
-            - mountPath: /cache
-              name: cache
-            - mountPath: /source/k8s-pv
-              name: k8s-pv
-              readOnly: true
-            - mountPath: /source/backups
-              name: backups
-              readOnly: true
-            - mountPath: /source/shared
-              name: shared
-              readOnly: true
+            - name: resticprofile
+              command:
+                - resticprofile
+                - -c
+                - /resticprofile-config/profiles.yaml
+                - -n
+                - azure
+                - --lock-wait
+                - 1h
+                - backup
+              image: creativeprojects/resticprofile
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: resticprofile
+                - secretRef:
+                    name: resticprofile-rclone
+              env:
+                - name: RCLONE_CONFIG
+                  value: /rclone-config/rclone.conf
+              volumeMounts:
+                - mountPath: /rclone-config
+                  name: rclone-config
+                - mountPath: /resticprofile-config
+                  name: resticprofile-config
+                - mountPath: /tmp
+                  name: scratch
+                - mountPath: /cache
+                  name: cache
+                - mountPath: /source/k8s-pv
+                  name: k8s-pv
+                  readOnly: true
+                - mountPath: /source/backups
+                  name: backups
+                  readOnly: true
+                - mountPath: /source/shared
+                  name: shared
+                  readOnly: true
           volumes:
-          - name: rclone-config
-            configMap:
-              name: rclone-template
-              items:
-                - key: rclone.conf.template
-                  path: rclone.conf
-          - name: resticprofile-config
-            configMap:
-              name: resticprofile-config
-          - name: scratch
-            emptyDir: {}
-          - name: cache
-            persistentVolumeClaim:
-              claimName: resticprofile-cache-synology
-          - nfs:
-              server: fs2.oneill.net
-              path: /volume1/k8s-pv
-              readOnly: true
-            name: k8s-pv
-          - nfs:
-              server: fs2.oneill.net
-              path: /volume2/backups
-              readOnly: true
-            name: backups
-          - nfs:
-              server: fs2.oneill.net
-              path: /volume2/shared
-              readOnly: true
-            name: shared
+            - name: rclone-config
+              configMap:
+                name: rclone-template
+                items:
+                  - key: rclone.conf.template
+                    path: rclone.conf
+            - name: resticprofile-config
+              configMap:
+                name: resticprofile-config
+            - name: scratch
+              emptyDir: {}
+            - name: cache
+              persistentVolumeClaim:
+                claimName: resticprofile-cache-synology
+            - nfs:
+                server: fs2.oneill.net
+                path: /volume1/k8s-pv
+                readOnly: true
+              name: k8s-pv
+            - nfs:
+                server: fs2.oneill.net
+                path: /volume2/backups
+                readOnly: true
+              name: backups
+            - nfs:
+                server: fs2.oneill.net
+                path: /volume2/shared
+                readOnly: true
+              name: shared

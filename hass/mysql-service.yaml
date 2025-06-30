@@ -8,6 +8,6 @@ spec:
   selector:
     app: hass-mysql
   ports:
-  - name: hass-mysql
-    protocol: TCP
-    port: 3306
+    - name: hass-mysql
+      protocol: TCP
+      port: 3306

@@ -9,10 +9,10 @@ spec:
     privateKeySecretRef:
       name: issuer-account-key
     solvers:
-    - dns01:
-        route53:
-          region: us-east-1
-          accessKeyID: AKIAJKAXEQX5E3OWSFHQ
-          secretAccessKeySecretRef:
-            name: cert-manager
-            key: aws-secret-access-key
+      - dns01:
+          route53:
+            region: us-east-1
+            accessKeyID: AKIAJKAXEQX5E3OWSFHQ
+            secretAccessKeySecretRef:
+              name: cert-manager
+              key: aws-secret-access-key

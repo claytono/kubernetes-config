@@ -19,28 +19,28 @@ spec:
         name: pihole
     spec:
       containers:
-      - name: pihole
-        image: pihole/pihole:latest
-        imagePullPolicy: Always
-        env:
-        - name: TZ
-          value: "America/New_York"
-        - name: PIHOLE_DNS_
-          value: 172.19.74.1
-        - name: VIRTUAL_HOST
-          value: pihole.k.oneill.net
-        envFrom:
-          - secretRef:
-              name: pihole
-        volumeMounts:
-        - name: config
-          mountPath: "/etc/pihole"
-        - name: dnsmasq
-          mountPath: "/etc/dnsmasq.d"
+        - name: pihole
+          image: pihole/pihole:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+            - name: PIHOLE_DNS_
+              value: 172.19.74.1
+            - name: VIRTUAL_HOST
+              value: pihole.k.oneill.net
+          envFrom:
+            - secretRef:
+                name: pihole
+          volumeMounts:
+            - name: config
+              mountPath: "/etc/pihole"
+            - name: dnsmasq
+              mountPath: "/etc/dnsmasq.d"
       volumes:
-      - name: config
-        persistentVolumeClaim:
-          claimName: pihole-config
-      - name: dnsmasq
-        persistentVolumeClaim:
-          claimName: pihole-dnsmasq
+        - name: config
+          persistentVolumeClaim:
+            claimName: pihole-config
+        - name: dnsmasq
+          persistentVolumeClaim:
+            claimName: pihole-dnsmasq

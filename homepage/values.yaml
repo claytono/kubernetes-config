@@ -38,9 +38,9 @@ ingress:
       kubernetes.io/ingress.class: "nginx"
       cert-manager.io/cluster-issuer: "letsencrypt"
     tls:
-    - hosts:
-      - "homepage.k.oneill.net"
-      secretName: "homepage-tls"
+      - hosts:
+          - "homepage.k.oneill.net"
+        secretName: "homepage-tls"
     hosts:
       - host: homepage.k.oneill.net
         paths:

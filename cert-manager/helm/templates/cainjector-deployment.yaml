@@ -41,17 +41,17 @@ spec:
           image: "quay.io/jetstack/cert-manager-cainjector:v1.11.0"
           imagePullPolicy: IfNotPresent
           args:
-          - --v=2
-          - --leader-election-namespace=kube-system
+            - --v=2
+            - --leader-election-namespace=kube-system
           env:
-          - name: POD_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-              - ALL
+                - ALL
       nodeSelector:
         kubernetes.io/os: linux

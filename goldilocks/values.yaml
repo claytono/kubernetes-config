@@ -25,10 +25,10 @@ dashboard:
       gethomepage.dev/group: "Monitoring"
 
     hosts:
-    - host: "goldilocks.k.oneill.net"
-      paths:
-        - path: /
-          type: Prefix
+      - host: "goldilocks.k.oneill.net"
+        paths:
+          - path: /
+            type: Prefix
     tls:
       - secretName: goldilocks-tls
-        hosts: [ "goldilocks.k.oneill.net" ]
+        hosts: ["goldilocks.k.oneill.net"]

@@ -5,14 +5,14 @@ kind: Kustomization
 namespace: metallb-system
 
 resources:
-- namespace.yaml
-- helm/charts/crds/templates/crds.yaml
-- helm/templates/rbac.yaml
-- helm/templates/service-accounts.yaml
-- helm/templates/controller.yaml
-- helm/templates/speaker.yaml
-- helm/templates/webhooks.yaml
-- config.yaml
+  - namespace.yaml
+  - helm/charts/crds/templates/crds.yaml
+  - helm/templates/rbac.yaml
+  - helm/templates/service-accounts.yaml
+  - helm/templates/controller.yaml
+  - helm/templates/speaker.yaml
+  - helm/templates/webhooks.yaml
+  - config.yaml
 
 labels:
   - pairs:

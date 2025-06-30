@@ -2,4 +2,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-    name: ingress-namespace
+  name: ingress-namespace

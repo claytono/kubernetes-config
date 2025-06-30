@@ -19,52 +19,59 @@ spec:
     spec:
       hostNetwork: true
       containers:
-      - name: plexmediaserver
-        image: plexinc/pms-docker:plexpass
-        imagePullPolicy: Always
-        securityContext:
-          privileged: true
-        livenessProbe:
-          exec:
-            command: [ "dd", "if=/dev/zero", "of=/config/health-check", "bs=1M", "count=1" ]
-          periodSeconds: 120
-          timeoutSeconds: 15
-        ports:
-          # See
-          # https://support.plex.tv/hc/en-us/articles/201543147-What-network-ports-do-I-need-to-allow-through-my-firewall
-          # for port details
-        - containerPort: 32400
-        - containerPort: 1900
-          protocol: "UDP"
-        - containerPort: 32410
-          protocol: "UDP"
-        - containerPort: 32412
-          protocol: "UDP"
-        - containerPort: 32413
-          protocol: "UDP"
-        - containerPort: 32414
-          protocol: "UDP"
-        env:
-          - name: HOSTNAME
-            value: "kube-pms"
-          - name: TZ
-            value: "EST5EDT"
-          - name: PLEX_CLAIM
-            valueFrom:
-              secretKeyRef:
-                name: plexmediaserver
-                key: PLEX_CLAIM
-        volumeMounts:
-          - mountPath: "/config"
-            name: config
-          - mountPath: "/transcode"
-            name: transcode
-          - mountPath: "/data"
-            name: video
-        resources:
-          requests:
-            memory: "8192Mi"
-            cpu: "2000m"
+        - name: plexmediaserver
+          image: plexinc/pms-docker:plexpass
+          imagePullPolicy: Always
+          securityContext:
+            privileged: true
+          livenessProbe:
+            exec:
+              command:
+                [
+                  "dd",
+                  "if=/dev/zero",
+                  "of=/config/health-check",
+                  "bs=1M",
+                  "count=1",
+                ]
+            periodSeconds: 120
+            timeoutSeconds: 15
+          ports:
+            # See
+            # https://support.plex.tv/hc/en-us/articles/201543147-What-network-ports-do-I-need-to-allow-through-my-firewall
+            # for port details
+            - containerPort: 32400
+            - containerPort: 1900
+              protocol: "UDP"
+            - containerPort: 32410
+              protocol: "UDP"
+            - containerPort: 32412
+              protocol: "UDP"
+            - containerPort: 32413
+              protocol: "UDP"
+            - containerPort: 32414
+              protocol: "UDP"
+          env:
+            - name: HOSTNAME
+              value: "kube-pms"
+            - name: TZ
+              value: "EST5EDT"
+            - name: PLEX_CLAIM
+              valueFrom:
+                secretKeyRef:
+                  name: plexmediaserver
+                  key: PLEX_CLAIM
+          volumeMounts:
+            - mountPath: "/config"
+              name: config
+            - mountPath: "/transcode"
+              name: transcode
+            - mountPath: "/data"
+              name: video
+          resources:
+            requests:
+              memory: "8192Mi"
+              cpu: "2000m"
       volumes:
         - name: config
           iscsi:

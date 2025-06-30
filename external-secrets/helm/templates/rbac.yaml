@@ -12,101 +12,101 @@ metadata:
     app.kubernetes.io/managed-by: Helm
 rules:
   - apiGroups:
-    - "external-secrets.io"
+      - "external-secrets.io"
     resources:
-    - "secretstores"
-    - "clustersecretstores"
-    - "externalsecrets"
-    - "clusterexternalsecrets"
-    - "pushsecrets"
+      - "secretstores"
+      - "clustersecretstores"
+      - "externalsecrets"
+      - "clusterexternalsecrets"
+      - "pushsecrets"
     verbs:
-    - "get"
-    - "list"
-    - "watch"
+      - "get"
+      - "list"
+      - "watch"
   - apiGroups:
-    - "external-secrets.io"
+      - "external-secrets.io"
     resources:
-    - "externalsecrets"
-    - "externalsecrets/status"
-    - "externalsecrets/finalizers"
-    - "secretstores"
-    - "secretstores/status"
-    - "secretstores/finalizers"
-    - "clustersecretstores"
-    - "clustersecretstores/status"
-    - "clustersecretstores/finalizers"
-    - "clusterexternalsecrets"
-    - "clusterexternalsecrets/status"
-    - "clusterexternalsecrets/finalizers"
-    - "pushsecrets"
-    - "pushsecrets/status"
-    - "pushsecrets/finalizers"
+      - "externalsecrets"
+      - "externalsecrets/status"
+      - "externalsecrets/finalizers"
+      - "secretstores"
+      - "secretstores/status"
+      - "secretstores/finalizers"
+      - "clustersecretstores"
+      - "clustersecretstores/status"
+      - "clustersecretstores/finalizers"
+      - "clusterexternalsecrets"
+      - "clusterexternalsecrets/status"
+      - "clusterexternalsecrets/finalizers"
+      - "pushsecrets"
+      - "pushsecrets/status"
+      - "pushsecrets/finalizers"
     verbs:
-    - "update"
-    - "patch"
+      - "update"
+      - "patch"
   - apiGroups:
-    - "generators.external-secrets.io"
+      - "generators.external-secrets.io"
     resources:
-    - "acraccesstokens"
-    - "ecrauthorizationtokens"
-    - "fakes"
-    - "gcraccesstokens"
-    - "passwords"
-    - "vaultdynamicsecrets"
+      - "acraccesstokens"
+      - "ecrauthorizationtokens"
+      - "fakes"
+      - "gcraccesstokens"
+      - "passwords"
+      - "vaultdynamicsecrets"
     verbs:
-    - "get"
-    - "list"
-    - "watch"
+      - "get"
+      - "list"
+      - "watch"
   - apiGroups:
-    - ""
+      - ""
     resources:
-    - "serviceaccounts"
-    - "namespaces"
+      - "serviceaccounts"
+      - "namespaces"
     verbs:
-    - "get"
-    - "list"
-    - "watch"
+      - "get"
+      - "list"
+      - "watch"
   - apiGroups:
-    - ""
+      - ""
     resources:
-    - "configmaps"
+      - "configmaps"
     verbs:
-    - "get"
-    - "list"
-    - "watch"
+      - "get"
+      - "list"
+      - "watch"
   - apiGroups:
-    - ""
+      - ""
     resources:
-    - "secrets"
+      - "secrets"
     verbs:
-    - "get"
-    - "list"
-    - "watch"
-    - "create"
-    - "update"
-    - "delete"
-    - "patch"
+      - "get"
+      - "list"
+      - "watch"
+      - "create"
+      - "update"
+      - "delete"
+      - "patch"
   - apiGroups:
-    - ""
+      - ""
     resources:
-    - "serviceaccounts/token"
+      - "serviceaccounts/token"
     verbs:
-    - "create"
+      - "create"
   - apiGroups:
-    - ""
+      - ""
     resources:
-    - "events"
+      - "events"
     verbs:
-    - "create"
-    - "patch"
+      - "create"
+      - "patch"
   - apiGroups:
-    - "external-secrets.io"
+      - "external-secrets.io"
     resources:
-    - "externalsecrets"
+      - "externalsecrets"
     verbs:
-    - "create"
-    - "update"
-    - "delete"
+      - "create"
+      - "update"
+      - "delete"
 ---
 # Source: external-secrets/templates/rbac.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -135,14 +135,14 @@ rules:
       - "watch"
       - "list"
   - apiGroups:
-    - "generators.external-secrets.io"
+      - "generators.external-secrets.io"
     resources:
-    - "acraccesstokens"
-    - "ecrauthorizationtokens"
-    - "fakes"
-    - "gcraccesstokens"
-    - "passwords"
-    - "vaultdynamicsecrets"
+      - "acraccesstokens"
+      - "ecrauthorizationtokens"
+      - "fakes"
+      - "gcraccesstokens"
+      - "passwords"
+      - "vaultdynamicsecrets"
     verbs:
       - "get"
       - "watch"
@@ -176,14 +176,14 @@ rules:
       - "patch"
       - "update"
   - apiGroups:
-    - "generators.external-secrets.io"
+      - "generators.external-secrets.io"
     resources:
-    - "acraccesstokens"
-    - "ecrauthorizationtokens"
-    - "fakes"
-    - "gcraccesstokens"
-    - "passwords"
-    - "vaultdynamicsecrets"
+      - "acraccesstokens"
+      - "ecrauthorizationtokens"
+      - "fakes"
+      - "gcraccesstokens"
+      - "passwords"
+      - "vaultdynamicsecrets"
     verbs:
       - "create"
       - "delete"
@@ -205,13 +205,13 @@ metadata:
     app.kubernetes.io/managed-by: Helm
 rules:
   - apiGroups:
-    - "external-secrets.io"
+      - "external-secrets.io"
     resources:
-    - "externalsecrets"
+      - "externalsecrets"
     verbs:
-    - "get"
-    - "list"
-    - "watch"
+      - "get"
+      - "list"
+      - "watch"
 ---
 # Source: external-secrets/templates/rbac.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -247,30 +247,30 @@ metadata:
     app.kubernetes.io/managed-by: Helm
 rules:
   - apiGroups:
-    - ""
+      - ""
     resources:
-    - "configmaps"
+      - "configmaps"
     resourceNames:
-    - "external-secrets-controller"
+      - "external-secrets-controller"
     verbs:
-    - "get"
-    - "update"
-    - "patch"
+      - "get"
+      - "update"
+      - "patch"
   - apiGroups:
-    - ""
+      - ""
     resources:
-    - "configmaps"
+      - "configmaps"
     verbs:
-    - "create"
+      - "create"
   - apiGroups:
-    - "coordination.k8s.io"
+      - "coordination.k8s.io"
     resources:
-    - "leases"
+      - "leases"
     verbs:
-    - "get"
-    - "create"
-    - "update"
-    - "patch"
+      - "get"
+      - "create"
+      - "update"
+      - "patch"
 ---
 # Source: external-secrets/templates/rbac.yaml
 apiVersion: rbac.authorization.k8s.io/v1

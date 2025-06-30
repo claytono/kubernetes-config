@@ -19,7 +19,7 @@ spec:
   containers:
     - name: test
       image: quay.io/reactiveops/ci-images:v11-alpine
-      command: ['bash']
+      command: ["bash"]
       args:
         - -c
         - |

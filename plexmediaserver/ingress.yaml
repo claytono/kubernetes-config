@@ -14,7 +14,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "plex.k.oneill.net"
+        - "plex.k.oneill.net"
       secretName: "plexmediaserver-tls"
   rules:
     - host: "plex.k.oneill.net"

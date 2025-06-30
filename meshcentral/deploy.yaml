@@ -8,36 +8,36 @@ spec:
   template:
     spec:
       containers:
-      - name: meshcentral
-        image: typhonragewind/meshcentral
-        imagePullPolicy: Always
-        env:
-        - name: TZ
-          value: "America/New_York"
-        - name: HOSTNAME
-          value: meshcentral.k.oneill.net
-        - name: REVERSE_PROXY
-          value: "false"
-        - name: IFRAME
-          value: "false"
-        # set to false if you want disable self-service creation of new accounts
-        # besides the first (admin)
-        - name: ALLOW_NEW_ACCOUNTS
-          value: "true"
-        # set to true to enable WebRTC - per documentation it is not officially
-        # released with meshcentral, but is solid enough to work with. Use with
-        # caution
-        - name: WEBRTC
-          value: "false"
-        volumeMounts:
-        - name: data
-          mountPath: /opt/meshcentral/meshcentral-data
-        - name: files
-          mountPath: /opt/meshcentral/meshcentral-files
+        - name: meshcentral
+          image: typhonragewind/meshcentral
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+            - name: HOSTNAME
+              value: meshcentral.k.oneill.net
+            - name: REVERSE_PROXY
+              value: "false"
+            - name: IFRAME
+              value: "false"
+            # set to false if you want disable self-service creation of new accounts
+            # besides the first (admin)
+            - name: ALLOW_NEW_ACCOUNTS
+              value: "true"
+            # set to true to enable WebRTC - per documentation it is not officially
+            # released with meshcentral, but is solid enough to work with. Use with
+            # caution
+            - name: WEBRTC
+              value: "false"
+          volumeMounts:
+            - name: data
+              mountPath: /opt/meshcentral/meshcentral-data
+            - name: files
+              mountPath: /opt/meshcentral/meshcentral-files
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: meshcentral-data
-      - name: files
-        persistentVolumeClaim:
-          claimName: meshcentral-files
+        - name: data
+          persistentVolumeClaim:
+            claimName: meshcentral-data
+        - name: files
+          persistentVolumeClaim:
+            claimName: meshcentral-files

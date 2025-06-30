@@ -9,7 +9,7 @@ spec:
   ingressClassName: "nginx"
   tls:
     - hosts:
-      - "netatmo-exporter.k.oneill.net"
+        - "netatmo-exporter.k.oneill.net"
       secretName: "netatmo-exporter-tls"
   rules:
     - host: "netatmo-exporter.k.oneill.net"

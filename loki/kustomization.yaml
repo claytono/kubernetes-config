@@ -5,10 +5,10 @@ kind: Kustomization
 namespace: default
 
 resources:
- - helm/loki/templates/statefulset.yaml
- - helm/loki/templates/serviceaccount.yaml
- - helm/loki/templates/service.yaml
- - helm/loki/templates/service-memberlist.yaml
+  - helm/loki/templates/statefulset.yaml
+  - helm/loki/templates/serviceaccount.yaml
+  - helm/loki/templates/service.yaml
+  - helm/loki/templates/service-memberlist.yaml
 
 labels:
   - pairs:

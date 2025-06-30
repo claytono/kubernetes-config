@@ -5,9 +5,9 @@ namespace: kube-system
 namePrefix: awair-
 
 resources:
- - deploy.yaml
- - service.yaml
- - externalsecret.yaml
+  - deploy.yaml
+  - service.yaml
+  - externalsecret.yaml
 
 labels:
   - pairs:

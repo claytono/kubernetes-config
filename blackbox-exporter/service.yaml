@@ -5,6 +5,6 @@ metadata:
   name: exporter
 spec:
   ports:
-  - name: exporter
-    protocol: TCP
-    port: 9115
+    - name: exporter
+      protocol: TCP
+      port: 9115

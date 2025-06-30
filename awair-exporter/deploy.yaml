@@ -12,11 +12,11 @@ spec:
       name: awair-exporter
     spec:
       containers:
-      - name: awair-exporter
-        image: dvorak/awair_exporter
-        imagePullPolicy: Always
-        envFrom:
-          - secretRef:
-              name: exporter
-        ports:
-        - containerPort: 8000
+        - name: awair-exporter
+          image: dvorak/awair_exporter
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: exporter
+          ports:
+            - containerPort: 8000

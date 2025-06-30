@@ -13,7 +13,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "grafana.k.oneill.net"
+        - "grafana.k.oneill.net"
       secretName: "grafana-tls"
   rules:
     - host: "grafana.k.oneill.net"

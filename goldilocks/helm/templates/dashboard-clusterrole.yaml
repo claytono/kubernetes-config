@@ -12,31 +12,31 @@ metadata:
     app.kubernetes.io/component: dashboard
 rules:
   - apiGroups:
-      - 'autoscaling.k8s.io'
+      - "autoscaling.k8s.io"
     resources:
-      - 'verticalpodautoscalers'
+      - "verticalpodautoscalers"
     verbs:
-      - 'get'
-      - 'list'
+      - "get"
+      - "list"
   - apiGroups:
-      - 'apps'
+      - "apps"
     resources:
-      - '*'
+      - "*"
     verbs:
-      - 'get'
-      - 'list'
+      - "get"
+      - "list"
   - apiGroups:
-      - ''
+      - ""
     resources:
-      - 'namespaces'
-      - 'pods'
+      - "namespaces"
+      - "pods"
     verbs:
-      - 'get'
-      - 'list'
+      - "get"
+      - "list"
   - apiGroups:
-      - 'argoproj.io'
+      - "argoproj.io"
     resources:
       - rollouts
     verbs:
-      - 'get'
-      - 'list'
+      - "get"
+      - "list"

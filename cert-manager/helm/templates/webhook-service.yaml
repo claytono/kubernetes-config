@@ -16,10 +16,10 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - name: https
-    port: 443
-    protocol: TCP
-    targetPort: "https"
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: "https"
   selector:
     app.kubernetes.io/name: webhook
     app.kubernetes.io/instance: cert-manager

@@ -120,12 +120,12 @@ metadata:
   name: vpa-target-reader
 rules:
   - apiGroups:
-    - '*'
+      - "*"
     resources:
-    - '*/scale'
+      - "*/scale"
     verbs:
-    - get
-    - watch
+      - get
+      - watch
   - apiGroups:
       - ""
     resources:

@@ -4,7 +4,7 @@ metadata:
   name: meshcentral
 spec:
   ports:
-  - name: meshcentral
-    protocol: TCP
-    port: 80
-    targetPort: 443
+    - name: meshcentral
+      protocol: TCP
+      port: 80
+      targetPort: 443

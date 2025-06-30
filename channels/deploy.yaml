@@ -19,22 +19,22 @@ spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       containers:
-      - name: channels
-        image: fancybits/channels-dvr:tve
-        imagePullPolicy: Always
-#        command: ['sleep', 'infinity']
-        env:
-          - name: TZ
-            value: "EST5EDT"
-          - name: CHANNELS_PORT
-            value: "8089"
-        volumeMounts:
-          - mountPath: "/channels-dvr"
-            name: config
-          - mountPath: "/recordings"
-            name: recordings
-          - name: dev-dri
-            mountPath: /dev/dri
+        - name: channels
+          image: fancybits/channels-dvr:tve
+          imagePullPolicy: Always
+          #        command: ['sleep', 'infinity']
+          env:
+            - name: TZ
+              value: "EST5EDT"
+            - name: CHANNELS_PORT
+              value: "8089"
+          volumeMounts:
+            - mountPath: "/channels-dvr"
+              name: config
+            - mountPath: "/recordings"
+              name: recordings
+            - name: dev-dri
+              mountPath: /dev/dri
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -45,4 +45,4 @@ spec:
           name: recordings
         - name: dev-dri
           hostPath:
-              path: /dev/dri
+            path: /dev/dri

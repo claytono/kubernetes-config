@@ -11,9 +11,9 @@ spec:
   type: LoadBalancer
   loadBalancerIP: 172.19.74.21
   ports:
-  - port: 32400
-    targetPort: 32400
-    protocol: TCP
+    - port: 32400
+      targetPort: 32400
+      protocol: TCP
   selector:
     app: plexmediaserver
 ---

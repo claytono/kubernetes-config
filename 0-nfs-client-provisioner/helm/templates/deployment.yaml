@@ -25,14 +25,12 @@ spec:
         release: nfs-subdir-external-provisioner
     spec:
       serviceAccountName: nfs-subdir-external-provisioner
-      securityContext:
-        {}
+      securityContext: {}
       containers:
         - name: nfs-subdir-external-provisioner
           image: "registry.k8s.io/sig-storage/nfs-subdir-external-provisioner:v4.0.18"
           imagePullPolicy: IfNotPresent
-          securityContext:
-            {}
+          securityContext: {}
           volumeMounts:
             - name: nfs-client-root
               mountPath: /persistentvolumes

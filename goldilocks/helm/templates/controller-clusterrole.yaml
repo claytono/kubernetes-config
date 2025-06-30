@@ -12,29 +12,29 @@ metadata:
     app.kubernetes.io/component: controller
 rules:
   - apiGroups:
-      - 'apps'
+      - "apps"
     resources:
-      - '*'
+      - "*"
     verbs:
-      - 'get'
-      - 'list'
-      - 'watch'
+      - "get"
+      - "list"
+      - "watch"
   - apiGroups:
-      - ''
+      - ""
     resources:
-      - 'namespaces'
-      - 'pods'
+      - "namespaces"
+      - "pods"
     verbs:
-      - 'get'
-      - 'list'
-      - 'watch'
+      - "get"
+      - "list"
+      - "watch"
   - apiGroups:
-      - 'autoscaling.k8s.io'
+      - "autoscaling.k8s.io"
     resources:
-      - 'verticalpodautoscalers'
+      - "verticalpodautoscalers"
     verbs:
-      - 'get'
-      - 'list'
-      - 'create'
-      - 'delete'
-      - 'update'
+      - "get"
+      - "list"
+      - "create"
+      - "delete"
+      - "update"

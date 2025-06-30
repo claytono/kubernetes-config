@@ -41,13 +41,13 @@ spec:
           image: "quay.io/jetstack/cert-manager-ctl:v1.11.0"
           imagePullPolicy: IfNotPresent
           args:
-          - check
-          - api
-          - --wait=1m
+            - check
+            - api
+            - --wait=1m
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-              - ALL
+                - ALL
       nodeSelector:
         kubernetes.io/os: linux

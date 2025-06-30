@@ -17,26 +17,32 @@ spec:
         app: mqtt-log
     spec:
       containers:
-      - name: mqtt-log
-        image: eclipse-mosquitto:2.0
-        env:
-        - name: MQTT_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: mqtt-log
-              key: username
-        - name: MQTT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mqtt-log
-              key: password
-        command: ["/usr/bin/mosquitto_sub"]
-        args: [
-          "-h", "mosquitto",
-          "-t", "#",
-          "-v",
-          "-u", "$(MQTT_USERNAME)",
-          "-P", "$(MQTT_PASSWORD)",
-          "-F", "{\"timestamp\":\"%I\",\"topic\":\"%t\",\"message\":\"%p\"}"
-        ]
-        imagePullPolicy: Always
+        - name: mqtt-log
+          image: eclipse-mosquitto:2.0
+          env:
+            - name: MQTT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mqtt-log
+                  key: username
+            - name: MQTT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mqtt-log
+                  key: password
+          command: ["/usr/bin/mosquitto_sub"]
+          args:
+            [
+              "-h",
+              "mosquitto",
+              "-t",
+              "#",
+              "-v",
+              "-u",
+              "$(MQTT_USERNAME)",
+              "-P",
+              "$(MQTT_PASSWORD)",
+              "-F",
+              '{"timestamp":"%I","topic":"%t","message":"%p"}',
+            ]
+          imagePullPolicy: Always

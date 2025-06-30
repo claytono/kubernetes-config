@@ -8,6 +8,6 @@ spec:
   selector:
     app: changedetection
   ports:
-  - name: changedetection
-    protocol: TCP
-    port: 5000
+    - name: changedetection
+      protocol: TCP
+      port: 5000

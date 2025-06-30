@@ -5,20 +5,20 @@ kind: Kustomization
 namespace: node-feature-discovery
 
 resources:
-- namespace.yaml
-- helm/crds/nfd-api-crds.yaml
-- helm/templates/clusterrole.yaml
-- helm/templates/clusterrolebinding.yaml
-- helm/templates/master.yaml
-- helm/templates/nfd-gc.yaml
-- helm/templates/nfd-master-conf.yaml
-- helm/templates/nfd-topologyupdater-conf.yaml
-- helm/templates/nfd-worker-conf.yaml
-- helm/templates/role.yaml
-- helm/templates/rolebinding.yaml
-- helm/templates/service.yaml
-- helm/templates/serviceaccount.yaml
-- helm/templates/worker.yaml
+  - namespace.yaml
+  - helm/crds/nfd-api-crds.yaml
+  - helm/templates/clusterrole.yaml
+  - helm/templates/clusterrolebinding.yaml
+  - helm/templates/master.yaml
+  - helm/templates/nfd-gc.yaml
+  - helm/templates/nfd-master-conf.yaml
+  - helm/templates/nfd-topologyupdater-conf.yaml
+  - helm/templates/nfd-worker-conf.yaml
+  - helm/templates/role.yaml
+  - helm/templates/rolebinding.yaml
+  - helm/templates/service.yaml
+  - helm/templates/serviceaccount.yaml
+  - helm/templates/worker.yaml
 
 labels:
   - pairs:

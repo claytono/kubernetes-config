@@ -4,29 +4,29 @@ kind: Kustomization
 namespace: external-secrets
 
 resources:
- - namespace.yaml
- - helm/templates/crds/acraccesstoken.yaml
- - helm/templates/crds/clusterexternalsecret.yaml
- - helm/templates/crds/clustersecretstore.yaml
- - helm/templates/crds/ecrauthorizationtoken.yaml
- - helm/templates/crds/externalsecret.yaml
- - helm/templates/crds/fake.yaml
- - helm/templates/crds/gcraccesstoken.yaml
- - helm/templates/crds/password.yaml
- - helm/templates/crds/pushsecret.yaml
- - helm/templates/crds/secretstore.yaml
- - helm/templates/crds/vaultdynamicsecret.yaml
- - helm/templates/crds/webhook.yaml
- - helm/templates/deployment.yaml
- - helm/templates/rbac.yaml
- - helm/templates/serviceaccount.yaml
- - helm/templates/validatingwebhook.yaml
- - helm/templates/webhook-certificate.yaml
- - helm/templates/webhook-deployment.yaml
- - helm/templates/webhook-service.yaml
- - helm/templates/webhook-serviceaccount.yaml
- - clusterstore.yaml
- - iscsi-external-secret.yaml
+  - namespace.yaml
+  - helm/templates/crds/acraccesstoken.yaml
+  - helm/templates/crds/clusterexternalsecret.yaml
+  - helm/templates/crds/clustersecretstore.yaml
+  - helm/templates/crds/ecrauthorizationtoken.yaml
+  - helm/templates/crds/externalsecret.yaml
+  - helm/templates/crds/fake.yaml
+  - helm/templates/crds/gcraccesstoken.yaml
+  - helm/templates/crds/password.yaml
+  - helm/templates/crds/pushsecret.yaml
+  - helm/templates/crds/secretstore.yaml
+  - helm/templates/crds/vaultdynamicsecret.yaml
+  - helm/templates/crds/webhook.yaml
+  - helm/templates/deployment.yaml
+  - helm/templates/rbac.yaml
+  - helm/templates/serviceaccount.yaml
+  - helm/templates/validatingwebhook.yaml
+  - helm/templates/webhook-certificate.yaml
+  - helm/templates/webhook-deployment.yaml
+  - helm/templates/webhook-service.yaml
+  - helm/templates/webhook-serviceaccount.yaml
+  - clusterstore.yaml
+  - iscsi-external-secret.yaml
 
 labels:
   - pairs:

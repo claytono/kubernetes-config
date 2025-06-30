@@ -22,8 +22,8 @@ spec:
               image: ghcr.io/claytono/rclone:latest
               imagePullPolicy: Always
               envFrom:
-              - secretRef:
-                  name: resticprofile-rclone
+                - secretRef:
+                    name: resticprofile-rclone
               env:
                 - name: PUSH_GATEWAY
                   value: https://pushgateway.k.oneill.net

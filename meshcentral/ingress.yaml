@@ -14,7 +14,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "meshcentral.k.oneill.net"
+        - "meshcentral.k.oneill.net"
       secretName: "meshcentral-tls"
   rules:
     - host: "meshcentral.k.oneill.net"

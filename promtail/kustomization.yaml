@@ -5,10 +5,10 @@ kind: Kustomization
 namespace: default
 
 resources:
- - helm/promtail/templates/clusterrole.yaml
- - helm/promtail/templates/clusterrolebinding.yaml
- - helm/promtail/templates/daemonset.yaml
- - helm/promtail/templates/serviceaccount.yaml
+  - helm/promtail/templates/clusterrole.yaml
+  - helm/promtail/templates/clusterrolebinding.yaml
+  - helm/promtail/templates/daemonset.yaml
+  - helm/promtail/templates/serviceaccount.yaml
 
 labels:
   - pairs:

@@ -4,7 +4,7 @@ metadata:
   name: pihole
 spec:
   ports:
-  - name: pihole-admin
-    protocol: TCP
-    port: 8000
-    targetPort: 80
+    - name: pihole-admin
+      protocol: TCP
+      port: 8000
+      targetPort: 80

@@ -15,19 +15,19 @@ spec:
           nodeSelector:
             feature.node.kubernetes.io/usb-ff_148f_7601.present: "true"
           containers:
-          - name: ezshare-sync
-            image: ghcr.io/claytono/ezshare-sync:latest
-            env:
-            - name: whiteList
-              value: ".log|.crc|.tgt|.dat|.edf|DATALOG|SETTINGS"
-            - name: mode
-              value: "soft"
-            volumeMounts:
-            - name: cpap-data
-              mountPath: /ezshare-data
+            - name: ezshare-sync
+              image: ghcr.io/claytono/ezshare-sync:latest
+              env:
+                - name: whiteList
+                  value: ".log|.crc|.tgt|.dat|.edf|DATALOG|SETTINGS"
+                - name: mode
+                  value: "soft"
+              volumeMounts:
+                - name: cpap-data
+                  mountPath: /ezshare-data
           volumes:
-          - name: cpap-data
-            nfs:
-              server: fs2.oneill.net
-              path: /volume1/drive/cpap-data
+            - name: cpap-data
+              nfs:
+                server: fs2.oneill.net
+                path: /volume1/drive/cpap-data
           restartPolicy: Never

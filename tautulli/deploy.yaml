@@ -16,24 +16,24 @@ spec:
         app: tautulli
     spec:
       containers:
-      - name: tautulli
-        securityContext:
-          privileged: true
-        image: tautulli/tautulli
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8181
-        env:
-          - name: TZ
-            value: "EST5EDT"
-        livenessProbe:
-          failureThreshold: 10000
-          httpGet:
-            path: /
-            port: 8181
-        volumeMounts:
-          - mountPath: "/config"
-            name: config
+        - name: tautulli
+          securityContext:
+            privileged: true
+          image: tautulli/tautulli
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8181
+          env:
+            - name: TZ
+              value: "EST5EDT"
+          livenessProbe:
+            failureThreshold: 10000
+            httpGet:
+              path: /
+              port: 8181
+          volumeMounts:
+            - mountPath: "/config"
+              name: config
       volumes:
         - name: config
           persistentVolumeClaim:

@@ -1,0 +1,31 @@
+---
+# Source: n8n/charts/valkey/templates/scripts-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: n8n-valkey-scripts
+  namespace: "n8n"
+  labels:
+    app.kubernetes.io/instance: n8n
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: valkey
+    app.kubernetes.io/version: 8.0.2
+    helm.sh/chart: valkey-2.4.7
+    app.kubernetes.io/part-of: valkey
+data:
+  start-primary.sh: |
+    #!/bin/bash
+
+    [[ -f $VALKEY_PASSWORD_FILE ]] && export VALKEY_PASSWORD="$(< "${VALKEY_PASSWORD_FILE}")"
+    if [[ -f /opt/bitnami/valkey/mounted-etc/primary.conf ]];then
+        cp /opt/bitnami/valkey/mounted-etc/primary.conf /opt/bitnami/valkey/etc/primary.conf
+    fi
+    if [[ -f /opt/bitnami/valkey/mounted-etc/valkey.conf ]];then
+        cp /opt/bitnami/valkey/mounted-etc/valkey.conf /opt/bitnami/valkey/etc/valkey.conf
+    fi
+    ARGS=("--port" "${VALKEY_PORT}")
+    ARGS+=("--requirepass" "${VALKEY_PASSWORD}")
+    ARGS+=("--primaryauth" "${VALKEY_PASSWORD}")
+    ARGS+=("--include" "/opt/bitnami/valkey/etc/valkey.conf")
+    ARGS+=("--include" "/opt/bitnami/valkey/etc/primary.conf")
+    exec valkey-server "${ARGS[@]}"

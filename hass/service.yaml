@@ -8,6 +8,6 @@ spec:
   selector:
     app: hass
   ports:
-  - name: hass
-    protocol: TCP
-    port: 8123
+    - name: hass
+      protocol: TCP
+      port: 8123

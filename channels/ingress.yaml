@@ -14,7 +14,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "channels.k.oneill.net"
+        - "channels.k.oneill.net"
       secretName: "channels-tls"
   rules:
     - host: "channels.k.oneill.net"

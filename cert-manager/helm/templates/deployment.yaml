@@ -34,8 +34,8 @@ spec:
         helm.sh/chart: cert-manager-v1.11.0
       annotations:
         prometheus.io/path: "/metrics"
-        prometheus.io/scrape: 'true'
-        prometheus.io/port: '9402'
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9402"
     spec:
       serviceAccountName: cert-manager
       securityContext:
@@ -47,27 +47,27 @@ spec:
           image: "quay.io/jetstack/cert-manager-controller:v1.11.0"
           imagePullPolicy: IfNotPresent
           args:
-          - --v=2
-          - --cluster-resource-namespace=$(POD_NAMESPACE)
-          - --leader-election-namespace=kube-system
-          - --acme-http01-solver-image=quay.io/jetstack/cert-manager-acmesolver:v1.11.0
-          - --default-issuer-name=letsencrypt
-          - --default-issuer-kind=ClusterIssuer
-          - --default-issuer-group=cert-manager.io
-          - --max-concurrent-challenges=60
+            - --v=2
+            - --cluster-resource-namespace=$(POD_NAMESPACE)
+            - --leader-election-namespace=kube-system
+            - --acme-http01-solver-image=quay.io/jetstack/cert-manager-acmesolver:v1.11.0
+            - --default-issuer-name=letsencrypt
+            - --default-issuer-kind=ClusterIssuer
+            - --default-issuer-group=cert-manager.io
+            - --max-concurrent-challenges=60
           ports:
-          - containerPort: 9402
-            name: http-metrics
-            protocol: TCP
+            - containerPort: 9402
+              name: http-metrics
+              protocol: TCP
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-              - ALL
+                - ALL
           env:
-          - name: POD_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
       nodeSelector:
         kubernetes.io/os: linux

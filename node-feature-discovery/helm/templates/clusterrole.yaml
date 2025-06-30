@@ -11,40 +11,40 @@ metadata:
     app.kubernetes.io/version: "v0.14.3"
     app.kubernetes.io/managed-by: Helm
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - nodes
-  - nodes/status
-  verbs:
-  - get
-  - patch
-  - update
-  - list
-- apiGroups:
-  - nfd.k8s-sigs.io
-  resources:
-  - nodefeatures
-  - nodefeaturerules
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - coordination.k8s.io
-  resources:
-  - leases
-  verbs:
-  - create
-- apiGroups:
-  - coordination.k8s.io
-  resources:
-  - leases
-  resourceNames:
-  - "nfd-master.nfd.kubernetes.io"
-  verbs:
-  - get
-  - update
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+      - nodes/status
+    verbs:
+      - get
+      - patch
+      - update
+      - list
+  - apiGroups:
+      - nfd.k8s-sigs.io
+    resources:
+      - nodefeatures
+      - nodefeaturerules
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - create
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    resourceNames:
+      - "nfd-master.nfd.kubernetes.io"
+    verbs:
+      - get
+      - update
 ---
 # Source: node-feature-discovery/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -58,30 +58,30 @@ metadata:
     app.kubernetes.io/version: "v0.14.3"
     app.kubernetes.io/managed-by: Helm
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - nodes
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - nodes/proxy
-  verbs:
-  - get
-- apiGroups:
-  - topology.node.k8s.io
-  resources:
-  - noderesourcetopologies
-  verbs:
-  - delete
-  - list
-- apiGroups:
-  - nfd.k8s-sigs.io
-  resources:
-  - nodefeatures
-  verbs:
-  - delete
-  - list
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - nodes/proxy
+    verbs:
+      - get
+  - apiGroups:
+      - topology.node.k8s.io
+    resources:
+      - noderesourcetopologies
+    verbs:
+      - delete
+      - list
+  - apiGroups:
+      - nfd.k8s-sigs.io
+    resources:
+      - nodefeatures
+    verbs:
+      - delete
+      - list

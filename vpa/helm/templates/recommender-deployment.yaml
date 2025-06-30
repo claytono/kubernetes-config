@@ -31,8 +31,7 @@ spec:
         runAsUser: 65534
       containers:
         - name: vpa
-          securityContext:
-            {}
+          securityContext: {}
           image: "k8s.gcr.io/autoscaling/vpa-recommender:0.10.0"
           imagePullPolicy: Always
           args:

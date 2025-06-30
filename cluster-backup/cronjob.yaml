@@ -15,44 +15,44 @@ spec:
           name: cluster-backup
         spec:
           containers:
-          - name: cluster-backup
-            image: debian:stable
-            imagePullPolicy: Always
-            command:
-            - /script/backup.sh
-            volumeMounts:
-            - name: script
-              mountPath: /script
-            - name: etcd
-              mountPath: /var/lib/etcd
-              readOnly: true
-            - name: k8s
-              mountPath: /etc/kubernetes
-              readOnly: true
-            - name: backups
-              mountPath: /backups
+            - name: cluster-backup
+              image: debian:stable
+              imagePullPolicy: Always
+              command:
+                - /script/backup.sh
+              volumeMounts:
+                - name: script
+                  mountPath: /script
+                - name: etcd
+                  mountPath: /var/lib/etcd
+                  readOnly: true
+                - name: k8s
+                  mountPath: /etc/kubernetes
+                  readOnly: true
+                - name: backups
+                  mountPath: /backups
           volumes:
-          - name: script
-            configMap:
-              name: cluster-backup
-              defaultMode: 0744
-          - hostPath:
-              path: /var/lib/etcd
-            name: etcd
-          - hostPath:
-              path: /etc/kubernetes
-            name: k8s
-          - nfs:
-              server: fs2.oneill.net
-              path: /volume1/k8s-pv/backups
-            name: backups
+            - name: script
+              configMap:
+                name: cluster-backup
+                defaultMode: 0744
+            - hostPath:
+                path: /var/lib/etcd
+              name: etcd
+            - hostPath:
+                path: /etc/kubernetes
+              name: k8s
+            - nfs:
+                server: fs2.oneill.net
+                path: /volume1/k8s-pv/backups
+              name: backups
           restartPolicy: OnFailure
           nodeSelector:
             node-role.kubernetes.io/control-plane: ""
           tolerations:
-          - key: "node-role.kubernetes.io/control-plane"
-            operator: "Exists"
-            effect: "NoSchedule"
-          - key: "node-role.kubernetes.io/master"
-            operator: "Exists"
-            effect: "NoSchedule"
+            - key: "node-role.kubernetes.io/control-plane"
+              operator: "Exists"
+              effect: "NoSchedule"
+            - key: "node-role.kubernetes.io/master"
+              operator: "Exists"
+              effect: "NoSchedule"

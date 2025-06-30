@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name:  release-name-node-feature-discovery-master
+  name: release-name-node-feature-discovery-master
   namespace: node-feature-discovery
   labels:
     helm.sh/chart: node-feature-discovery-0.14.3
@@ -28,15 +28,14 @@ spec:
     spec:
       serviceAccountName: release-name-node-feature-discovery
       enableServiceLinks: false
-      securityContext:
-        {}
+      securityContext: {}
       containers:
         - name: master
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-              - ALL
+                - ALL
             readOnlyRootFilesystem: true
             runAsNonRoot: true
           image: "registry.k8s.io/nfd/node-feature-discovery:v0.14.3"
@@ -44,32 +43,31 @@ spec:
           livenessProbe:
             exec:
               command:
-              - "/usr/bin/grpc_health_probe"
-              - "-addr=:8080"
+                - "/usr/bin/grpc_health_probe"
+                - "-addr=:8080"
             initialDelaySeconds: 10
             periodSeconds: 10
           readinessProbe:
             exec:
               command:
-              - "/usr/bin/grpc_health_probe"
-              - "-addr=:8080"
+                - "/usr/bin/grpc_health_probe"
+                - "-addr=:8080"
             initialDelaySeconds: 5
             periodSeconds: 10
             failureThreshold: 10
           ports:
-          - containerPort: 8080
-            name: grpc
-          - containerPort: 8081
-            name: metrics
+            - containerPort: 8080
+              name: grpc
+            - containerPort: 8081
+              name: metrics
           env:
-          - name: NODE_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: spec.nodeName
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
           command:
             - "nfd-master"
-          resources:
-            {}
+          resources: {}
           args:
             - "-port=8080"
             ## By default, disable crd controller for other than the default instances
@@ -89,20 +87,20 @@ spec:
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - preference:
-              matchExpressions:
-              - key: node-role.kubernetes.io/master
-                operator: In
-                values:
-                - ""
-            weight: 1
-          - preference:
-              matchExpressions:
-              - key: node-role.kubernetes.io/control-plane
-                operator: In
-                values:
-                - ""
-            weight: 1
+            - preference:
+                matchExpressions:
+                  - key: node-role.kubernetes.io/master
+                    operator: In
+                    values:
+                      - ""
+              weight: 1
+            - preference:
+                matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: In
+                    values:
+                      - ""
+              weight: 1
       tolerations:
         - effect: NoSchedule
           key: node-role.kubernetes.io/master

@@ -19,12 +19,12 @@ spec:
     spec:
       hostNetwork: true
       containers:
-      - name: infinitude
-        image: nebulous/infinitude
-        imagePullPolicy: Always
-        volumeMounts:
-          - mountPath: "/infinitude/state"
-            name: state
+        - name: infinitude
+          image: nebulous/infinitude
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: "/infinitude/state"
+              name: state
       volumes:
         - name: state
           persistentVolumeClaim:

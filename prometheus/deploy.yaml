@@ -15,30 +15,30 @@ spec:
     spec:
       serviceAccountName: prometheus
       containers:
-      - name: prometheus
-        image: prom/prometheus:latest
-        args:
-          - '--config.file=/etc/prometheus/prometheus.yml'
-          - "--web.external-url=https://prometheus.k.oneill.net"
-          - "--storage.tsdb.retention.time=730d"
-        ports:
-        - name: web
-          containerPort: 9090
-        volumeMounts:
-        - name: config
-          mountPath: /etc/prometheus
-        - name: secrets
-          mountPath: /secrets
-          readOnly: true
-        - name: data
-          mountPath: /prometheus/data
+        - name: prometheus
+          image: prom/prometheus:latest
+          args:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+            - "--web.external-url=https://prometheus.k.oneill.net"
+            - "--storage.tsdb.retention.time=730d"
+          ports:
+            - name: web
+              containerPort: 9090
+          volumeMounts:
+            - name: config
+              mountPath: /etc/prometheus
+            - name: secrets
+              mountPath: /secrets
+              readOnly: true
+            - name: data
+              mountPath: /prometheus/data
       volumes:
-      - name: config
-        configMap:
-          name: prometheus
-      - name: secrets
-        secret:
-          secretName: prometheus
-      - name: data
-        persistentVolumeClaim:
-          claimName: prometheus-data
+        - name: config
+          configMap:
+            name: prometheus
+        - name: secrets
+          secret:
+            secretName: prometheus
+        - name: data
+          persistentVolumeClaim:
+            claimName: prometheus-data

@@ -23,7 +23,8 @@ rules:
     resources: ["events"]
     verbs: ["get", "create", "update", "patch"]
   - apiGroups: ["admissionregistration.k8s.io"]
-    resources: ["validatingwebhookconfigurations", "mutatingwebhookconfigurations"]
+    resources:
+      ["validatingwebhookconfigurations", "mutatingwebhookconfigurations"]
     verbs: ["get", "list", "watch", "update"]
   - apiGroups: ["apiregistration.k8s.io"]
     resources: ["apiservices"]
@@ -77,7 +78,11 @@ rules:
   #   see cmd/cainjector/start.go#L137
   - apiGroups: ["coordination.k8s.io"]
     resources: ["leases"]
-    resourceNames: ["cert-manager-cainjector-leader-election", "cert-manager-cainjector-leader-election-core"]
+    resourceNames:
+      [
+        "cert-manager-cainjector-leader-election",
+        "cert-manager-cainjector-leader-election-core",
+      ]
     verbs: ["get", "update", "patch"]
   - apiGroups: ["coordination.k8s.io"]
     resources: ["leases"]
