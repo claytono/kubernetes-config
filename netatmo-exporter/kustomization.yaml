@@ -13,4 +13,3 @@ resources:
 labels:
   - pairs:
       app: netatmo-exporter
-

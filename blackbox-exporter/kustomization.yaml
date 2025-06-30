@@ -15,4 +15,3 @@ configMapGenerator:
   - name: config
     files:
       - config.yaml
-

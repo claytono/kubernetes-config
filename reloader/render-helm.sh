@@ -18,4 +18,3 @@ mv tmp/*/* helm
 rmdir tmp/*
 rmdir tmp
 rm -rf helm/tests
-

@@ -12,4 +12,3 @@ helm template connect connect \
   --namespace 1password \
   --values values.yaml \
   --output-dir helm
-

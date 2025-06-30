@@ -79,7 +79,7 @@ spec:
         app.kubernetes.io/name: homepage
         app.kubernetes.io/instance: homepage
     spec:
-      
+
       serviceAccountName: homepage
       automountServiceAccountToken: true
       dnsPolicy: ClusterFirst
@@ -87,7 +87,7 @@ spec:
       containers:
         - name: homepage
           image: "ghcr.io/gethomepage/homepage:v0.8.4"
-          imagePullPolicy: 
+          imagePullPolicy:
           ports:
             - name: http
               containerPort: 3000

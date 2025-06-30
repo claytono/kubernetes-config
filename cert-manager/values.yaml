@@ -6,4 +6,3 @@ ingressShim:
   defaultIssuerName: letsencrypt
   defaultIssuerKind: ClusterIssuer
   defaultIssuerGroup: cert-manager.io
-

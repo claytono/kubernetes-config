@@ -11,4 +11,3 @@ resources:
 labels:
   - pairs:
       app: tautulli
-

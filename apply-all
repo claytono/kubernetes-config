@@ -6,7 +6,7 @@ cd $BASEDIR
 # Get sorted list of all directories with yaml in them
 DIRS=$(find . -name '*.yaml'|cut -d / -f2-2|sort|uniq)
 
-for dir in $DIRS; do 
+for dir in $DIRS; do
     if [ -r "$dir/kustomization.yaml" ]; then
         CMD="kubectl apply -k $dir"
     else

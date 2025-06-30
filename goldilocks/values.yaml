@@ -32,4 +32,3 @@ dashboard:
     tls:
       - secretName: goldilocks-tls
         hosts: [ "goldilocks.k.oneill.net" ]
-
