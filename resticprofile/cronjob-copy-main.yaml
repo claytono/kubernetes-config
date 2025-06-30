@@ -54,6 +54,11 @@ spec:
                     fieldPath: metadata.name
               - name: RCLONE_CONFIG
                 value: /rclone-config/rclone.conf
+              - name: RESTIC_FROM_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: resticprofile
+                    key: RESTIC_PASSWORD
             volumeMounts:
             - mountPath: /rclone-config
               name: rclone-config
