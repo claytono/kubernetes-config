@@ -16,4 +16,3 @@ configMapGenerator:
   - name: run-script
     files:
       - run.sh
-

@@ -7,4 +7,4 @@ spec:
   - name: pihole-admin
     protocol: TCP
     port: 8000
-    targetPort: 80 
+    targetPort: 80

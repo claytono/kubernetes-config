@@ -170,4 +170,3 @@ migrate-azure-to-b2:
     run-finally: *run_finally
   prometheus-labels:
     - host: "kubernetes"
-

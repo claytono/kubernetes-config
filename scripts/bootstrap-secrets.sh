@@ -7,4 +7,4 @@ set -eu -o pipefail
 find . -name bootstrap-secrets.sh -not -path "*/\.*" -not -path "*/scripts/*" | while read -r script; do
     echo "Running $script..."
     (cd "$(dirname "$script")" && ./bootstrap-secrets.sh)
-done 
+done

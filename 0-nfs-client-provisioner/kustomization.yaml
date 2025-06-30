@@ -15,4 +15,3 @@ resources:
 labels:
   - pairs:
       app: nfs-subdir-external-provisioner
-

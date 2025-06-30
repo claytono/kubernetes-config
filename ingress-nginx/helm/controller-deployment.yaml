@@ -22,7 +22,7 @@ spec:
   replicas: 1
   revisionHistoryLimit: 10
   strategy:
-    
+
     type: Recreate
   minReadySeconds: 0
   template:
@@ -37,7 +37,7 @@ spec:
         - name: controller
           image: "registry.k8s.io/ingress-nginx/controller:v1.2.1@sha256:5516d103a9c2ecc4f026efbd4b40662ce22dc1f824fb129ed121460aaa5c47f8"
           imagePullPolicy: IfNotPresent
-          lifecycle: 
+          lifecycle:
             preStop:
               exec:
                 command:
@@ -49,7 +49,7 @@ spec:
             - --controller-class=k8s.io/ingress-nginx
             - --ingress-class=nginx
             - --configmap=$(POD_NAMESPACE)/ingress-nginx-controller
-          securityContext: 
+          securityContext:
             capabilities:
               drop:
               - ALL
@@ -68,7 +68,7 @@ spec:
                   fieldPath: metadata.namespace
             - name: LD_PRELOAD
               value: /usr/local/lib/libmimalloc.so
-          livenessProbe: 
+          livenessProbe:
             failureThreshold: 5
             httpGet:
               path: /healthz
@@ -78,7 +78,7 @@ spec:
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
-          readinessProbe: 
+          readinessProbe:
             failureThreshold: 3
             httpGet:
               path: /healthz
@@ -95,12 +95,12 @@ spec:
             - name: https
               containerPort: 443
               protocol: TCP
-          resources: 
+          resources:
             requests:
               cpu: 100m
               memory: 90Mi
       hostNetwork: true
-      nodeSelector: 
+      nodeSelector:
         kubernetes.io/os: linux
       serviceAccountName: ingress-nginx
       terminationGracePeriodSeconds: 300
