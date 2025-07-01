@@ -26,8 +26,8 @@ email_address=$(basename "$new_filename" .cfg | grep -oP '[^/]+$' | sed 's/\.cfg
 echo "Email address extracted and saved: $email_address"
 
 flock --verbose --wait 14400 /data/lock \
-  gyb --config /config/  --email "$email_address" "$@"
+	gyb --config /config/ --email "$email_address" "$@"
 
 if [ -n "$PING_URL" ]; then
-  curl -fsS -m 10 --retry 5 "$PING_URL"
+	curl -fsS -m 10 --retry 5 "$PING_URL"
 fi

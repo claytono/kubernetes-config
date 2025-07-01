@@ -5,11 +5,11 @@ set -eo pipefail
 # For local development use only
 
 # Directory where this script is located
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 TEMP_RCLONE_CONFIG="/tmp/rclone.conf"
 TEMPLATE_CONFIG="$SCRIPT_DIR/rclone.conf.template"
 
-# Source the shared 1Password secrets script
+# shellcheck disable=SC1091
 source "$SCRIPT_DIR/get-1password-secrets.sh"
 
 # Running locally, fetch secrets from 1Password

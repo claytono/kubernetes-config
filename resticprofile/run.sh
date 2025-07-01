@@ -2,14 +2,17 @@
 
 set -eu -o pipefail
 
+BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$BASEDIR"
+
 image=$(yq .spec.jobTemplate.spec.template.spec.containers[0].image <cronjob-azure.yaml)
 
-mkdir -p "$(pwd)/.cache"
-mkdir -p "$(pwd)/.tmp"
-uuidgen >"$(pwd)/.tmp/uuid"
+mkdir -p .cache
+mkdir -p .tmp
+uuidgen >.tmp/uuid
 
-# Source the shared 1Password secrets script
-source "$(dirname "$0")/get-1password-secrets.sh"
+# shellcheck disable=SC1091
+source ./get-1password-secrets.sh
 
 # Get resticprofile password
 export_resticprofile_password
@@ -19,22 +22,22 @@ export_rclone_env_variables
 
 # Now run the Docker container with the config file and necessary environment variables
 docker run -it --rm \
-    -e RESTIC_PASSWORD="$RESTIC_PASSWORD" \
-    -e RESTIC_PASSWORD2="$RESTIC_PASSWORD" \
-    -e RESTIC_FROM_PASSWORD="$RESTIC_PASSWORD" \
-    -e RCLONE_RC_NO_AUTH=true \
-    -e RCLONE_CONFIG_AZURE_KEY \
-    -e RCLONE_CONFIG_AZC_PASSWORD \
-    -e RCLONE_CONFIG_AZC_PASSWORD2 \
-    -e RCLONE_CONFIG_B2_ACCOUNT \
-    -e RCLONE_CONFIG_B2_KEY \
-    -e RCLONE_CONFIG_B2C_PASSWORD \
-    -e RCLONE_CONFIG_B2C_PASSWORD2 \
-    -v "$(pwd)/.cache:/cache" \
-    -v "$(pwd)/.tmp:/tmp" \
-    -v "$(pwd)/profiles.yaml:/resticprofile-config/profiles.yaml:ro" \
-    -v "$(pwd)/rclone.conf.template:/rclone-config/rclone.conf:ro" \
-    "$image" \
-    -c /resticprofile-config/profiles.yaml \
-    --lock-wait 6h \
-    "$@"
+	-e RESTIC_PASSWORD="$RESTIC_PASSWORD" \
+	-e RESTIC_PASSWORD2="$RESTIC_PASSWORD" \
+	-e RESTIC_FROM_PASSWORD="$RESTIC_PASSWORD" \
+	-e RCLONE_RC_NO_AUTH=true \
+	-e RCLONE_CONFIG_AZURE_KEY \
+	-e RCLONE_CONFIG_AZC_PASSWORD \
+	-e RCLONE_CONFIG_AZC_PASSWORD2 \
+	-e RCLONE_CONFIG_B2_ACCOUNT \
+	-e RCLONE_CONFIG_B2_KEY \
+	-e RCLONE_CONFIG_B2C_PASSWORD \
+	-e RCLONE_CONFIG_B2C_PASSWORD2 \
+	-v "$BASEDIR/.cache:/cache" \
+	-v "$BASEDIR/.tmp:/tmp" \
+	-v "$BASEDIR/profiles.yaml:/resticprofile-config/profiles.yaml:ro" \
+	-v "$BASEDIR/rclone.conf.template:/rclone-config/rclone.conf:ro" \
+	"$image" \
+	-c /resticprofile-config/profiles.yaml \
+	--lock-wait 6h \
+	"$@"
