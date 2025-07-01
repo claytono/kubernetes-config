@@ -7,9 +7,14 @@ metadata:
     reloader.stakater.com/auto: 'true'
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: awair-exporter
   template:
     metadata:
       name: awair-exporter
+      labels:
+        app: awair-exporter
     spec:
       containers:
       - name: awair-exporter

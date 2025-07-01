@@ -4,6 +4,8 @@ kind: Service
 metadata:
   name: exporter
 spec:
+  selector:
+    app: awair-exporter
   ports:
   - name: awair-exporter
     protocol: TCP

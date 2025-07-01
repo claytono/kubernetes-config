@@ -5,7 +5,13 @@ metadata:
   name: meshcentral
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: meshcentral
   template:
+    metadata:
+      labels:
+        app: meshcentral
     spec:
       containers:
       - name: meshcentral

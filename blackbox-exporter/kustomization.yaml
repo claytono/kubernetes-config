@@ -10,6 +10,7 @@ resources:
 labels:
 - pairs:
     app: blackbox-exporter
+
 configMapGenerator:
 - name: config
   files:
