@@ -1,0 +1,187 @@
+---
+# Source: n8n/charts/valkey/templates/primary/application.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: n8n-valkey-primary
+  namespace: "n8n"
+  labels:
+    app.kubernetes.io/instance: n8n
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: valkey
+    app.kubernetes.io/version: 8.0.2
+    helm.sh/chart: valkey-2.4.7
+    app.kubernetes.io/component: primary
+    app.kubernetes.io/part-of: valkey
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: n8n
+      app.kubernetes.io/name: valkey
+      app.kubernetes.io/component: primary
+  serviceName: n8n-valkey-headless
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: n8n
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: valkey
+        app.kubernetes.io/version: 8.0.2
+        helm.sh/chart: valkey-2.4.7
+        app.kubernetes.io/component: primary
+      annotations:
+        checksum/configmap: c8cdc0c4c772ac3192446a08bf401c29f1e39f33614657d36e4bb1692e34b39f
+        checksum/health: e3a0f06458110f02986bb8df4391c43567355d3582dd02f25447184391196fbc
+        checksum/scripts: 791de9ea7b477455268cda3e85c8e58a1505e8d19ff8e851d78a246cb185a0f7
+        checksum/secret: 674b63750e453a54d12df8e777e2cbc0c8d424c675fb535f3f7e484092ba39ef
+    spec:
+      
+      securityContext:
+        fsGroup: 1001
+        fsGroupChangePolicy: Always
+        supplementalGroups: []
+        sysctls: []
+      serviceAccountName: n8n-valkey-primary
+      automountServiceAccountToken: false
+      affinity:
+        podAffinity:
+          
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/instance: n8n
+                    app.kubernetes.io/name: valkey
+                    app.kubernetes.io/component: primary
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        nodeAffinity:
+          
+      enableServiceLinks: true
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: valkey
+          image: docker.io/bitnami/valkey:8.0.2-debian-12-r6
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 1001
+            runAsNonRoot: true
+            runAsUser: 1001
+            seLinuxOptions: {}
+            seccompProfile:
+              type: RuntimeDefault
+          command:
+            - /bin/bash
+          args:
+            - -c
+            - /opt/bitnami/scripts/start-scripts/start-primary.sh
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: VALKEY_REPLICATION_MODE
+              value: primary
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "no"
+            - name: VALKEY_PASSWORD_FILE
+              value: "/opt/bitnami/valkey/secrets/valkey-password"
+            - name: VALKEY_TLS_ENABLED
+              value: "no"
+            - name: VALKEY_PORT
+              value: "6379"
+          ports:
+            - name: redis
+              containerPort: 6379
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            # One second longer than command timeout should prevent generation of zombie processes.
+            timeoutSeconds: 6
+            successThreshold: 1
+            failureThreshold: 5
+            exec:
+              command:
+                - sh
+                - -c
+                - /health/ping_liveness_local.sh 5
+          readinessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 5
+            exec:
+              command:
+                - sh
+                - -c
+                - /health/ping_readiness_local.sh 1
+          resources:
+            limits:
+              cpu: 150m
+              ephemeral-storage: 2Gi
+              memory: 192Mi
+            requests:
+              cpu: 100m
+              ephemeral-storage: 50Mi
+              memory: 128Mi
+          volumeMounts:
+            - name: start-scripts
+              mountPath: /opt/bitnami/scripts/start-scripts
+            - name: health
+              mountPath: /health
+            - name: valkey-password
+              mountPath: /opt/bitnami/valkey/secrets/
+            - name: valkey-data
+              mountPath: /data
+            - name: config
+              mountPath: /opt/bitnami/valkey/mounted-etc
+            - name: empty-dir
+              mountPath: /opt/bitnami/valkey/etc/
+              subPath: app-conf-dir
+            - name: empty-dir
+              mountPath: /tmp
+              subPath: tmp-dir
+      volumes:
+        - name: start-scripts
+          configMap:
+            name: n8n-valkey-scripts
+            defaultMode: 0755
+        - name: health
+          configMap:
+            name: n8n-valkey-health
+            defaultMode: 0755
+        - name: valkey-password
+          
+          secret:
+            secretName: n8n-valkey
+            items:
+            - key: valkey-password
+              path: valkey-password
+        - name: config
+          configMap:
+            name: n8n-valkey-configuration
+        - name: empty-dir
+          emptyDir: {}
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: valkey-data
+        labels:
+          app.kubernetes.io/instance: n8n
+          app.kubernetes.io/name: valkey
+          app.kubernetes.io/component: primary
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "2Gi"

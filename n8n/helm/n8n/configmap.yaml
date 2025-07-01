@@ -1,0 +1,21 @@
+---
+# Source: n8n/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: n8n-app-config
+  labels:
+    helm.sh/chart: n8n-1.0.10
+    app.kubernetes.io/name: n8n
+    app.kubernetes.io/instance: n8n
+    app.kubernetes.io/version: "1.99.1"
+    app.kubernetes.io/managed-by: Helm
+data:
+  DB_POSTGRESDB_DATABASE: "n8n"
+  DB_POSTGRESDB_HOST: "n8n-postgres-postgresql"
+  DB_POSTGRESDB_PORT: "5432"
+  DB_POSTGRESDB_USER: "n8n"
+  DB_TYPE: "postgresdb"
+  N8N_HOST: "n8n.k.oneill.net"
+  N8N_PROTOCOL: "https"
+  N8N_WEBHOOK_URL: "https://n8n.k.oneill.net/"

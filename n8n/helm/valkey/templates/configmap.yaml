@@ -1,0 +1,34 @@
+---
+# Source: n8n/charts/valkey/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: n8n-valkey-configuration
+  namespace: "n8n"
+  labels:
+    app.kubernetes.io/instance: n8n
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: valkey
+    app.kubernetes.io/version: 8.0.2
+    helm.sh/chart: valkey-2.4.7
+    app.kubernetes.io/part-of: valkey
+data:
+  valkey.conf: |-
+    # User-supplied common configuration:
+    # Enable AOF https://valkey.io/docs/topics/persistence.html
+    appendonly yes
+    # Disable RDB persistence, AOF persistence already enabled.
+    save ""
+    # End of common configuration
+  primary.conf: |-
+    dir /data
+    # User-supplied primary configuration:
+    rename-command FLUSHDB ""
+    rename-command FLUSHALL ""
+    # End of primary configuration
+  replica.conf: |-
+    dir /data
+    # User-supplied replica configuration:
+    rename-command FLUSHDB ""
+    rename-command FLUSHALL ""
+    # End of replica configuration
