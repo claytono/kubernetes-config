@@ -1,9 +1,10 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: alertmanager
   annotations:
-    reloader.stakater.com/auto: "true"
+    reloader.stakater.com/auto: 'true'
 spec:
   replicas: 1
   selector:
@@ -19,10 +20,10 @@ spec:
       - name: gomplate-config
         image: hairyhenderson/gomplate
         args:
-         - "--file"
-         - "/etc/alertmanager/config.template.yaml"
-         - "--out"
-         - "/config/config.yaml"
+        - --file
+        - /etc/alertmanager/config.template.yaml
+        - --out
+        - /config/config.yaml
         env:
         - name: SMTP_PASSWORD
           valueFrom:
@@ -38,9 +39,9 @@ spec:
       - name: alertmanager
         image: prom/alertmanager:latest
         args:
-          - '--config.file=/config/config.yaml'
-          - '--storage.path=/alertmanager'
-          - '--web.external-url=https://alertmanager.k.oneill.net'
+        - --config.file=/config/config.yaml
+        - --storage.path=/alertmanager
+        - --web.external-url=https://alertmanager.k.oneill.net
         ports:
         - name: alertmanager
           containerPort: 9093

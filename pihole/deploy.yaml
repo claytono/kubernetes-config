@@ -6,7 +6,7 @@ metadata:
   labels:
     app: pihole
   annotations:
-    reloader.stakater.com/auto: "true"
+    reloader.stakater.com/auto: 'true'
 spec:
   replicas: 1
   selector:
@@ -24,19 +24,19 @@ spec:
         imagePullPolicy: Always
         env:
         - name: TZ
-          value: "America/New_York"
+          value: America/New_York
         - name: PIHOLE_DNS_
           value: 172.19.74.1
         - name: VIRTUAL_HOST
           value: pihole.k.oneill.net
         envFrom:
-          - secretRef:
-              name: pihole
+        - secretRef:
+            name: pihole
         volumeMounts:
         - name: config
-          mountPath: "/etc/pihole"
+          mountPath: /etc/pihole
         - name: dnsmasq
-          mountPath: "/etc/dnsmasq.d"
+          mountPath: /etc/dnsmasq.d
       volumes:
       - name: config
         persistentVolumeClaim:

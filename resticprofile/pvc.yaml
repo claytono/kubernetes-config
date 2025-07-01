@@ -5,7 +5,7 @@ metadata:
   name: resticprofile-cache-copy
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
@@ -16,7 +16,7 @@ metadata:
   name: resticprofile-cache-synology
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
@@ -27,7 +27,7 @@ metadata:
   name: resticprofile-cache-migration
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi

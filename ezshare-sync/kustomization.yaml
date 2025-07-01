@@ -5,8 +5,8 @@ kind: Kustomization
 namespace: default
 
 resources:
- - cronjob.yaml
+- cronjob.yaml
 
 labels:
-  - pairs:
-      app: ezshare-sync
+- pairs:
+    app: ezshare-sync

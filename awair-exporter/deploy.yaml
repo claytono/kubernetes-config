@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: exporter
   annotations:
-    reloader.stakater.com/auto: "true"
+    reloader.stakater.com/auto: 'true'
 spec:
   replicas: 1
   template:
@@ -16,7 +16,7 @@ spec:
         image: dvorak/awair_exporter
         imagePullPolicy: Always
         envFrom:
-          - secretRef:
-              name: exporter
+        - secretRef:
+            name: exporter
         ports:
         - containerPort: 8000

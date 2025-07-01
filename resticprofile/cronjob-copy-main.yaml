@@ -1,9 +1,10 @@
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: resticprofile-copy-main
 spec:
-  schedule: "18 5 * * *"
+  schedule: 18 5 * * *
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   jobTemplate:
@@ -11,35 +12,35 @@ spec:
       template:
         metadata:
           labels:
-            resticprofile: "copy-main"
+            resticprofile: copy-main
           annotations:
-            prometheus.io/scrape: "true"
-            prometheus.io/path: "/metrics"
-            prometheus.io/port: "5572"
+            prometheus.io/scrape: 'true'
+            prometheus.io/path: /metrics
+            prometheus.io/port: '5572'
         spec:
           hostname: rp-kube
           restartPolicy: OnFailure
           initContainers:
-            - name: generate-uuid
-              image: alpine
-              command: ['sh', '-c', 'apk add --no-cache util-linux; uuidgen >/tmp/uuid']
-              volumeMounts:
-                - mountPath: /tmp
-                  name: scratch
+          - name: generate-uuid
+            image: alpine
+            command: [sh, -c, apk add --no-cache util-linux; uuidgen >/tmp/uuid]
+            volumeMounts:
+            - mountPath: /tmp
+              name: scratch
           containers:
           - name: resticprofile
             securityContext:
               runAsUser: 10007
               runAsGroup: 10007
             command:
-              - resticprofile
-              - -c
-              - /resticprofile-config/profiles.yaml
-              - -n
-              - copy-main
-              - --lock-wait
-              - 1h
-              - copy
+            - resticprofile
+            - -c
+            - /resticprofile-config/profiles.yaml
+            - -n
+            - copy-main
+            - --lock-wait
+            - 1h
+            - copy
             image: creativeprojects/resticprofile
             imagePullPolicy: IfNotPresent
             envFrom:
@@ -48,17 +49,17 @@ spec:
             - secretRef:
                 name: resticprofile-rclone
             env:
-              - name: RUN_ID
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.name
-              - name: RCLONE_CONFIG
-                value: /rclone-config/rclone.conf
-              - name: RESTIC_FROM_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: resticprofile
-                    key: RESTIC_PASSWORD
+            - name: RUN_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: RCLONE_CONFIG
+              value: /rclone-config/rclone.conf
+            - name: RESTIC_FROM_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: resticprofile
+                  key: RESTIC_PASSWORD
             volumeMounts:
             - mountPath: /rclone-config
               name: rclone-config
@@ -75,8 +76,8 @@ spec:
             configMap:
               name: rclone-template
               items:
-                - key: rclone.conf.template
-                  path: rclone.conf
+              - key: rclone.conf.template
+                path: rclone.conf
           - name: resticprofile-config
             configMap:
               name: resticprofile-config

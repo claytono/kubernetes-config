@@ -4,9 +4,9 @@ kind: Kustomization
 namespace: default
 
 resources:
- - deploy.yaml
- - externalsecret.yaml
+- deploy.yaml
+- externalsecret.yaml
 
 labels:
-  - pairs:
-      app: mqtt-log
+- pairs:
+    app: mqtt-log

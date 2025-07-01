@@ -1,3 +1,4 @@
+---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
@@ -31,9 +32,9 @@ spec:
   # that host, since tailscale can't reach it.
   nodeSelectors:
   - matchExpressions:
-      - key: node-role.kubernetes.io/control-plane
-        operator: DoesNotExist
-        values: []
+    - key: node-role.kubernetes.io/control-plane
+      operator: DoesNotExist
+      values: []
   ipAddressPools:
   - default
 ---
@@ -46,8 +47,8 @@ spec:
   # See above
   nodeSelectors:
   - matchExpressions:
-      - key: node-role.kubernetes.io/control-plane
-        operator: DoesNotExist
-        values: []
+    - key: node-role.kubernetes.io/control-plane
+      operator: DoesNotExist
+      values: []
   ipAddressPools:
   - static

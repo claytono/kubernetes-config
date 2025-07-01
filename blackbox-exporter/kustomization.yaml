@@ -4,14 +4,13 @@ kind: Kustomization
 namePrefix: blackbox-
 
 resources:
- - deploy.yaml
- - service.yaml
+- deploy.yaml
+- service.yaml
 
 labels:
-  - pairs:
-      app: blackbox-exporter
-
+- pairs:
+    app: blackbox-exporter
 configMapGenerator:
-  - name: config
-    files:
-      - config.yaml
+- name: config
+  files:
+  - config.yaml

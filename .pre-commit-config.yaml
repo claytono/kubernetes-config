@@ -1,3 +1,4 @@
+---
 # See https://pre-commit.com/ for documentation
 # Enable additional hooks by uncommenting as needed
 exclude: (^|/)helm/
@@ -75,4 +76,4 @@ repos:
   #   rev: v1.7.7
   #   hooks:
   #     - id: actionlint
-  #       files: ".github/workflows/.*\.ya?ml$" 
+  #       files: ".github/workflows/.*\.ya?ml$"

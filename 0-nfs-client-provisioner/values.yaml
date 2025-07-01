@@ -11,4 +11,4 @@ storageClass:
   defaultClass: true
   archiveOnDelete: false
   onDelete: retain
-  pathPattern: "${.PVC.namespace}-${.PVC.name}"
+  pathPattern: ${.PVC.namespace}-${.PVC.name}

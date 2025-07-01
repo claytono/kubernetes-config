@@ -1,10 +1,11 @@
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: cluster-backup
   namespace: kube-system
 spec:
-  schedule: "0 */12 * * *"
+  schedule: 0 */12 * * *
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 10
@@ -48,11 +49,11 @@ spec:
             name: backups
           restartPolicy: OnFailure
           nodeSelector:
-            node-role.kubernetes.io/control-plane: ""
+            node-role.kubernetes.io/control-plane: ''
           tolerations:
-          - key: "node-role.kubernetes.io/control-plane"
-            operator: "Exists"
-            effect: "NoSchedule"
-          - key: "node-role.kubernetes.io/master"
-            operator: "Exists"
-            effect: "NoSchedule"
+          - key: node-role.kubernetes.io/control-plane
+            operator: Exists
+            effect: NoSchedule
+          - key: node-role.kubernetes.io/master
+            operator: Exists
+            effect: NoSchedule

@@ -15,5 +15,5 @@ resources:
 - config.yaml
 
 labels:
-  - pairs:
-      app: metallb
+- pairs:
+    app: metallb

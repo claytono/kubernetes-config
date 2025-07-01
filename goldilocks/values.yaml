@@ -17,18 +17,18 @@ dashboard:
     enabled: true
     ingressClassName: nginx
     annotations:
-      cert-manager.io/cluster-issuer: "letsencrypt"
-      gethomepage.dev/enabled: "true"
-      gethomepage.dev/name: "Goldilocks"
-      gethomepage.dev/description: "VPA generation and web UI"
-      gethomepage.dev/icon: "mdi-eye-outline"
-      gethomepage.dev/group: "Monitoring"
+      cert-manager.io/cluster-issuer: letsencrypt
+      gethomepage.dev/enabled: 'true'
+      gethomepage.dev/name: Goldilocks
+      gethomepage.dev/description: VPA generation and web UI
+      gethomepage.dev/icon: mdi-eye-outline
+      gethomepage.dev/group: Monitoring
 
     hosts:
-    - host: "goldilocks.k.oneill.net"
+    - host: goldilocks.k.oneill.net
       paths:
-        - path: /
-          type: Prefix
+      - path: /
+        type: Prefix
     tls:
-      - secretName: goldilocks-tls
-        hosts: [ "goldilocks.k.oneill.net" ]
+    - secretName: goldilocks-tls
+      hosts: [goldilocks.k.oneill.net]

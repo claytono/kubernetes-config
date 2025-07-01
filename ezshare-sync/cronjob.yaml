@@ -4,7 +4,7 @@ kind: CronJob
 metadata:
   name: ezshare-sync
 spec:
-  schedule: "*/10 * * * *"
+  schedule: '*/10 * * * *'
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   jobTemplate:
@@ -13,15 +13,15 @@ spec:
         spec:
           priorityClassName: high-priority
           nodeSelector:
-            feature.node.kubernetes.io/usb-ff_148f_7601.present: "true"
+            feature.node.kubernetes.io/usb-ff_148f_7601.present: 'true'
           containers:
           - name: ezshare-sync
             image: ghcr.io/claytono/ezshare-sync:latest
             env:
             - name: whiteList
-              value: ".log|.crc|.tgt|.dat|.edf|DATALOG|SETTINGS"
+              value: .log|.crc|.tgt|.dat|.edf|DATALOG|SETTINGS
             - name: mode
-              value: "soft"
+              value: soft
             volumeMounts:
             - name: cpap-data
               mountPath: /ezshare-data

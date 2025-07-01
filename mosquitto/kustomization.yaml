@@ -4,18 +4,17 @@ kind: Kustomization
 namespace: default
 
 resources:
- - deploy.yaml
- - externalsecret.yaml
- - pvc.yaml
- - service.yaml
+- deploy.yaml
+- externalsecret.yaml
+- pvc.yaml
+- service.yaml
 
 commonLabels:
   app: mosquitto
-
 configMapGenerator:
- - name: mosquitto
-   files:
-    - mosquitto.conf
- - name: create-password-file-script
-   files:
-    - create-password-file.sh
+- name: mosquitto
+  files:
+  - mosquitto.conf
+- name: create-password-file-script
+  files:
+  - create-password-file.sh

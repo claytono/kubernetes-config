@@ -1,9 +1,10 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: netatmo-wunderground-agent
   annotations:
-    reloader.stakater.com/auto: "true"
+    reloader.stakater.com/auto: 'true'
 spec:
   replicas: 1
   selector:
@@ -19,11 +20,11 @@ spec:
       - name: netatmo-wunderground-agent
         image: brbeaird/netatmo-wunderground-agent
         env:
-          - name: netatmo_tokenFileDirectory
-            value: /data
+        - name: netatmo_tokenFileDirectory
+          value: /data
         envFrom:
-          - secretRef:
-              name: netatmo-wunderground-agent
+        - secretRef:
+            name: netatmo-wunderground-agent
         volumeMounts:
         - name: data-volume
           mountPath: /data

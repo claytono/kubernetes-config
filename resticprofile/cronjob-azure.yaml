@@ -1,9 +1,10 @@
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: resticprofile-azure
 spec:
-  schedule: "4 18 * * *"
+  schedule: 4 18 * * *
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   failedJobsHistoryLimit: 3
@@ -12,32 +13,32 @@ spec:
       template:
         metadata:
           labels:
-            resticprofile: "azure"
+            resticprofile: azure
           annotations:
-            prometheus.io/scrape: "true"
-            prometheus.io/path: "/metrics"
-            prometheus.io/port: "5572"
+            prometheus.io/scrape: 'true'
+            prometheus.io/path: /metrics
+            prometheus.io/port: '5572'
         spec:
           hostname: rp-kube
           restartPolicy: OnFailure
           initContainers:
-            - name: generate-uuid
-              image: alpine
-              command: ['sh', '-c', 'apk add --no-cache util-linux; uuidgen >/tmp/uuid']
-              volumeMounts:
-                - mountPath: /tmp
-                  name: scratch
+          - name: generate-uuid
+            image: alpine
+            command: [sh, -c, apk add --no-cache util-linux; uuidgen >/tmp/uuid]
+            volumeMounts:
+            - mountPath: /tmp
+              name: scratch
           containers:
           - name: resticprofile
             command:
-              - resticprofile
-              - -c
-              - /resticprofile-config/profiles.yaml
-              - -n
-              - azure
-              - --lock-wait
-              - 1h
-              - backup
+            - resticprofile
+            - -c
+            - /resticprofile-config/profiles.yaml
+            - -n
+            - azure
+            - --lock-wait
+            - 1h
+            - backup
             image: creativeprojects/resticprofile
             imagePullPolicy: IfNotPresent
             envFrom:
@@ -46,8 +47,8 @@ spec:
             - secretRef:
                 name: resticprofile-rclone
             env:
-              - name: RCLONE_CONFIG
-                value: /rclone-config/rclone.conf
+            - name: RCLONE_CONFIG
+              value: /rclone-config/rclone.conf
             volumeMounts:
             - mountPath: /rclone-config
               name: rclone-config
@@ -71,8 +72,8 @@ spec:
             configMap:
               name: rclone-template
               items:
-                - key: rclone.conf.template
-                  path: rclone.conf
+              - key: rclone.conf.template
+                path: rclone.conf
           - name: resticprofile-config
             configMap:
               name: resticprofile-config

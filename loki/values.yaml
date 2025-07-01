@@ -1,3 +1,4 @@
+---
 persistence:
   enabled: true
 config:
@@ -7,5 +8,5 @@ config:
     retention_period: 30d
     ingestion_rate_mb: 32
 podAnnotations:
-  prometheus.io/scrape: "true"
-  prometheus.io/port: "http-metrics"
+  prometheus.io/scrape: 'true'
+  prometheus.io/port: http-metrics

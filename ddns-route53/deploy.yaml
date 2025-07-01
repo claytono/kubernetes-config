@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: ddns-route53
   annotations:
-    reloader.stakater.com/auto: "true"
+    reloader.stakater.com/auto: 'true'
 spec:
   replicas: 1
   strategy:
@@ -17,14 +17,14 @@ spec:
       - name: ddns-route53
         image: ghcr.io/crazy-max/ddns-route53
         args:
-          - '--schedule=*/5 * * * *'
+        - --schedule=*/5 * * * *
         envFrom:
-          - secretRef:
-              name: ddns-route53-oneill
+        - secretRef:
+            name: ddns-route53-oneill
       - name: fnord
         image: ghcr.io/crazy-max/ddns-route53
         args:
-          - '--schedule=*/5 * * * *'
+        - --schedule=*/5 * * * *
         envFrom:
-          - secretRef:
-              name: ddns-route53-fnord
+        - secretRef:
+            name: ddns-route53-fnord

@@ -1,9 +1,10 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: changedetection
   annotations:
-    reloader.stakater.com/auto: "true"
+    reloader.stakater.com/auto: 'true'
 spec:
   replicas: 1
   strategy:
@@ -28,15 +29,15 @@ spec:
           mountPath: /datastore
         env:
         - name: PLAYWRIGHT_DRIVER_URL
-          value: "ws://localhost:3000/"
+          value: ws://localhost:3000/
       - name: browserless
         image: dgtlmoon/sockpuppetbrowser:latest
         resources:
           limits:
-            memory: "2Gi"
+            memory: 2Gi
           requests:
-            cpu: "500m"
-            memory: "2Gi"
+            cpu: 500m
+            memory: 2Gi
         ports:
         - containerPort: 3000
         volumeMounts:

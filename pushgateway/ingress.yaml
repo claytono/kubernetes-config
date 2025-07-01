@@ -6,21 +6,21 @@ metadata:
   labels:
     k8s-app: pushgateway
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/cluster-issuer: "letsencrypt"
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
   tls:
-    - hosts:
-      - "pushgateway.k.oneill.net"
-      secretName: "pushgateway-tls"
+  - hosts:
+    - pushgateway.k.oneill.net
+    secretName: pushgateway-tls
   rules:
-    - host: "pushgateway.k.oneill.net"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: pushgateway
-                port:
-                  number: 9091
+  - host: pushgateway.k.oneill.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pushgateway
+            port:
+              number: 9091

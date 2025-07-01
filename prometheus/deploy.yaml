@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: prometheus
   annotations:
-    reloader.stakater.com/auto: "true"
+    reloader.stakater.com/auto: 'true'
 spec:
   replicas: 1
   strategy:
@@ -18,9 +18,9 @@ spec:
       - name: prometheus
         image: prom/prometheus:latest
         args:
-          - '--config.file=/etc/prometheus/prometheus.yml'
-          - "--web.external-url=https://prometheus.k.oneill.net"
-          - "--storage.tsdb.retention.time=730d"
+        - --config.file=/etc/prometheus/prometheus.yml
+        - --web.external-url=https://prometheus.k.oneill.net
+        - --storage.tsdb.retention.time=730d
         ports:
         - name: web
           containerPort: 9090

@@ -6,26 +6,26 @@ metadata:
   labels:
     k8s-app: tautulli
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/cluster-issuer: "letsencrypt"
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Tautulli"
-    gethomepage.dev/description: "Plex Monitoring and Statistics"
-    gethomepage.dev/group: "Media"
-    gethomepage.dev/icon: "tautulli.png"
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/name: Tautulli
+    gethomepage.dev/description: Plex Monitoring and Statistics
+    gethomepage.dev/group: Media
+    gethomepage.dev/icon: tautulli.png
 spec:
   tls:
-    - hosts:
-      - "tautulli.k.oneill.net"
-      secretName: "tautulli-tls"
+  - hosts:
+    - tautulli.k.oneill.net
+    secretName: tautulli-tls
   rules:
-    - host: "tautulli.k.oneill.net"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: tautulli
-                port:
-                  number: 8181
+  - host: tautulli.k.oneill.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tautulli
+            port:
+              number: 8181
