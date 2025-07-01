@@ -1,0 +1,231 @@
+#!/usr/bin/env bash
+# Script to check GitHub Actions workflow runs and retrieve logs for failed runs
+
+set -e
+
+# Repository information
+REPO_URL=$(git --no-pager config --get remote.origin.url)
+REPO_PATH=$(echo "$REPO_URL" | sed -E 's/.*github.com[:/]([^/]+\/[^/]+)(\.git)?$/\1/')
+BRANCH=$(git --no-pager branch --show-current)
+
+# Default exclusion patterns
+DEFAULT_EXCLUSIONS=("codecov/project" "codecov/patch")
+
+# Function to print usage information
+usage() {
+    echo "Usage: $0 [options]"
+    echo "Options:"
+    echo "  -b, --branch BRANCH    Specify branch name (default: current branch)"
+    echo "  -n, --no-wait          Don't wait for in-progress workflows to complete"
+    echo "  -t, --timeout SECONDS  Timeout in seconds when waiting (default: 300)"
+    echo "  -i, --interval SECONDS Watch interval in seconds (default: 1)"
+    echo "  -f, --fail-fast        Exit on first check failure"
+    echo "  -e, --exclude PATTERN  Exclude checks matching pattern (can be used multiple times)"
+    echo "  -a, --all              Include all checks (don't exclude codecov by default)"
+    echo "  -h, --help             Show this help message"
+    exit 1
+}
+
+# Parse command-line arguments
+WAIT_FOR_COMPLETION=true
+TIMEOUT=300
+WATCH_INTERVAL=1
+FAIL_FAST=""
+PR_ARG=""
+EXCLUDE_PATTERNS=("${DEFAULT_EXCLUSIONS[@]}")
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -b | --branch)
+            BRANCH="$2"
+            PR_ARG="$BRANCH"
+            shift 2
+            ;;
+        -n | --no-wait)
+            WAIT_FOR_COMPLETION=false
+            shift
+            ;;
+        -f | --fail-fast)
+            FAIL_FAST="--fail-fast"
+            shift
+            ;;
+        -t | --timeout)
+            TIMEOUT="$2"
+            shift 2
+            ;;
+        -i | --interval)
+            WATCH_INTERVAL="$2"
+            shift 2
+            ;;
+        -e | --exclude)
+            EXCLUDE_PATTERNS+=("$2")
+            shift 2
+            ;;
+        -a | --all)
+            EXCLUDE_PATTERNS=()
+            shift
+            ;;
+        -h | --help)
+            usage
+            ;;
+        *)
+            echo "Unknown option: $1"
+            usage
+            ;;
+    esac
+done
+
+# Check if gh CLI is installed
+if ! command -v gh &>/dev/null; then
+    echo "Error: GitHub CLI (gh) is not installed."
+    echo "Please install it from https://cli.github.com/"
+    exit 1
+fi
+
+# Check if authenticated with GitHub
+if ! gh auth status &>/dev/null; then
+    echo "Error: Not authenticated with GitHub."
+    echo "Please run 'gh auth login' to authenticate."
+    exit 1
+fi
+
+echo "Checking workflow runs for branch: ${BRANCH}"
+echo "Repository: ${REPO_PATH}"
+if [[ ${#EXCLUDE_PATTERNS[@]} -gt 0 ]]; then
+    echo "Excluding check patterns: ${EXCLUDE_PATTERNS[*]}"
+fi
+
+# Function to get PR number for current branch
+get_pr_number() {
+    local branch="$1"
+    gh pr list --head "$branch" --json number --jq '.[0].number'
+}
+
+# Function to check if a check should be excluded
+should_exclude_check() {
+    local check_name="$1"
+    for pattern in "${EXCLUDE_PATTERNS[@]}"; do
+        if [[ "$check_name" == *"$pattern"* ]]; then
+            return 0 # True, should exclude
+        fi
+    done
+    return 1 # False, should not exclude
+}
+
+# Function to check for failed runs and get their logs
+get_failed_checks_logs() {
+    local pr_number="$1"
+    local failed_count=0
+    local excluded_count=0
+
+    if [[ -z "$pr_number" ]]; then
+        echo "No PR number provided, unable to get failed checks."
+        return 1
+    fi
+
+    echo "Checking for failed checks in PR #$pr_number..."
+
+    # Get all checks with their state in JSON format
+    local checks_json
+    checks_json=$(gh pr checks "$pr_number" --json name,state,link)
+
+    # Simple approach: Loop through all checks and handle them individually
+    local total_checks
+    total_checks=$(echo "$checks_json" | jq '. | length')
+
+    for ((i = 0; i < total_checks; i++)); do
+        local check_json
+        check_json=$(echo "$checks_json" | jq ".[$i]")
+
+        local name
+        local state
+        local link
+
+        name=$(echo "$check_json" | jq -r '.name')
+        state=$(echo "$check_json" | jq -r '.state')
+        link=$(echo "$check_json" | jq -r '.link')
+
+        # Skip successful checks
+        if [[ "$state" == "SUCCESS" ]]; then
+            continue
+        fi
+
+        # Check if this check should be excluded
+        if should_exclude_check "$name"; then
+            excluded_count=$((excluded_count + 1))
+            echo "- $name: $state (EXCLUDED - will not cause failure)"
+            continue
+        fi
+
+        echo "- $name: $state"
+        failed_count=$((failed_count + 1))
+
+        # Extract run ID from the link if it's a GitHub Actions workflow run
+        local run_id
+        run_id=$(echo "$link" | sed -n 's#.*/runs/\([0-9]*\).*#\1#p')
+
+        if [[ -n "$run_id" ]]; then
+            echo "Retrieving logs for run ID: $run_id"
+            echo "========== Logs for $name (Run ID: $run_id) =========="
+            gh run view "$run_id" --log || {
+                echo "Could not retrieve logs directly."
+            }
+            echo "======================================================="
+        else
+            echo "Could not extract run ID from link: $link"
+            echo "Please check the details manually at: $link"
+        fi
+    done
+
+    # Only return failure if there are failing checks that weren't excluded
+    if [[ $failed_count -gt 0 ]]; then
+        return 1
+    fi
+
+    if [[ $excluded_count -gt 0 ]]; then
+        echo "All failing checks were in the exclusion list. Considering this a success!"
+    fi
+
+    return 0
+}
+
+# After parsing command-line arguments, determine PR_NUMBER
+# Determine PR number for this branch or explicit arg
+if [[ -z "$PR_ARG" ]]; then
+    PR_NUMBER=$(get_pr_number "$BRANCH")
+else
+    PR_NUMBER="$PR_ARG"
+fi
+
+if [[ -z "$PR_NUMBER" ]]; then
+    echo "No PR found for branch: $BRANCH"
+    exit 1
+fi
+
+if [[ "$WAIT_FOR_COMPLETION" == "true" ]]; then
+    echo "Waiting for workflows to complete (timeout: ${TIMEOUT}s)..."
+
+    echo "Checking PR status every ${WATCH_INTERVAL} seconds..."
+    gh pr checks "$PR_NUMBER" --watch --interval "$WATCH_INTERVAL" $FAIL_FAST || true
+
+    # After waiting, check for failed checks
+    echo "Evaluating check results..."
+    get_failed_checks_logs "$PR_NUMBER"
+    exit $?
+
+else
+    # Just show the current status without waiting
+    echo "Current CI status:"
+
+    # Display checks status without waiting
+    gh pr checks "$PR_NUMBER"
+    EXIT_CODE=$?
+
+    if [[ $EXIT_CODE -ne 0 ]]; then
+        echo "Failed checks detected:"
+        get_failed_checks_logs "$PR_NUMBER"
+        exit $?
+    fi
+fi
+
+exit 0
