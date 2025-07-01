@@ -18,6 +18,7 @@
           packages = with pkgs; [
             kubeconform
             kubectl
+            kustomize
             yq-go
             jq
             pre-commit
