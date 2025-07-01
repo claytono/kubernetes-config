@@ -1,0 +1,15 @@
+extends: default
+
+rules:
+  indentation: disable
+  line-length:
+    max: 120
+    level: warning
+  trailing-spaces: disable
+  new-line-at-end-of-file: enable
+  document-start: disable
+  comments-indentation: enable
+  empty-lines:
+    max: 2
+    max-start: 0
+    max-end: 1 
