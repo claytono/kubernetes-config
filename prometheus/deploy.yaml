@@ -9,9 +9,14 @@ spec:
   replicas: 1
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app: prometheus
   template:
     metadata:
       name: prometheus
+      labels:
+        app: prometheus
     spec:
       serviceAccountName: prometheus
       containers:

@@ -4,6 +4,8 @@ kind: Service
 metadata:
   name: pihole
 spec:
+  selector:
+    app: pihole
   ports:
   - name: pihole-admin
     protocol: TCP

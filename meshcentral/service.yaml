@@ -4,6 +4,8 @@ kind: Service
 metadata:
   name: meshcentral
 spec:
+  selector:
+    app: meshcentral
   ports:
   - name: meshcentral
     protocol: TCP

@@ -8,11 +8,18 @@ on:
     branches: [main]
 
 jobs:
-  pre-commit:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
+
+    - name: Install Nix
+      uses: cachix/install-nix-action@v31
       with:
-        python-version: 3.x
-    - uses: pre-commit/action@v3.0.1
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup development environment
+      run: nix develop --command echo "Development environment ready"
+
+    - name: Run pre-commit
+      run: nix develop --command pre-commit run --all-files

@@ -6,6 +6,8 @@ metadata:
     prometheus.io/scrape: 'true'
   name: prometheus
 spec:
+  selector:
+    app: prometheus
   ports:
   - name: prometheus
     protocol: TCP

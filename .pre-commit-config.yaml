@@ -1,7 +1,7 @@
 ---
 # See https://pre-commit.com/ for documentation
 # Enable additional hooks by uncommenting as needed
-exclude: (^|/)helm/
+exclude: (^|/)helm/|helm.yaml$
 
 repos:
   # --- Core pre-commit hooks (enabled) ---
@@ -54,11 +54,15 @@ repos:
     args: [-i, '2', -ci]
 
   # --- kubeconform (Alternative to kubeval) ---
-  # - repo: https://github.com/yannh/kubeconform
-  #   rev: v0.6.4
-  #   hooks:
-  #     - id: kubeconform
-  #       files: \.(yml|yaml)$
+- repo: local
+  hooks:
+  - id: kubeconform
+    name: kubeconform manifest validation
+    entry: scripts/kubeconform-wrapper.sh
+    language: system
+    files: \.(ya?ml)$
+    pass_filenames: true
+    exclude: helm.yaml$
 
   # --- kube-linter (Kubernetes anti-patterns) ---
   # - repo: https://github.com/stackrox/kube-linter
