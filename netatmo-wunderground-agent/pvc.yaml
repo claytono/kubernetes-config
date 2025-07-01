@@ -5,7 +5,7 @@ metadata:
   name: netatmo-wunderground-agent-data
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi

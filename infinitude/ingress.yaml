@@ -6,21 +6,21 @@ metadata:
   labels:
     app: infinitude
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/cluster-issuer: "letsencrypt"
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
   tls:
-    - hosts:
-      - "infinitude.k.oneill.net"
-      secretName: "infinitude-tls"
+  - hosts:
+    - infinitude.k.oneill.net
+    secretName: infinitude-tls
   rules:
-    - host: "infinitude.k.oneill.net"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: infinitude
-                port:
-                  number: 3000
+  - host: infinitude.k.oneill.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: infinitude
+            port:
+              number: 3000

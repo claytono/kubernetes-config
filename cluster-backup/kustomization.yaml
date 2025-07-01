@@ -4,13 +4,12 @@ kind: Kustomization
 namespace: kube-system
 
 resources:
- - cronjob.yaml
+- cronjob.yaml
 
 labels:
-  - pairs:
-      app: cluster-backup
-
+- pairs:
+    app: cluster-backup
 configMapGenerator:
- - name: cluster-backup
-   files:
-     - backup.sh
+- name: cluster-backup
+  files:
+  - backup.sh

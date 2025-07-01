@@ -1,9 +1,10 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: netatmo-exporter
   annotations:
-    reloader.stakater.com/auto: "true"
+    reloader.stakater.com/auto: 'true'
 spec:
   replicas: 1
   selector:
@@ -19,11 +20,11 @@ spec:
       - name: netatmo-exporter
         image: ghcr.io/xperimental/netatmo-exporter:2.0.1
         env:
-          - name: NETATMO_EXPORTER_TOKEN_FILE
-            value: /data/token.json
+        - name: NETATMO_EXPORTER_TOKEN_FILE
+          value: /data/token.json
         envFrom:
-          - secretRef:
-              name: netatmo-exporter
+        - secretRef:
+            name: netatmo-exporter
         volumeMounts:
         - name: data-volume
           mountPath: /data

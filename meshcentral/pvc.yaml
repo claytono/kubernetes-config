@@ -5,7 +5,7 @@ metadata:
   name: meshcentral-data
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 100Gi
@@ -16,7 +16,7 @@ metadata:
   name: meshcentral-files
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 100Gi

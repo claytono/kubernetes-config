@@ -5,7 +5,7 @@ metadata:
   name: got-your-back-data
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 25Gi

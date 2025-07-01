@@ -7,7 +7,7 @@ metadata:
     app: smokeping
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
@@ -20,7 +20,7 @@ metadata:
     app: smokeping
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi

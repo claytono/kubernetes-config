@@ -1,9 +1,10 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mqtt-log
   annotations:
-    reloader.stakater.com/auto: "true"
+    reloader.stakater.com/auto: 'true'
 spec:
   selector:
     matchLabels:
@@ -30,13 +31,7 @@ spec:
             secretKeyRef:
               name: mqtt-log
               key: password
-        command: ["/usr/bin/mosquitto_sub"]
-        args: [
-          "-h", "mosquitto",
-          "-t", "#",
-          "-v",
-          "-u", "$(MQTT_USERNAME)",
-          "-P", "$(MQTT_PASSWORD)",
-          "-F", "{\"timestamp\":\"%I\",\"topic\":\"%t\",\"message\":\"%p\"}"
-        ]
+        command: [/usr/bin/mosquitto_sub]
+        args: [-h, mosquitto, -t, '#', -v, -u, $(MQTT_USERNAME), -P, $(MQTT_PASSWORD),
+          -F, '{"timestamp":"%I","topic":"%t","message":"%p"}']
         imagePullPolicy: Always

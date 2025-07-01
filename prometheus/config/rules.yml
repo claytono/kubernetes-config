@@ -1,51 +1,55 @@
+---
 groups:
-  - name: recording.rules
-    rules:
+- name: recording.rules
+  rules:
       # Records whether or not distance from bottom of desk to floor is greater
       # than one meter.
-      - record: desk_up
-        expr: hass_sensor_unit_m{entity="sensor.desk_ultrasonic_sensor"} >  bool 0.9
-  - name: alert.rules
-    rules:
-      - alert: NodeDown
-        expr: up{job="node resources"} == 0
-        for: 5m
-      - alert: ICMPUnreachable
-        expr: probe_success == 0
-        for: 20m
-      - alert: ExporterDown
-        expr: up{job!="node resources", app!="resticprofile"} == 0
-        for: 15m
-      - alert: CO2_PPM_Too_High
-        expr: awair_sensor_co2 > 1000
-        for: 5m
-        annotations:
-          message: "Open a window or door!"
-      - alert: Netatmo_Battery_Low
-        expr: netatmo_sensor_battery_percent < 20
-        for: 2h
-      - alert: LessThanAnInchOfRain
+  - record: desk_up
+    expr: hass_sensor_unit_m{entity="sensor.desk_ultrasonic_sensor"} >  bool 0.9
+- name: alert.rules
+  rules:
+  - alert: NodeDown
+    expr: up{job="node resources"} == 0
+    for: 5m
+  - alert: ICMPUnreachable
+    expr: probe_success == 0
+    for: 20m
+  - alert: ExporterDown
+    expr: up{job!="node resources", app!="resticprofile"} == 0
+    for: 15m
+  - alert: CO2_PPM_Too_High
+    expr: awair_sensor_co2 > 1000
+    for: 5m
+    annotations:
+      message: Open a window or door!
+  - alert: Netatmo_Battery_Low
+    expr: netatmo_sensor_battery_percent < 20
+    for: 2h
+  - alert: LessThanAnInchOfRain
         # (sum_over_time(netatmo_sensor_rain_amount_mm[7d]) *25.4 /300) < bool 1 and (max_over_time(netatmo_sensor_temperature_celsius{module="Outdoor"}[7d])*9/5 + 32)  > bool 65
-        expr: sum_over_time(netatmo_sensor_rain_amount_mm[7d]) *25.4 /300 < 1
-        for: 1h
-        labels:
-          realert: daily
-        annotations:
-          message: "There has been less than an inch of rain in the last week.  Maybe water the yard?"
-      - alert: OfficeHumidityLow
+    expr: sum_over_time(netatmo_sensor_rain_amount_mm[7d]) *25.4 /300 < 1
+    for: 1h
+    labels:
+      realert: daily
+    annotations:
+      message: There has been less than an inch of rain in the last week.  Maybe water
+        the yard?
+  - alert: OfficeHumidityLow
         # Check if humidity in the office is low and the humidifier power draw
         # is low.  If so, the humidifier is probably out of water.
-        expr: >
-          (
-            sum(hass_sensor_unit_percent{entity="sensor.office_humidity_bme280"} < bool 30)
-            +
-            sum(electricity_usage_w{description="Humidifier"} < bool 1)
-          ) >= 2
-        for: 5m
-        annotations:
-          message: "Humidity in the office is low and the humidifier is not running.  Check water levels."
-      - alert: DryboxHumidityHigh
-        expr: hass_sensor_unit_percent{entity="sensor.drybox_humidity"} > 30
-        for: 24h
-        labels:
-          realert: daily
+    expr: >
+      (
+        sum(hass_sensor_unit_percent{entity="sensor.office_humidity_bme280"} < bool
+      30)
+        +
+        sum(electricity_usage_w{description="Humidifier"} < bool 1)
+      ) >= 2
+    for: 5m
+    annotations:
+      message: Humidity in the office is low and the humidifier is not running.  Check
+        water levels.
+  - alert: DryboxHumidityHigh
+    expr: hass_sensor_unit_percent{entity="sensor.drybox_humidity"} > 30
+    for: 24h
+    labels:
+      realert: daily

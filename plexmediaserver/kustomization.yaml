@@ -5,12 +5,12 @@ kind: Kustomization
 namespace: default
 
 resources:
- - deploy.yaml
- - ingress.yaml
- - pvc.yaml
- - service.yaml
- - externalsecret.yaml
+- deploy.yaml
+- ingress.yaml
+- pvc.yaml
+- service.yaml
+- externalsecret.yaml
 
 labels:
-  - pairs:
-      app: plexmediaserver
+- pairs:
+    app: plexmediaserver

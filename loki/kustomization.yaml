@@ -5,26 +5,25 @@ kind: Kustomization
 namespace: default
 
 resources:
- - helm/loki/templates/statefulset.yaml
- - helm/loki/templates/serviceaccount.yaml
- - helm/loki/templates/service.yaml
- - helm/loki/templates/service-memberlist.yaml
+- helm/loki/templates/statefulset.yaml
+- helm/loki/templates/serviceaccount.yaml
+- helm/loki/templates/service.yaml
+- helm/loki/templates/service-memberlist.yaml
 
 labels:
-  - pairs:
-      app: loki
-
+- pairs:
+    app: loki
 secretGenerator:
-  - name: loki
-    files:
-      - loki.yaml=helm/loki.dist.yaml
-    type: Opaque
+- name: loki
+  files:
+  - loki.yaml=helm/loki.dist.yaml
+  type: Opaque
 
 patches:
-  - target:
-      kind: StatefulSet
-      name: loki
-    patch: |-
-      - op: replace
-        path: /spec/template/metadata/annotations/prometheus.io~1port
-        value: "3100"
+- target:
+    kind: StatefulSet
+    name: loki
+  patch: |-
+    - op: replace
+      path: /spec/template/metadata/annotations/prometheus.io~1port
+      value: "3100"

@@ -6,25 +6,25 @@ metadata:
   labels:
     k8s-app: hass
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/cluster-issuer: "letsencrypt"
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Home Assistant"
-    gethomepage.dev/group: "Miscellaneous"
-    gethomepage.dev/icon: "home-assistant.png"
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/name: Home Assistant
+    gethomepage.dev/group: Miscellaneous
+    gethomepage.dev/icon: home-assistant.png
 spec:
   tls:
-    - hosts:
-      - "hass.k.oneill.net"
-      secretName: "hass-tls"
+  - hosts:
+    - hass.k.oneill.net
+    secretName: hass-tls
   rules:
-    - host: "hass.k.oneill.net"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: hass
-                port:
-                  number: 8123
+  - host: hass.k.oneill.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hass
+            port:
+              number: 8123

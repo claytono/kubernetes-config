@@ -24,17 +24,17 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-          - mountPath: "/config"
-            name: config
-          - mountPath: "/data"
-            name: data
+        - mountPath: /config
+          name: config
+        - mountPath: /data
+          name: data
         env:
-          - name: TZ
-            value: "America/New_York"
+        - name: TZ
+          value: America/New_York
       volumes:
-        - name: config
-          persistentVolumeClaim:
-            claimName: smokeping-config
-        - name: data
-          persistentVolumeClaim:
-            claimName: smokeping-data
+      - name: config
+        persistentVolumeClaim:
+          claimName: smokeping-config
+      - name: data
+        persistentVolumeClaim:
+          claimName: smokeping-data

@@ -6,25 +6,25 @@ metadata:
   labels:
     k8s-app: alertmanager
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/cluster-issuer: "letsencrypt"
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Alertmanager"
-    gethomepage.dev/group: "Monitoring"
-    gethomepage.dev/icon: "alertmanager.png"
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/name: Alertmanager
+    gethomepage.dev/group: Monitoring
+    gethomepage.dev/icon: alertmanager.png
 spec:
   tls:
-    - hosts:
-      - "alertmanager.k.oneill.net"
-      secretName: "alertmanager-tls"
+  - hosts:
+    - alertmanager.k.oneill.net
+    secretName: alertmanager-tls
   rules:
-    - host: "alertmanager.k.oneill.net"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: alertmanager
-                port:
-                  number: 9093
+  - host: alertmanager.k.oneill.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: alertmanager
+            port:
+              number: 9093

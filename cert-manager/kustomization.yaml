@@ -60,5 +60,5 @@ patches:
     name: cert-manager-cainjector
 
 labels:
-  - pairs:
-      app: cert-manager
+- pairs:
+    app: cert-manager

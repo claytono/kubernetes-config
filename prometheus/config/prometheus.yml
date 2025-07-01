@@ -1,3 +1,4 @@
+---
 global:
   scrape_interval: 15s
 rule_files:
@@ -10,65 +11,64 @@ alerting:
     - targets:
       - alertmanager.k.oneill.net:443
 scrape_configs:
-- job_name: 'prometheus'
+- job_name: prometheus
 
   # metrics_path defaults to '/metrics'
   # scheme defaults to 'http'.
 
   static_configs:
-    - targets: ['localhost:9090']
-
-- job_name: 'node resources'
+  - targets: [localhost:9090]
+- job_name: node resources
   static_configs:
-    - targets:
-      - k1.oneill.net:9100
-      - k2.oneill.net:9100
-      - k4.oneill.net:9100
-      - k5.oneill.net:9100
+  - targets:
+    - k1.oneill.net:9100
+    - k2.oneill.net:9100
+    - k4.oneill.net:9100
+    - k5.oneill.net:9100
 
 # scrape szamar via http on port 10445
-- job_name: 'hwinfo gaming pc'
+- job_name: hwinfo gaming pc
   static_configs:
-    - targets:
-      - szamar.oneill.net:10445
-      - szamar.oneill.net:4445
-      - szamar.oneill.net:9835
+  - targets:
+    - szamar.oneill.net:10445
+    - szamar.oneill.net:4445
+    - szamar.oneill.net:9835
 
-- job_name: 'blackbox'
+- job_name: blackbox
   metrics_path: /probe
   params:
     module: [icmp]
   static_configs:
-    - targets:
-      - og-left-door.oneill.net
-      - og-right-door.oneill.net
-      - veraplus.oneill.net
-      - udmp.oneill.net
-      - basement-guardian.oneill.net
-      - infinity-thermostat.oneill.net
+  - targets:
+    - og-left-door.oneill.net
+    - og-right-door.oneill.net
+    - veraplus.oneill.net
+    - udmp.oneill.net
+    - basement-guardian.oneill.net
+    - infinity-thermostat.oneill.net
   relabel_configs:
-    - source_labels: [__address__]
-      target_label: __param_target
-    - source_labels: [__param_target]
-      target_label: instance
-    - target_label: __address__
-      replacement: blackbox-exporter:9115  # The blackbox exporter's real hostname:port.
+  - source_labels: [__address__]
+    target_label: __param_target
+  - source_labels: [__param_target]
+    target_label: instance
+  - target_label: __address__
+    replacement: blackbox-exporter:9115  # The blackbox exporter's real hostname:port.
 
-- job_name: 'hass'
+- job_name: hass
   bearer_token_file: /secrets/hass-bearer-token
   metrics_path: /api/prometheus
   static_configs:
-    - targets:
-      - hass.default:8123
+  - targets:
+    - hass.default:8123
 
-- job_name: 'vera'
+- job_name: vera
   scrape_interval: 15s
-  metrics_path: '/data_request?id=lr_prometheus_metrics'
+  metrics_path: /data_request?id=lr_prometheus_metrics
   static_configs:
-    - targets:
-      - 'veraplus.oneill.net:3480'
+  - targets:
+    - veraplus.oneill.net:3480
 
-- job_name: 'kubernetes-apiservers'
+- job_name: kubernetes-apiservers
 
   kubernetes_sd_configs:
   - role: endpoints
@@ -107,8 +107,7 @@ scrape_configs:
     # Kubernetes apiserver.  This means it will work if Prometheus is running out of
     # cluster, or can't connect to nodes for some other reason (e.g. because of
     # firewalling).
-
-- job_name: 'kubernetes-nodes'
+- job_name: kubernetes-nodes
 
   # Default to scraping over https. If required, just disable this or change to
   # `http`.
@@ -136,7 +135,6 @@ scrape_configs:
     regex: (.+)
     target_label: __metrics_path__
     replacement: /api/v1/nodes/${1}/proxy/metrics
-
 # Scrape config for Kubelet cAdvisor.
 #
 # This is required for Kubernetes 1.7.3 and later, where cAdvisor metrics
@@ -151,7 +149,7 @@ scrape_configs:
 #
 # This job is not necessary and should be removed in Kubernetes 1.6 and
 # earlier versions, or it will cause the metrics to be scraped twice.
-- job_name: 'kubernetes-cadvisor'
+- job_name: kubernetes-cadvisor
 
   # Default to scraping over https. If required, just disable this or change to
   # `http`.
@@ -179,7 +177,6 @@ scrape_configs:
     regex: (.+)
     target_label: __metrics_path__
     replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
-
 # Scrape config for service endpoints.
 #
 # The relabeling allows the actual service scrape endpoint to be configured
@@ -191,7 +188,7 @@ scrape_configs:
 # * `prometheus.io/path`: If the metrics path is not `/metrics` override this.
 # * `prometheus.io/port`: If the metrics are exposed on a different port to the
 # service then set this appropriately.
-- job_name: 'kubernetes-service-endpoints'
+- job_name: kubernetes-service-endpoints
 
   kubernetes_sd_configs:
   - role: endpoints
@@ -224,14 +221,13 @@ scrape_configs:
   - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape_interval]
     action: replace
     target_label: scrape_interval
-
 # Example scrape config for probing services via the Blackbox Exporter.
 #
 # The relabeling allows the actual service scrape endpoint to be configured
 # via the following annotations:
 #
 # * `prometheus.io/probe`: Only probe services that have a value of `true`
-- job_name: 'kubernetes-services'
+- job_name: kubernetes-services
 
   metrics_path: /probe
   params:
@@ -256,7 +252,6 @@ scrape_configs:
     target_label: kubernetes_namespace
   - source_labels: [__meta_kubernetes_service_name]
     target_label: kubernetes_name
-
 # Example scrape config for pods
 #
 # The relabeling allows the actual pod scrape endpoint to be configured via the
@@ -266,7 +261,7 @@ scrape_configs:
 # * `prometheus.io/path`: If the metrics path is not `/metrics` override this.
 # * `prometheus.io/port`: Scrape the pod on the indicated port instead of the
 # pod's declared ports (default is a port-free target if none are declared).
-- job_name: 'kubernetes-pods'
+- job_name: kubernetes-pods
 
   kubernetes_sd_configs:
   - role: pod

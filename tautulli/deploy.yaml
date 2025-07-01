@@ -24,17 +24,17 @@ spec:
         ports:
         - containerPort: 8181
         env:
-          - name: TZ
-            value: "EST5EDT"
+        - name: TZ
+          value: EST5EDT
         livenessProbe:
           failureThreshold: 10000
           httpGet:
             path: /
             port: 8181
         volumeMounts:
-          - mountPath: "/config"
-            name: config
+        - mountPath: /config
+          name: config
       volumes:
-        - name: config
-          persistentVolumeClaim:
-            claimName: tautulli-config
+      - name: config
+        persistentVolumeClaim:
+          claimName: tautulli-config

@@ -23,9 +23,9 @@ spec:
         image: nebulous/infinitude
         imagePullPolicy: Always
         volumeMounts:
-          - mountPath: "/infinitude/state"
-            name: state
+        - mountPath: /infinitude/state
+          name: state
       volumes:
-        - name: state
-          persistentVolumeClaim:
-            claimName: infinitude-state
+      - name: state
+        persistentVolumeClaim:
+          claimName: infinitude-state

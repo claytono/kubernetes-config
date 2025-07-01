@@ -1,3 +1,4 @@
+---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
@@ -14,7 +15,7 @@ spec:
   isCA: true
   commonName: my-selfsigned-ca
   secretName: root-secret
-  duration: "8760h"
+  duration: 8760h
   privateKey:
     algorithm: ECDSA
     size: 256

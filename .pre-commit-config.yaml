@@ -1,17 +1,26 @@
+---
 # See https://pre-commit.com/ for documentation
 # Enable additional hooks by uncommenting as needed
+exclude: (^|/)helm/
 
 repos:
   # --- Core pre-commit hooks (enabled) ---
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
-    hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: check-yaml
-        args: ["--allow-multiple-documents"]
-      - id: check-added-large-files
-      - id: check-merge-conflict
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+  - id: trailing-whitespace
+  - id: end-of-file-fixer
+  - id: check-yaml
+    args: [--allow-multiple-documents]
+  - id: check-added-large-files
+  - id: check-merge-conflict
+
+  # --- yamlfix (YAML formatting) ---
+- repo: https://github.com/lyz-code/yamlfix
+  rev: 1.17.0
+  hooks:
+  - id: yamlfix
+    args: [-c, .yamlfix.toml]
 
   # --- Prettier (YAML, JSON, Markdown formatting) ---
   # - repo: https://github.com/pre-commit/mirrors-prettier
@@ -67,4 +76,4 @@ repos:
   #   rev: v1.7.7
   #   hooks:
   #     - id: actionlint
-  #       files: ".github/workflows/.*\.ya?ml$" 
+  #       files: ".github/workflows/.*\.ya?ml$"

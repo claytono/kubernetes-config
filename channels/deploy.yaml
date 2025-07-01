@@ -24,25 +24,25 @@ spec:
         imagePullPolicy: Always
 #        command: ['sleep', 'infinity']
         env:
-          - name: TZ
-            value: "EST5EDT"
-          - name: CHANNELS_PORT
-            value: "8089"
+        - name: TZ
+          value: EST5EDT
+        - name: CHANNELS_PORT
+          value: '8089'
         volumeMounts:
-          - mountPath: "/channels-dvr"
-            name: config
-          - mountPath: "/recordings"
-            name: recordings
-          - name: dev-dri
-            mountPath: /dev/dri
-      volumes:
-        - name: config
-          persistentVolumeClaim:
-            claimName: channels-config
-        - nfs:
-            server: fs2.oneill.net
-            path: /volume2/shared/video/channels
+        - mountPath: /channels-dvr
+          name: config
+        - mountPath: /recordings
           name: recordings
         - name: dev-dri
-          hostPath:
-              path: /dev/dri
+          mountPath: /dev/dri
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: channels-config
+      - nfs:
+          server: fs2.oneill.net
+          path: /volume2/shared/video/channels
+        name: recordings
+      - name: dev-dri
+        hostPath:
+          path: /dev/dri

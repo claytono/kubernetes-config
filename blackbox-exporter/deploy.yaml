@@ -13,7 +13,7 @@ spec:
       - name: blackbox-exporter
         image: prom/blackbox-exporter:v0.24.0
         imagePullPolicy: Always
-        args: [ "--config.file=/config/config.yaml" ]
+        args: [--config.file=/config/config.yaml]
         volumeMounts:
         - name: config
           mountPath: /config

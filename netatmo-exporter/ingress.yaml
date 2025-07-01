@@ -4,21 +4,21 @@ kind: Ingress
 metadata:
   name: netatmo-exporter
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt"
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
-  ingressClassName: "nginx"
+  ingressClassName: nginx
   tls:
-    - hosts:
-      - "netatmo-exporter.k.oneill.net"
-      secretName: "netatmo-exporter-tls"
+  - hosts:
+    - netatmo-exporter.k.oneill.net
+    secretName: netatmo-exporter-tls
   rules:
-    - host: "netatmo-exporter.k.oneill.net"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: netatmo-exporter
-                port:
-                  number: 9210
+  - host: netatmo-exporter.k.oneill.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: netatmo-exporter
+            port:
+              number: 9210

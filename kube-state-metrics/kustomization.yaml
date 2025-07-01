@@ -3,12 +3,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
- - helm/templates/clusterrolebinding.yaml
- - helm/templates/role.yaml
- - helm/templates/serviceaccount.yaml
- - helm/templates/deployment.yaml
- - helm/templates/service.yaml
+- helm/templates/clusterrolebinding.yaml
+- helm/templates/role.yaml
+- helm/templates/serviceaccount.yaml
+- helm/templates/deployment.yaml
+- helm/templates/service.yaml
 
 labels:
-  - pairs:
-      app: kube-state-metrics
+- pairs:
+    app: kube-state-metrics

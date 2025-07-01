@@ -1,24 +1,25 @@
+---
 image:
   repository: ghcr.io/gethomepage/homepage
-  tag: "v0.8.4"
+  tag: v0.8.4
 
 config:
   services:
-    - Media:
+  - Media:
   widgets:
     # show the kubernetes widget, with the cluster summary and individual nodes
-    - kubernetes:
-        cluster:
-          show: true
-          cpu: true
-          memory: true
-          showLabel: true
-          label: "cluster"
-        nodes:
-          show: true
-          cpu: true
-          memory: true
-          showLabel: true
+  - kubernetes:
+      cluster:
+        show: true
+        cpu: true
+        memory: true
+        showLabel: true
+        label: cluster
+      nodes:
+        show: true
+        cpu: true
+        memory: true
+        showLabel: true
   kubernetes:
     mode: cluster
   settings:
@@ -27,7 +28,6 @@ config:
 serviceAccount:
   create: true
   name: homepage
-
 # This enables the service account to access the necessary resources
 enableRbac: true
 
@@ -35,14 +35,14 @@ ingress:
   main:
     enabled: true
     annotations:
-      kubernetes.io/ingress.class: "nginx"
-      cert-manager.io/cluster-issuer: "letsencrypt"
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt
     tls:
     - hosts:
-      - "homepage.k.oneill.net"
-      secretName: "homepage-tls"
+      - homepage.k.oneill.net
+      secretName: homepage-tls
     hosts:
-      - host: homepage.k.oneill.net
-        paths:
-          - path: /
-            pathType: Prefix
+    - host: homepage.k.oneill.net
+      paths:
+      - path: /
+        pathType: Prefix

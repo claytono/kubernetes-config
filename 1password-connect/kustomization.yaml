@@ -4,16 +4,15 @@ kind: Kustomization
 namespace: 1password
 
 resources:
- - namespace.yaml
- - helm/connect/templates/connect-deployment.yaml
- - helm/connect/templates/service.yaml
+- namespace.yaml
+- helm/connect/templates/connect-deployment.yaml
+- helm/connect/templates/service.yaml
 
 labels:
-  - pairs:
-      app: 1password-connect
-
+- pairs:
+    app: 1password-connect
 secretGenerator:
-  - name: op-credentials
-    files:
-      - 1password-credentials.json
-    type: Opaque
+- name: op-credentials
+  files:
+  - 1password-credentials.json
+  type: Opaque

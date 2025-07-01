@@ -29,25 +29,25 @@ spec:
   type: LoadBalancer
   loadBalancerIP: 172.19.74.21
   ports:
-    - name: plex-dlna
-      port: 1900
-      targetPort: 1900
-      protocol: UDP
-    - name: plex-gdm1
-      port: 32410
-      targetPort: 32410
-      protocol: UDP
-    - name: plex-gdm2
-      port: 32412
-      targetPort: 32412
-      protocol: UDP
-    - name: plex-gdm3
-      port: 32413
-      targetPort: 32413
-      protocol: UDP
-    - name: plex-gdm4
-      port: 32414
-      targetPort: 32414
-      protocol: UDP
+  - name: plex-dlna
+    port: 1900
+    targetPort: 1900
+    protocol: UDP
+  - name: plex-gdm1
+    port: 32410
+    targetPort: 32410
+    protocol: UDP
+  - name: plex-gdm2
+    port: 32412
+    targetPort: 32412
+    protocol: UDP
+  - name: plex-gdm3
+    port: 32413
+    targetPort: 32413
+    protocol: UDP
+  - name: plex-gdm4
+    port: 32414
+    targetPort: 32414
+    protocol: UDP
   selector:
     app: plexmediaserver

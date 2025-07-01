@@ -13,5 +13,5 @@ resources:
 - helm/templates/deployment.yaml
 
 labels:
-  - pairs:
-      app: nfs-subdir-external-provisioner
+- pairs:
+    app: nfs-subdir-external-provisioner
