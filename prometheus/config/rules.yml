@@ -15,7 +15,8 @@ groups:
     expr: probe_success == 0
     for: 20m
   - alert: ExporterDown
-    expr: up{job!="node resources", app!="resticprofile", job!="hwinfo gaming pc"} == 0
+    expr: up{job!="node resources", app!="resticprofile", job!="hwinfo gaming pc"}
+      == 0
     for: 15m
   - alert: CO2_PPM_Too_High
     expr: awair_sensor_co2 > 1000
