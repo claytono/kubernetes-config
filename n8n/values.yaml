@@ -30,7 +30,9 @@ main:
     n8n:
       protocol: https
       host: n8n.k.oneill.net
+#      port: 443
       webhook_url: https://n8n.k.oneill.net/
+      editor_base_url: https://n8n.k.oneill.net/
     db:
       type: postgresdb
       postgresdb:

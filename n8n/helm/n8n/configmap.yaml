@@ -16,6 +16,7 @@ data:
   DB_POSTGRESDB_PORT: "5432"
   DB_POSTGRESDB_USER: "n8n"
   DB_TYPE: "postgresdb"
+  N8N_EDITOR_BASE_URL: "https://n8n.k.oneill.net/"
   N8N_HOST: "n8n.k.oneill.net"
   N8N_PROTOCOL: "https"
   N8N_WEBHOOK_URL: "https://n8n.k.oneill.net/"

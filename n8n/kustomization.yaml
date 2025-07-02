@@ -27,7 +27,6 @@ resources:
 - helm/valkey/templates/health-configmap.yaml
 - helm/valkey/templates/networkpolicy.yaml
 - helm/valkey/templates/scripts-configmap.yaml
-- helm/valkey/templates/secret.yaml
 - helm/valkey/templates/primary/application.yaml
 - helm/valkey/templates/primary/service.yaml
 - helm/valkey/templates/primary/serviceaccount.yaml
