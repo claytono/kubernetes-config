@@ -5,14 +5,14 @@ set -eu -o pipefail
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$BASEDIR"
 
-# Chart variables
-N8N_CHART_NAME="oci://8gears.container-registry.com/library/n8n"
-N8N_CHART_VERSION="1.0.10"
-POSTGRES_CHART_NAME="oci://registry-1.docker.io/bitnamicharts/postgresql"
-POSTGRES_CHART_VERSION="15.5.36"
-
 rm -rf helm tmp
 mkdir -p tmp helm/n8n helm/valkey helm/postgres
+
+# Fetch chart info from repo root YAML
+N8N_CHART_NAME=$(scripts/chart-version.sh n8n name)
+N8N_CHART_VERSION=$(scripts/chart-version.sh n8n version)
+POSTGRES_CHART_NAME=$(scripts/chart-version.sh postgres name)
+POSTGRES_CHART_VERSION=$(scripts/chart-version.sh postgres version)
 
 # Render n8n chart
 helm template n8n "$N8N_CHART_NAME" \

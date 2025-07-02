@@ -1,17 +1,13 @@
 {
-  "description": "Renovate config for Helm chart version automation in render-helm.sh scripts.",
+  "description": "Renovate config for Helm chart version automation in chart-versions.yaml.",
   "extends": ["config:base"],
-  "regexManagers": [
+  "packageRules": [
     {
-      "fileMatch": ["(^|/)render-helm\\.sh$"],
-      "matchStrings": [
-        "(?<depName>[A-Z0-9_]+_CHART_NAME)=(?<currentValue>\\\"[^\\\"]+\\\")",
-        "(?<depName>[A-Z0-9_]+_CHART_VERSION)=(?<currentValue>\\\"[0-9a-zA-Z\\.\\-]+\\\")"
-      ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "{{{depName}}}",
-      "versioningTemplate": "helm",
-      "extractVersionTemplate": "{{{currentValue}}}"
+      "matchDatasources": ["helm"],
+      "matchPackagePatterns": [".*"]
     }
-  ]
+  ],
+  "yaml": {
+    "fileMatch": ["^chart-versions.yaml$"]
+  }
 }
