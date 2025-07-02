@@ -3,9 +3,7 @@
   "extends": ["config:base"],
   "regexManagers": [
     {
-      "fileMatch": [
-        "(^|/)render-helm\\.sh$"
-      ],
+      "fileMatch": ["(^|/)render-helm\\.sh$"],
       "matchStrings": [
         "(?<depName>[A-Z0-9_]+_CHART_NAME)=(?<currentValue>\\\"[^\\\"]+\\\")",
         "(?<depName>[A-Z0-9_]+_CHART_VERSION)=(?<currentValue>\\\"[0-9a-zA-Z\\.\\-]+\\\")"
@@ -16,4 +14,4 @@
       "extractVersionTemplate": "{{{currentValue}}}"
     }
   ]
-} 
+}
