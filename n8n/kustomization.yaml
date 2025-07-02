@@ -1,0 +1,32 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: n8n
+
+resources:
+- namespace.yaml
+- externalsecret.yaml
+  # n8n resources
+- helm/n8n/configmap.yaml
+- helm/n8n/deployment.yaml
+- helm/n8n/ingress.yaml
+- helm/n8n/pvc.yaml
+- helm/n8n/service.yaml
+- helm/n8n/serviceaccount.yaml
+  # PostgreSQL resources
+- helm/postgres/primary/networkpolicy.yaml
+- helm/postgres/primary/pdb.yaml
+- helm/postgres/primary/statefulset.yaml
+- helm/postgres/primary/svc-headless.yaml
+- helm/postgres/primary/svc.yaml
+- helm/postgres/serviceaccount.yaml
+  # Valkey/Redis resources
+- helm/valkey/templates/configmap.yaml
+- helm/valkey/templates/headless-svc.yaml
+- helm/valkey/templates/health-configmap.yaml
+- helm/valkey/templates/networkpolicy.yaml
+- helm/valkey/templates/scripts-configmap.yaml
+- helm/valkey/templates/primary/application.yaml
+- helm/valkey/templates/primary/service.yaml
+- helm/valkey/templates/primary/serviceaccount.yaml

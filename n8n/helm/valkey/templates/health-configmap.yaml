@@ -1,0 +1,108 @@
+---
+# Source: n8n/charts/valkey/templates/health-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: n8n-valkey-health
+  namespace: "n8n"
+  labels:
+    app.kubernetes.io/instance: n8n
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: valkey
+    app.kubernetes.io/version: 8.0.2
+    helm.sh/chart: valkey-2.4.7
+data:
+  ping_readiness_local.sh: |-
+    #!/bin/bash
+
+    [[ -f $VALKEY_PASSWORD_FILE ]] && export VALKEY_PASSWORD="$(< "${VALKEY_PASSWORD_FILE}")"
+    [[ -n "$VALKEY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PASSWORD"
+    response=$(
+      timeout -s 15 $1 \
+      valkey-cli \
+        -h localhost \
+        -p $VALKEY_PORT \
+        ping
+    )
+    if [ "$?" -eq "124" ]; then
+      echo "Timed out"
+      exit 1
+    fi
+    if [ "$response" != "PONG" ]; then
+      echo "$response"
+      exit 1
+    fi
+  ping_liveness_local.sh: |-
+    #!/bin/bash
+
+    [[ -f $VALKEY_PASSWORD_FILE ]] && export VALKEY_PASSWORD="$(< "${VALKEY_PASSWORD_FILE}")"
+    [[ -n "$VALKEY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PASSWORD"
+    response=$(
+      timeout -s 15 $1 \
+      valkey-cli \
+        -h localhost \
+        -p $VALKEY_PORT \
+        ping
+    )
+    if [ "$?" -eq "124" ]; then
+      echo "Timed out"
+      exit 1
+    fi
+    responseFirstWord=$(echo $response | head -n1 | awk '{print $1;}')
+    if [ "$response" != "PONG" ] && [ "$responseFirstWord" != "LOADING" ] && [ "$responseFirstWord" != "MASTERDOWN" ]; then
+      echo "$response"
+      exit 1
+    fi
+  ping_readiness_primary.sh: |-
+    #!/bin/bash
+
+    [[ -f $VALKEY_PRIMARY_PASSWORD_FILE ]] && export VALKEY_PRIMARY_PASSWORD="$(< "${VALKEY_PRIMARY_PASSWORD_FILE}")"
+    [[ -n "$VALKEY_PRIMARY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PRIMARY_PASSWORD"
+    response=$(
+      timeout -s 15 $1 \
+      valkey-cli \
+        -h $VALKEY_PRIMARY_HOST \
+        -p $VALKEY_PRIMARY_PORT_NUMBER \
+        ping
+    )
+    if [ "$?" -eq "124" ]; then
+      echo "Timed out"
+      exit 1
+    fi
+    if [ "$response" != "PONG" ]; then
+      echo "$response"
+      exit 1
+    fi
+  ping_liveness_primary.sh: |-
+    #!/bin/bash
+
+    [[ -f $VALKEY_PRIMARY_PASSWORD_FILE ]] && export VALKEY_PRIMARY_PASSWORD="$(< "${VALKEY_PRIMARY_PASSWORD_FILE}")"
+    [[ -n "$VALKEY_PRIMARY_PASSWORD" ]] && export REDISCLI_AUTH="$VALKEY_PRIMARY_PASSWORD"
+    response=$(
+      timeout -s 15 $1 \
+      valkey-cli \
+        -h $VALKEY_PRIMARY_HOST \
+        -p $VALKEY_PRIMARY_PORT_NUMBER \
+        ping
+    )
+    if [ "$?" -eq "124" ]; then
+      echo "Timed out"
+      exit 1
+    fi
+    responseFirstWord=$(echo $response | head -n1 | awk '{print $1;}')
+    if [ "$response" != "PONG" ] && [ "$responseFirstWord" != "LOADING" ]; then
+      echo "$response"
+      exit 1
+    fi
+  ping_readiness_local_and_primary.sh: |-
+    script_dir="$(dirname "$0")"
+    exit_status=0
+    "$script_dir/ping_readiness_local.sh" $1 || exit_status=$?
+    "$script_dir/ping_readiness_primary.sh" $1 || exit_status=$?
+    exit $exit_status
+  ping_liveness_local_and_primary.sh: |-
+    script_dir="$(dirname "$0")"
+    exit_status=0
+    "$script_dir/ping_liveness_local.sh" $1 || exit_status=$?
+    "$script_dir/ping_liveness_primary.sh" $1 || exit_status=$?
+    exit $exit_status

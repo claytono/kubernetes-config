@@ -1,0 +1,18 @@
+---
+# Source: n8n/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: n8n
+  labels:
+    helm.sh/chart: n8n-1.0.10
+    app.kubernetes.io/name: n8n
+    app.kubernetes.io/instance: n8n
+    app.kubernetes.io/version: "1.99.1"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: 5Gi

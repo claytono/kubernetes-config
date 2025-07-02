@@ -1,0 +1,84 @@
+---
+# Source: n8n/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n8n
+  labels:
+    helm.sh/chart: n8n-1.0.10
+    app.kubernetes.io/name: n8n
+    app.kubernetes.io/instance: n8n
+    app.kubernetes.io/version: "1.99.1"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: n8n
+      app.kubernetes.io/instance: n8n
+      app.kubernetes.io/type: master
+  template:
+    metadata:
+      annotations:
+        checksum/config: 055c5b2f7db12586ae968975381bdc670ce0e26edbde2ba0607b00721902ddaa
+      labels:
+        app.kubernetes.io/name: n8n
+        app.kubernetes.io/instance: n8n
+        app.kubernetes.io/type: master
+    spec:
+      serviceAccountName: n8n
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: n8n
+          securityContext:
+            {}
+          image: "n8nio/n8n:1.99.1"
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: n8n-app-config
+          env: 
+            - name: DB_POSTGRESDB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: DB_POSTGRESDB_PASSWORD
+                  name: n8n-secrets
+            - name: N8N_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: N8N_ENCRYPTION_KEY
+                  name: n8n-secrets
+            - name: N8N_USER_MANAGEMENT_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: N8N_USER_MANAGEMENT_JWT_SECRET
+                  name: n8n-secrets
+          lifecycle:
+            {}
+          ports:
+            - name: http
+              containerPort: 5678
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          resources:
+            {}
+          volumeMounts:
+            - name: data
+              mountPath: /home/node/.n8n
+      volumes:
+        - name: "data"
+          persistentVolumeClaim:
+            claimName: n8n

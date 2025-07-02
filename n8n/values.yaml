@@ -1,0 +1,78 @@
+---
+# n8n Helm Chart Values
+# Based on 8gears/n8n-helm-chart v1.0.10
+
+# Global image configuration
+image:
+  repository: n8nio/n8n
+  pullPolicy: Always
+
+# Ingress configuration - enabling with correct path format
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+  hosts:
+  - host: n8n.k.oneill.net
+    paths:
+    - /
+  tls:
+  - secretName: n8n-tls
+    hosts:
+    - n8n.k.oneill.net
+
+# Main n8n application configuration
+main:
+  # n8n-specific configuration via environment variables
+  config:
+    n8n:
+      protocol: https
+      host: n8n.k.oneill.net
+#      port: 443
+      webhook_url: https://n8n.k.oneill.net/
+      editor_base_url: https://n8n.k.oneill.net/
+    db:
+      type: postgresdb
+      postgresdb:
+        host: n8n-postgres-postgresql
+        port: 5432
+        database: n8n
+        user: n8n
+        # password will come from external secret via extraEnv
+
+  # Enable persistent storage (default is false/emptyDir)
+  persistence:
+    enabled: true
+    type: dynamic
+    size: 5Gi
+    accessModes:
+    - ReadWriteOnce
+
+  # Extra environment variables from external secrets
+  extraEnv:
+    N8N_ENCRYPTION_KEY:
+      valueFrom:
+        secretKeyRef:
+          name: n8n-secrets
+          key: N8N_ENCRYPTION_KEY
+    N8N_USER_MANAGEMENT_JWT_SECRET:
+      valueFrom:
+        secretKeyRef:
+          name: n8n-secrets
+          key: N8N_USER_MANAGEMENT_JWT_SECRET
+    DB_POSTGRESDB_PASSWORD:
+      valueFrom:
+        secretKeyRef:
+          name: n8n-secrets
+          key: DB_POSTGRESDB_PASSWORD
+
+# Enable Valkey/Redis for queue mode and better performance
+valkey:
+  enabled: true
+  architecture: standalone
+  primary:
+    persistence:
+      enabled: true
+      size: 2Gi
