@@ -11,7 +11,6 @@ mkdir -p .cache
 mkdir -p .tmp
 uuidgen >.tmp/uuid
 
-# shellcheck disable=SC1091
 source ./get-1password-secrets.sh
 
 # Get resticprofile password

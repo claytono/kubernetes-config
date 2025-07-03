@@ -1,0 +1,18 @@
+---
+# This Chart.yaml is used as a meta chart for centralizing Helm chart version management.
+# It is not a deployable Helm chart. Dependencies listed here are used for Renovate automation
+# and for scripting (e.g., render-helm.sh) to ensure all chart versions are managed in one place.
+# Do not attempt to deploy this chart directly.
+apiVersion: v2
+name: kubernetes-config-meta
+version: 0.1.0
+dependencies:
+- name: n8n
+  version: 1.0.10
+  repository: oci://8gears.container-registry.com/library/n8n
+- name: postgresql
+  version: 15.5.36
+  repository: oci://registry-1.docker.io/bitnamicharts/postgresql
+- name: vpa
+  version: 1.4.0
+  repository: https://charts.fairwinds.com/stable
