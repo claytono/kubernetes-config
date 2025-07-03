@@ -1,13 +1,10 @@
 {
-  "description": "Renovate config for Helm chart version automation in chart-versions.yaml.",
-  "extends": ["config:base"],
+  "description": "Renovate config for Helm chart version automation in Chart.yaml.",
+  "extends": ["config:recommended"],
   "packageRules": [
     {
       "matchDatasources": ["helm"],
-      "matchPackagePatterns": [".*"]
+      "matchPackageNames": [".*"]
     }
-  ],
-  "yaml": {
-    "fileMatch": ["^chart-versions.yaml$"]
-  }
+  ]
 }

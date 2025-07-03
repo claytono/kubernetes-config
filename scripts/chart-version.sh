@@ -1,31 +1,75 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -eu -o pipefail
+# Helper: get the directory of this script
+BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd)"
 
-# Usage: chart-version.sh <chart> <field>
-# Example: chart-version.sh n8n version
+# Helper function to look up chart fields from Chart.yaml dependencies
+chart_version_lookup() {
+  local chart="$1"
+  local field="$2"
+  local chart_file="$BASEDIR/../Chart.yaml"
 
-CHART_VERSIONS_FILE="$(git rev-parse --show-toplevel)/chart-versions.yaml"
+  if [ ! -f "$chart_file" ]; then
+    echo "Error: $chart_file not found" >&2
+    return 2
+  fi
 
-if [ $# -ne 2 ]; then
-  echo "Usage: $0 <chart> <field>" >&2
-  exit 1
-fi
+  local value
+  value=$(yq -r ".dependencies[] | select(.name == \"$chart\") | .$field" "$chart_file")
 
-CHART="$1"
-FIELD="$2"
+  if [ "$value" = "null" ] || [ -z "$value" ]; then
+    echo "Error: Field '$field' for chart '$chart' not found in $chart_file" >&2
+    return 3
+  fi
 
-if [ ! -f "$CHART_VERSIONS_FILE" ]; then
-  echo "Error: $CHART_VERSIONS_FILE not found" >&2
-  exit 2
-fi
+  printf "%s" "$value"
+}
 
-VALUE=$(yq ".${CHART}.${FIELD}" "$CHART_VERSIONS_FILE")
+# Convenience function to get the repository (chart repo/source)
+chart_repo() {
+  chart_version_lookup "$1" repository
+}
 
-if [ "$VALUE" = "null" ] || [ -z "$VALUE" ]; then
-  echo "Error: Field '$FIELD' for chart '$CHART' not found in $CHART_VERSIONS_FILE" >&2
-  exit 3
-fi
+# Convenience function to get the version only
+chart_version() {
+  chart_version_lookup "$1" version
+}
 
-# Output the value
-printf "%s" "$VALUE"
+# Function to output correct Helm CLI args for a chart key
+helm_chart_args() {
+  local chart="$1"
+  local repo
+  local version
+  repo=$(chart_repo "$chart")
+  version=$(chart_version "$chart")
+  if [[ "$repo" == oci://* ]]; then
+    # OCI chart: use repo as chart argument, no --repo
+    printf '%q ' "$repo" --version "$version"
+  else
+    # Standard chart: use chart name, --repo, --version
+    printf '%q ' "$chart" --repo "$repo" --version "$version"
+  fi
+}
+
+# Function to output correct Helm CLI args for a chart key as a Bash array
+helm_chart_args_array() {
+  local chart="$1"
+  local repo
+  local version
+  repo=$(chart_repo "$chart")
+  version=$(chart_version "$chart")
+  if [[ "$repo" == oci://* ]]; then
+    printf '%s\n' "$repo" --version "$version"
+  else
+    printf '%s\n' "$chart" --repo "$repo" --version "$version"
+  fi
+}
+
+# Function to call helm template with correct chart args and any extra options
+helm_template() {
+  local release="$1"
+  local chart_key="$2"
+  shift 2
+  mapfile -t chart_args < <(helm_chart_args_array "$chart_key")
+  helm template "$release" "${chart_args[@]}" "$@"
+}

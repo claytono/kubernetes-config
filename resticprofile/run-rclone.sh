@@ -9,7 +9,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 TEMP_RCLONE_CONFIG="/tmp/rclone.conf"
 TEMPLATE_CONFIG="$SCRIPT_DIR/rclone.conf.template"
 
-# shellcheck disable=SC1091
 source "$SCRIPT_DIR/get-1password-secrets.sh"
 
 # Running locally, fetch secrets from 1Password
