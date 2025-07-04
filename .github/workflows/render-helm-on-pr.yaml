@@ -2,11 +2,15 @@
 name: Render Helm Charts on PR
 
 on:
+  # Run on every push to any branch
+  push: {}
+  # Run on any PR open/update
   pull_request:
     types: [opened, synchronize]
 
 jobs:
   render:
+    name: Render Helm Charts
     runs-on: ubuntu-latest
 
     steps:
