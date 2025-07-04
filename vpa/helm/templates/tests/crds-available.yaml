@@ -1,9 +1,9 @@
 ---
-# Source: vpa/templates/tests/metrics.yaml
+# Source: vpa/templates/tests/crds-available.yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: vpa-test-metrics-api-available
+  name: vpa-test-crds-available
   labels:
     helm.sh/chart: vpa-4.7.2
     app.kubernetes.io/name: vpa
@@ -12,10 +12,10 @@ metadata:
     app.kubernetes.io/managed-by: Helm
   annotations:
     "helm.sh/hook": test
-    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
-    "helm.sh/hook-weight": "40"
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+    "helm.sh/hook-weight": "10"
 spec:
-  serviceAccountName: vpa-test
+  serviceAccountName:  vpa-test
   containers:
     - name: test
       securityContext:
@@ -31,6 +31,7 @@ spec:
       command: ['kubectl']
       args:
         - get
-        - --raw
-        - "/apis/metrics.k8s.io/v1beta1/nodes"
+        - crd
+        - verticalpodautoscalercheckpoints.autoscaling.k8s.io
+        - verticalpodautoscalers.autoscaling.k8s.io
   restartPolicy: Never

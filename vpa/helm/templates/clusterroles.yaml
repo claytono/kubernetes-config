@@ -46,7 +46,6 @@ rules:
       - get
       - list
       - watch
-      - patch
   - apiGroups:
       - "autoscaling.k8s.io"
     resources:
@@ -55,6 +54,20 @@ rules:
       - get
       - list
       - watch
+      - patch
+---
+# Source: vpa/templates/clusterroles.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: vpa-status-actor
+rules:
+  - apiGroups:
+      - "autoscaling.k8s.io"
+    resources:
+      - verticalpodautoscalers/status
+    verbs:
+      - get
       - patch
 ---
 # Source: vpa/templates/clusterroles.yaml

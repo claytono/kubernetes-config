@@ -5,28 +5,36 @@ kind: Pod
 metadata:
   name: vpa-test-create-vpa
   labels:
-    helm.sh/chart: vpa-1.4.0
+    helm.sh/chart: vpa-4.7.2
     app.kubernetes.io/name: vpa
     app.kubernetes.io/instance: vpa
-    app.kubernetes.io/version: "0.10.0"
+    app.kubernetes.io/version: "1.0.0"
     app.kubernetes.io/managed-by: Helm
   annotations:
     "helm.sh/hook": test
     "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
-    "helm.sh/hook-weight": "100"
+    "helm.sh/hook-weight": "20"
 spec:
   serviceAccountName: vpa-test
   containers:
     - name: test
-      image: quay.io/reactiveops/ci-images:v11-alpine
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 10324
+      image: bitnami/kubectl:1.33
+      imagePullPolicy: Always
       command: ['bash']
       args:
         - -c
         - |
           #!/bin/bash
 
-          set -e
-          set -x
+          set -ex
           cat <<EOF | kubectl -n default apply -f -
           apiVersion: autoscaling.k8s.io/v1
           kind: VerticalPodAutoscaler
