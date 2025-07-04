@@ -4,12 +4,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vpa-recommender
+  namespace: default
   labels:
     app.kubernetes.io/component: recommender
-    helm.sh/chart: vpa-1.4.0
+    helm.sh/chart: vpa-1.7.5
     app.kubernetes.io/name: vpa
     app.kubernetes.io/instance: vpa
-    app.kubernetes.io/version: "0.10.0"
+    app.kubernetes.io/version: "0.13.0"
     app.kubernetes.io/managed-by: Helm
 spec:
   replicas: 1
@@ -33,7 +34,7 @@ spec:
         - name: vpa
           securityContext:
             {}
-          image: "k8s.gcr.io/autoscaling/vpa-recommender:0.10.0"
+          image: "registry.k8s.io/autoscaling/vpa-recommender:0.13.0"
           imagePullPolicy: Always
           args:
             - --pod-recommendation-min-cpu-millicores=15
