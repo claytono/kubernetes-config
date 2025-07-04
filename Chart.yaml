@@ -11,7 +11,7 @@ dependencies:
   version: 1.0.10
   repository: oci://8gears.container-registry.com/library/n8n
 - name: postgresql
-  version: 15.5.36
+  version: 15.5.38
   repository: https://charts.bitnami.com/bitnami
 - name: vpa
   version: 1.4.0
