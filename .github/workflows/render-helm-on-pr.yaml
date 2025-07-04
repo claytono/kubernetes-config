@@ -2,11 +2,11 @@
 name: Render Helm Charts on PR
 
 on:
-  pull_request:
-    types: [opened, synchronize]
+  push: {}
 
 jobs:
   render:
+    name: Render Helm Charts
     runs-on: ubuntu-latest
 
     steps:

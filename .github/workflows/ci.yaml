@@ -2,17 +2,11 @@
 name: CI
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-  # Also runs when the render workflow completes
-  workflow_run:
-    workflows: [Render Helm Charts on PR]
-    types: [completed]
+  push: {}
 
 jobs:
   lint:
+    name: Lint & Test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
