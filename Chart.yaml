@@ -9,7 +9,7 @@ version: 0.1.0
 dependencies:
 - name: n8n
   version: 1.0.10
-  repository: oci://8gears.container-registry.com/library/n8n
+  repository: oci://8gears.container-registry.com/library
 - name: postgresql
   version: 15.5.38
   repository: https://charts.bitnami.com/bitnami
