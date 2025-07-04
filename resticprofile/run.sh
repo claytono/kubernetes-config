@@ -5,7 +5,7 @@ set -eu -o pipefail
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$BASEDIR"
 
-image=$(yq .spec.jobTemplate.spec.template.spec.containers[0].image <cronjob-azure.yaml)
+image=$(yq -r .spec.jobTemplate.spec.template.spec.containers[0].image <cronjob-azure.yaml)
 
 mkdir -p .cache
 mkdir -p .tmp
@@ -20,7 +20,7 @@ export_resticprofile_password
 export_rclone_env_variables
 
 # Now run the Docker container with the config file and necessary environment variables
-docker run -it --rm \
+docker run --rm \
 	-e RESTIC_PASSWORD="$RESTIC_PASSWORD" \
 	-e RESTIC_PASSWORD2="$RESTIC_PASSWORD" \
 	-e RESTIC_FROM_PASSWORD="$RESTIC_PASSWORD" \
