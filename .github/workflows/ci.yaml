@@ -6,6 +6,10 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  # Also runs when the render workflow completes
+  workflow_run:
+    workflows: [Render Helm Charts on PR]
+    types: [completed]
 
 jobs:
   lint:
