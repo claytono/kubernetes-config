@@ -29,5 +29,8 @@ jobs:
     - name: Setup development environment
       run: nix develop --command echo "Development environment ready"
 
+    - name: Pre-commit install
+      run: nix develop --command pre-commit install
+
     - name: Run pre-commit
       run: nix develop --command pre-commit run --all-files
