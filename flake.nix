@@ -21,6 +21,7 @@
             yq
             jq
             pre-commit
+            act
           ];
         };
       });

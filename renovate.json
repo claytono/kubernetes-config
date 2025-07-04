@@ -5,12 +5,10 @@
     {
       "matchDatasources": ["helm"],
       "matchManagers": ["helmv3"],
-      "matchPaths": ["**/Chart.yaml"],
-      "postUpgradeTasks": {
-        "fileFilters": ["**/Chart.yaml"],
-        "commands": ["(cd {{{packageFileDir}}} && ./render-helm.sh)"],
-        "executionMode": "branch"
-      }
+      "matchPaths": ["**/Chart.yaml"]
     }
+  ],
+  "gitIgnoredAuthors": [
+    "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
   ]
 }
