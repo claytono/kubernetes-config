@@ -7,7 +7,8 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd)"
 chart_version_lookup() {
   local chart="$1"
   local field="$2"
-  local chart_file="$BASEDIR/../Chart.yaml"
+  # Look for Chart.yaml in the current directory (project-specific)
+  local chart_file="$BASEDIR/Chart.yaml"
 
   if [ ! -f "$chart_file" ]; then
     echo "Error: $chart_file not found" >&2
