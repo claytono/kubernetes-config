@@ -12,6 +12,5 @@
         "executionMode": "branch"
       }
     }
-  ],
-  "allowedCommands": ["^\\(cd \\S+render-helm\\.sh\\)$"]
+  ]
 }
