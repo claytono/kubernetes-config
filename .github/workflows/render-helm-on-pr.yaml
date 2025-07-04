@@ -1,0 +1,65 @@
+---
+name: Render Helm Charts on PR
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout full history
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install Nix
+      uses: cachix/install-nix-action@v31
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Cache pre-commit
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pre-commit
+        key: ${{ runner.os }}-precommit-${{ hashFiles('.pre-commit-config.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-precommit-
+
+    - name: Install pre-commit hooks
+      run: nix develop --command pre-commit install
+
+    - name: Render changed charts
+      run: |
+        BASE_SHA=${{ github.event.pull_request.base.sha }}
+        HEAD_SHA=${{ github.sha }}
+
+        git diff --name-only $BASE_SHA $HEAD_SHA \
+          | xargs -r -n1 dirname \
+          | sort -u \
+          | while read dir; do
+              if [ -f "$dir/render-helm.sh" ]; then
+                echo "⏳ Rendering in $dir"
+                pushd "$dir"
+                nix develop --command ./render-helm.sh
+                popd
+              else
+                echo "⏭  Skipping $dir (no render-helm.sh)"
+              fi
+            done
+
+    - name: Commit & Push rendered manifests
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "regenerate Helm manifests"
+          git push
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
