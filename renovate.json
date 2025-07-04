@@ -1,10 +1,17 @@
 {
-  "description": "Renovate config for Helm chart version automation in Chart.yaml.",
+  "description": "Renovate config for multi-project Helm chart version automation.",
   "extends": ["config:recommended"],
   "packageRules": [
     {
       "matchDatasources": ["helm"],
-      "matchPackageNames": [".*"]
+      "matchManagers": ["helmv3"],
+      "matchPaths": ["**/Chart.yaml"],
+      "postUpgradeTasks": {
+        "fileFilters": ["**/Chart.yaml"],
+        "commands": ["(cd {{{packageFileDir}}} && ./render-helm.sh)"],
+        "executionMode": "branch"
+      }
     }
-  ]
+  ],
+  "allowedCommands": ["^\\(cd \\S+render-helm\\.sh\\)$"]
 }
