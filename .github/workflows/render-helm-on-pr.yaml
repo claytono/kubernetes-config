@@ -39,7 +39,7 @@ jobs:
         git diff --name-only $BASE_SHA $HEAD_SHA \
           | xargs -r -n1 dirname \
           | sort -u \
-          | while read dir; do
+          | while read -r dir; do
               if [ -f "$dir/render-helm.sh" ]; then
                 echo "⏳ Rendering in $dir"
                 pushd "$dir"
