@@ -2,11 +2,7 @@
 name: CI
 
 on:
-  # Run on every push to any branch
   push: {}
-  # Run on any PR open/update
-  pull_request:
-    types: [opened, synchronize]
 
 jobs:
   lint:
