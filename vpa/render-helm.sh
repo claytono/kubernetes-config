@@ -16,4 +16,4 @@ helm_template vpa vpa --include-crds --values values.yaml --output-dir tmp
 mv tmp/*/* helm
 rmdir tmp/*
 rmdir tmp
-rm -rf helm/tests
+rm -rf helm/templates/tests

@@ -4,5 +4,5 @@ name: vpa-meta
 version: 0.1.0
 dependencies:
 - name: vpa
-  version: 1.7.5
+  version: 2.5.1
   repository: https://charts.fairwinds.com/stable
