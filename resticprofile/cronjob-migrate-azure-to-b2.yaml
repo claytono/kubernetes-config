@@ -48,8 +48,8 @@ spec:
             - --lock-wait
             - 1h
             - copy
-            image: creativeprojects/resticprofile:latest
-            imagePullPolicy: Always
+            image: creativeprojects/resticprofile
+            imagePullPolicy: IfNotPresent
             envFrom:
             - secretRef:
                 name: resticprofile
