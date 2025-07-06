@@ -42,7 +42,7 @@ spec:
             - 6h
             - copy
             image: creativeprojects/resticprofile
-            imagePullPolicy: Always
+            imagePullPolicy: IfNotPresent
             envFrom:
             - secretRef:
                 name: resticprofile

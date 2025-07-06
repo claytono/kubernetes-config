@@ -48,7 +48,7 @@ spec:
             - 6h
             - forget
             image: creativeprojects/resticprofile
-            imagePullPolicy: Always
+            imagePullPolicy: IfNotPresent
             envFrom:
             - secretRef:
                 name: resticprofile

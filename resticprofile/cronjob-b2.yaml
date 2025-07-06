@@ -45,7 +45,7 @@ spec:
             - 6h
             - backup
             image: creativeprojects/resticprofile
-            imagePullPolicy: Always
+            imagePullPolicy: IfNotPresent
             envFrom:
             - secretRef:
                 name: resticprofile
