@@ -5,6 +5,7 @@ metadata:
   name: resticprofile-migrate-azure-to-b2
 spec:
   schedule: 0 3 * * *
+  suspend: true
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   jobTemplate:
@@ -78,9 +79,9 @@ spec:
           volumes:
           - name: rclone-config
             configMap:
-              name: rclone-template
+              name: rclone-config
               items:
-              - key: rclone.conf.template
+              - key: rclone.conf
                 path: rclone.conf
           - name: resticprofile-config
             configMap:
@@ -89,4 +90,4 @@ spec:
             emptyDir: {}
           - name: cache
             persistentVolumeClaim:
-              claimName: resticprofile-cache-migration
+              claimName: resticprofile-cache

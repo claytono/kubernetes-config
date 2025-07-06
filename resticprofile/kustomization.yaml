@@ -3,19 +3,25 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- cronjob-about.yaml
-- cronjob-azure.yaml
 - cronjob-copy-main.yaml
+- cronjob-b2.yaml
+- cronjob-b2-forget.yaml
 - cronjob-migrate-azure-to-b2.yaml
 - pvc.yaml
 - externalsecret.yaml
 
-commonLabels:
-  app: resticprofile
 configMapGenerator:
-- name: resticprofile-config
-  files:
+- files:
   - profiles.yaml
-- name: rclone-template
-  files:
-  - rclone.conf.template
+  name: resticprofile-config
+  options:
+    disableNameSuffixHash: true
+- files:
+  - rclone.conf
+  name: rclone-config
+  options:
+    disableNameSuffixHash: true
+labels:
+- includeSelectors: true
+  pairs:
+    app: resticprofile

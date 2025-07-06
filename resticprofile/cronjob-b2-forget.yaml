@@ -2,9 +2,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: resticprofile-copy-main
+  name: resticprofile-b2-forget
 spec:
-  schedule: 18 5 * * *
+  schedule: 0 2 * * *  # Daily at 2 AM (after backup completes)
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   jobTemplate:
@@ -12,11 +12,11 @@ spec:
       template:
         metadata:
           labels:
-            resticprofile: copy-main
+            resticprofile: b2-forget
           annotations:
             prometheus.io/scrape: 'true'
             prometheus.io/path: /metrics
-            prometheus.io/port: '5572'
+            prometheus.io/port: '5573'
         spec:
           hostname: rp-kube
           restartPolicy: OnFailure
@@ -27,6 +27,12 @@ spec:
             volumeMounts:
             - mountPath: /tmp
               name: scratch
+          - name: fix-cache-permissions
+            image: alpine
+            command: [sh, -c, chown -R 10007:10007 /cache]
+            volumeMounts:
+            - mountPath: /cache
+              name: cache
           containers:
           - name: resticprofile
             securityContext:
@@ -37,10 +43,10 @@ spec:
             - -c
             - /resticprofile-config/profiles.yaml
             - -n
-            - copy-main
+            - b2
             - --lock-wait
             - 6h
-            - copy
+            - forget
             image: creativeprojects/resticprofile:latest
             imagePullPolicy: Always
             envFrom:
@@ -55,7 +61,7 @@ spec:
                   fieldPath: metadata.name
             - name: RCLONE_CONFIG
               value: /rclone-config/rclone.conf
-            - name: RESTIC_FROM_PASSWORD
+            - name: RESTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: resticprofile
@@ -69,8 +75,6 @@ spec:
               name: scratch
             - mountPath: /cache
               name: cache
-            - mountPath: /source/backups/restic/repos
-              name: backups
           volumes:
           - name: rclone-config
             configMap:
@@ -86,7 +90,3 @@ spec:
           - name: cache
             persistentVolumeClaim:
               claimName: resticprofile-cache
-          - nfs:
-              server: fs2.oneill.net
-              path: /volume2/backups/restic/repos
-            name: backups
