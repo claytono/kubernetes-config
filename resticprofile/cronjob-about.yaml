@@ -38,7 +38,7 @@ spec:
           volumes:
           - name: rclone-config
             configMap:
-              name: rclone-template
+              name: rclone-config
               items:
-              - key: rclone.conf.template
+              - key: rclone.conf
                 path: rclone.conf

@@ -5,6 +5,7 @@ metadata:
   name: resticprofile-azure
 spec:
   schedule: 4 18 * * *
+  suspend: true
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   failedJobsHistoryLimit: 3
@@ -70,9 +71,9 @@ spec:
           volumes:
           - name: rclone-config
             configMap:
-              name: rclone-template
+              name: rclone-config
               items:
-              - key: rclone.conf.template
+              - key: rclone.conf
                 path: rclone.conf
           - name: resticprofile-config
             configMap:
@@ -81,7 +82,7 @@ spec:
             emptyDir: {}
           - name: cache
             persistentVolumeClaim:
-              claimName: resticprofile-cache-synology
+              claimName: resticprofile-cache
           - nfs:
               server: fs2.oneill.net
               path: /volume1/k8s-pv
