@@ -23,7 +23,7 @@ configMapGenerator:
     disableNameSuffixHash: true
 images:
 - name: alpine
-  newTag: '3.18'
+  newTag: '3.22'
 - name: creativeprojects/resticprofile
   newTag: v0.31.0
 
