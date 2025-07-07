@@ -6,7 +6,7 @@ metadata:
   name: goldilocks-controller
   labels:
     app.kubernetes.io/name: goldilocks
-    helm.sh/chart: goldilocks-6.8.0
+    helm.sh/chart: goldilocks-9.0.2
     app.kubernetes.io/instance: goldilocks
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: controller
@@ -15,6 +15,15 @@ rules:
       - 'apps'
     resources:
       - '*'
+    verbs:
+      - 'get'
+      - 'list'
+      - 'watch'
+  - apiGroups:
+      - 'batch'
+    resources:
+      - 'cronjobs'
+      - 'jobs'
     verbs:
       - 'get'
       - 'list'
