@@ -2,7 +2,11 @@
 name: Render Helm Charts on PR
 
 on:
-  push: {}
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
 
 jobs:
   render:
@@ -14,6 +18,8 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
+        persist-credentials: false
+        token: ${{ secrets.PAT }}
 
     - name: Install Nix
       uses: cachix/install-nix-action@v31
@@ -33,7 +39,12 @@ jobs:
 
     - name: Render changed charts
       run: |
-        BASE_SHA=${{ github.event.pull_request.base.sha }}
+        # Fallback logic for BASE_SHA
+        if [ -z "${{ github.event.pull_request.base.sha }}" ]; then
+          BASE_SHA=$(git rev-parse HEAD^)
+        else
+          BASE_SHA=${{ github.event.pull_request.base.sha }}
+        fi
         HEAD_SHA=${{ github.sha }}
 
         git diff --name-only $BASE_SHA $HEAD_SHA \
@@ -50,7 +61,7 @@ jobs:
               fi
             done
 
-    - name: Commit & Push rendered manifests
+    - name: Commit regenerated manifests
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -58,11 +69,11 @@ jobs:
         if git diff --cached --quiet; then
           echo "No changes to commit"
         else
-          git commit -m "regenerate Helm manifests"
-          # Extract the PR branch name
-          BRANCH_NAME="${GITHUB_HEAD_REF:-${GITHUB_REF##*/}}"
-          echo "Pushing to branch: $BRANCH_NAME"
-          git push origin HEAD:refs/heads/"$BRANCH_NAME"
+          git commit -m "chore: regenerate Helm manifests"
         fi
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Push changes via PAT
+      run: |-
+        BRANCH_NAME="${GITHUB_HEAD_REF:-${GITHUB_REF##*/}}"
+        echo "Pushing to branch: $BRANCH_NAME"
+        git push https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }} HEAD:${BRANCH_NAME}
