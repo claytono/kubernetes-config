@@ -6,10 +6,10 @@ metadata:
   name: vpa-recommender
   labels:
     app.kubernetes.io/component: recommender
-    helm.sh/chart: vpa-2.5.1
+    helm.sh/chart: vpa-4.7.2
     app.kubernetes.io/name: vpa
     app.kubernetes.io/instance: vpa
-    app.kubernetes.io/version: "0.14.0"
+    app.kubernetes.io/version: "1.0.0"
     app.kubernetes.io/managed-by: Helm
 spec:
   replicas: 1
@@ -30,11 +30,17 @@ spec:
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: vpa
           securityContext:
-            {}
-          image: registry.k8s.io/autoscaling/vpa-recommender:0.14.0
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+          image: registry.k8s.io/autoscaling/vpa-recommender:1.0.0
           imagePullPolicy: Always
           args:
             - --pod-recommendation-min-cpu-millicores=15
@@ -63,9 +69,7 @@ spec:
               containerPort: 8942
               protocol: TCP
           resources:
-            limits:
-              cpu: 200m
-              memory: 1000Mi
+            limits: {}
             requests:
               cpu: 50m
               memory: 500Mi
