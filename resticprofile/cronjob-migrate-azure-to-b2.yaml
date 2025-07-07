@@ -28,17 +28,8 @@ spec:
             volumeMounts:
             - mountPath: /tmp
               name: scratch
-          - name: fix-cache-permissions
-            image: alpine
-            command: [sh, -c, chown -R 10007:10007 /cache]
-            volumeMounts:
-            - mountPath: /cache
-              name: cache
           containers:
           - name: resticprofile
-            securityContext:
-              runAsUser: 10007
-              runAsGroup: 10007
             command:
             - resticprofile
             - -c
