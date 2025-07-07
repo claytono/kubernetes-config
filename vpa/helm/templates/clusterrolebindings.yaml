@@ -31,6 +31,20 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
+  name: vpa-status-actor
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: vpa-status-actor
+subjects:
+  - kind: ServiceAccount
+    name: vpa-recommender
+    namespace: default
+---
+# Source: vpa/templates/clusterrolebindings.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
   name: vpa-actor
 roleRef:
   apiGroup: rbac.authorization.k8s.io
