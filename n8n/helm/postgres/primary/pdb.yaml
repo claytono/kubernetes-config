@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: postgresql
     app.kubernetes.io/version: 16.4.0
-    helm.sh/chart: postgresql-15.5.36
+    helm.sh/chart: postgresql-15.5.38
     app.kubernetes.io/component: primary
 spec:
   maxUnavailable: 1

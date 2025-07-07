@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: postgresql
     app.kubernetes.io/version: 16.4.0
-    helm.sh/chart: postgresql-15.5.36
+    helm.sh/chart: postgresql-15.5.38
     app.kubernetes.io/component: primary
 spec:
   replicas: 1
@@ -31,7 +31,7 @@ spec:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: postgresql
         app.kubernetes.io/version: 16.4.0
-        helm.sh/chart: postgresql-15.5.36
+        helm.sh/chart: postgresql-15.5.38
         app.kubernetes.io/component: primary
     spec:
       serviceAccountName: n8n-postgres-postgresql
@@ -61,7 +61,7 @@ spec:
       hostIPC: false
       containers:
         - name: postgresql
-          image: docker.io/bitnami/postgresql:16.4.0-debian-12-r12
+          image: docker.io/bitnami/postgresql:16.4.0-debian-12-r14
           imagePullPolicy: "IfNotPresent"
           securityContext:
             allowPrivilegeEscalation: false
