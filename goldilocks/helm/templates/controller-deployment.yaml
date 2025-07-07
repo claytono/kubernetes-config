@@ -4,9 +4,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: goldilocks-controller
+  namespace: default
   labels:
     app.kubernetes.io/name: goldilocks
-    helm.sh/chart: goldilocks-6.5.1
+    helm.sh/chart: goldilocks-6.8.0
     app.kubernetes.io/instance: goldilocks
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: controller
@@ -29,7 +30,7 @@ spec:
         {}
       containers:
         - name: goldilocks
-          image: "us-docker.pkg.dev/fairwinds-ops/oss/goldilocks:v4.6.3"
+          image: "us-docker.pkg.dev/fairwinds-ops/oss/goldilocks:v4.9.0"
           imagePullPolicy: Always
           command:
             - /goldilocks
@@ -50,4 +51,4 @@ spec:
               memory: 256Mi
             requests:
               cpu: 25m
-              memory: 32Mi
+              memory: 256Mi
