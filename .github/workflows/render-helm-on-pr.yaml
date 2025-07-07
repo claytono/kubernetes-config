@@ -17,6 +17,7 @@ jobs:
     - name: Checkout full history
       uses: actions/checkout@v4
       with:
+        ref: ${{ github.event.pull_request.head.ref }}
         fetch-depth: 0
         persist-credentials: false
         token: ${{ secrets.PAT }}
@@ -39,13 +40,11 @@ jobs:
 
     - name: Render changed charts
       run: |
-        # Fallback logic for BASE_SHA
-        if [ -z "${{ github.event.pull_request.base.sha }}" ]; then
-          BASE_SHA=$(git rev-parse HEAD^)
-        else
-          BASE_SHA=${{ github.event.pull_request.base.sha }}
-        fi
-        HEAD_SHA=${{ github.sha }}
+        # Get the base branch for comparison
+        BASE_SHA=${{ github.event.pull_request.base.sha }}
+        HEAD_SHA=${{ github.event.pull_request.head.sha }}
+
+        echo "Comparing $BASE_SHA..$HEAD_SHA"
 
         git diff --name-only $BASE_SHA $HEAD_SHA \
           | xargs -r -n1 dirname \
