@@ -29,9 +29,6 @@ spec:
               name: scratch
           containers:
           - name: resticprofile
-            securityContext:
-              runAsUser: 10007
-              runAsGroup: 10007
             command:
             - resticprofile
             - -c
