@@ -75,4 +75,4 @@ jobs:
       run: |-
         BRANCH_NAME="${GITHUB_HEAD_REF:-${GITHUB_REF##*/}}"
         echo "Pushing to branch: $BRANCH_NAME"
-        git push https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }} HEAD:${BRANCH_NAME}
+        git push "https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}" "HEAD:${BRANCH_NAME}"
