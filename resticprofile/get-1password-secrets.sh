@@ -24,12 +24,7 @@ export_rclone_env_variables() {
 		echo "$item_json" | jq -r --arg field "$1" '.fields[] | select(.label == $field) | .value // empty'
 	}
 
-	# Azure backend credentials
-	export RCLONE_CONFIG_AZURE_KEY=$(extract_field "RCLONE_CONFIG_AZURE_KEY")
-
 	# Get the shared crypt passwords from 1Password and set them directly
-	export RCLONE_CONFIG_AZC_PASSWORD=$(extract_field "RCLONE_CONFIG_CRYPT_PASSWORD")
-	export RCLONE_CONFIG_AZC_PASSWORD2=$(extract_field "RCLONE_CONFIG_CRYPT_PASSWORD2")
 	export RCLONE_CONFIG_B2C_PASSWORD=$(extract_field "RCLONE_CONFIG_CRYPT_PASSWORD")
 	export RCLONE_CONFIG_B2C_PASSWORD2=$(extract_field "RCLONE_CONFIG_CRYPT_PASSWORD2")
 

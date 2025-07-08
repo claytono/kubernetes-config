@@ -59,7 +59,7 @@ b2:
   check:
     read-data-subset: 1%
 # B2 copy profile (copy from local repo to B2)
-copy-main: &copy-main
+copy-main:
   compression: max
   repository: /source/backups/restic/repos/main
   verbose: true
@@ -83,73 +83,3 @@ copy-main: &copy-main
   - host: kubernetes
   - backend: b2
   prometheus-push: https://pushgateway.k.oneill.net/
-
-# Migration profile - copy from Azure to B2
-migrate-azure-to-b2:
-  <<: *copy-main
-  repository: rclone:azc:restic/main  # Source: Azure
-  env:
-    RCLONE_BWLIMIT: 25M
-    RCLONE_CONFIG: /rclone-config/rclone.conf
-    RCLONE_FAST_LIST: true
-    RESTIC_PROGRESS_FPS: '0.1'
-    RESTIC_CACHE_DIR: /cache
-  copy:
-    repository: rclone:b2c:restic/main  # Destination: B2
-    run-before: *run_before
-    run-finally: *run_finally
-  prometheus-labels:
-  - host: kubernetes
-
-# Azure profile (legacy - suspended)
-azure:
-  repository: rclone:azc:restic/main
-  compression: max
-  verbose: true
-  pack-size: 64
-
-  env:
-    RCLONE_BWLIMIT: 25M
-    RCLONE_CONFIG: /rclone-config/rclone.conf
-    RCLONE_RC: true
-    RCLONE_RC_ADDR: 0.0.0.0:5572
-    RCLONE_RC_ENABLE_METRICS: true
-    RCLONE_FAST_LIST: true
-    RESTIC_PROGRESS_FPS: '0.1'
-    RESTIC_CACHE_DIR: /cache
-
-  backup:
-    source:
-    - /source
-    exclude:
-    - /source/backups/arq
-    - /source/backups/restic
-    - /source/k8s-pv/default-resticprofile-cache*
-    - /source/k8s-pv/default-prometheus-data/
-    - /source/shared/video/tv
-    - /source/shared/video/channels
-    - /source/shared/video/movies
-    - /source/shared/downloads
-    no-error-on-warning: true
-    run-before: *run_before
-    run-finally: *run_finally
-  forget:
-    keep-hourly: 24
-    keep-daily: 14
-    keep-monthly: 24
-    keep-weekly: 12
-    prune: true
-    run-before: *run_before
-    run-finally: *run_finally
-  prometheus-labels:
-  - host: kubernetes
-  prometheus-push: https://pushgateway.k.oneill.net/
-  retention:
-    after-backup: true
-    keep-hourly: 24
-    keep-daily: 14
-    keep-monthly: 24
-    keep-weekly: 12
-    prune: true
-  check:
-    read-data-subset: 50M

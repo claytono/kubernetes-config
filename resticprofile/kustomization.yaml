@@ -6,7 +6,6 @@ resources:
 - cronjob-copy-main.yaml
 - cronjob-b2.yaml
 - cronjob-b2-forget.yaml
-- cronjob-migrate-azure-to-b2.yaml
 - pvc.yaml
 - externalsecret.yaml
 
