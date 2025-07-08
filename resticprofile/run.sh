@@ -5,7 +5,7 @@ set -eu -o pipefail
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$BASEDIR"
 
-image=$(yq -r .spec.jobTemplate.spec.template.spec.containers[0].image <cronjob-azure.yaml)
+image=$(yq -r .spec.jobTemplate.spec.template.spec.containers[0].image <cronjob-b2.yaml)
 
 mkdir -p .cache
 mkdir -p .tmp
@@ -25,9 +25,6 @@ docker run --rm \
 	-e RESTIC_PASSWORD2="$RESTIC_PASSWORD" \
 	-e RESTIC_FROM_PASSWORD="$RESTIC_PASSWORD" \
 	-e RCLONE_RC_NO_AUTH=true \
-	-e RCLONE_CONFIG_AZURE_KEY \
-	-e RCLONE_CONFIG_AZC_PASSWORD \
-	-e RCLONE_CONFIG_AZC_PASSWORD2 \
 	-e RCLONE_CONFIG_B2_ACCOUNT \
 	-e RCLONE_CONFIG_B2_KEY \
 	-e RCLONE_CONFIG_B2C_PASSWORD \
@@ -35,7 +32,7 @@ docker run --rm \
 	-v "$BASEDIR/.cache:/cache" \
 	-v "$BASEDIR/.tmp:/tmp" \
 	-v "$BASEDIR/profiles.yaml:/resticprofile-config/profiles.yaml:ro" \
-	-v "$BASEDIR/rclone.conf.template:/rclone-config/rclone.conf:ro" \
+	-v "$BASEDIR/rclone.conf:/rclone-config/rclone.conf:ro" \
 	"$image" \
 	-c /resticprofile-config/profiles.yaml \
 	--lock-wait 6h \
