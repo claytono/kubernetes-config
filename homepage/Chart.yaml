@@ -4,5 +4,5 @@ name: homepage-meta
 version: 0.1.0
 dependencies:
 - name: homepage
-  version: 1.2.3
+  version: 2.1.0
   repository: https://jameswynn.github.io/helm-charts

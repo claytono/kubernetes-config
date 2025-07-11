@@ -1,6 +1,5 @@
 ---
 # Source: homepage/templates/common.yaml
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -9,8 +8,8 @@ metadata:
     app.kubernetes.io/instance: homepage
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: homepage
-    app.kubernetes.io/version: v0.6.10
-    helm.sh/chart: homepage-1.2.3
+    app.kubernetes.io/version: v1.2.0
+    helm.sh/chart: homepage-2.1.0
 secrets:
   - name: homepage-sa-token
 ---
@@ -24,10 +23,135 @@ metadata:
     app.kubernetes.io/instance: homepage
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: homepage
-    app.kubernetes.io/version: v0.6.10
-    helm.sh/chart: homepage-1.2.3
+    app.kubernetes.io/version: v1.2.0
+    helm.sh/chart: homepage-2.1.0
   annotations:
     kubernetes.io/service-account.name: homepage
+---
+# Source: homepage/templates/common.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage
+  labels:
+    helm.sh/chart: homepage-2.1.0
+    app.kubernetes.io/name: homepage
+    app.kubernetes.io/instance: homepage
+    app.kubernetes.io/version: "v1.2.0"
+    app.kubernetes.io/managed-by: Helm
+    
+data:
+  bookmarks.yaml: |
+    - Developer:
+      - Github:
+        - abbr: GH
+          href: https://github.com/
+  docker.yaml: ""
+  kubernetes.yaml: |
+    mode: cluster
+  services.yaml: |
+    - Media: null
+  settings.yaml: |
+    title: Homepage
+    headerStyle: boxed
+    layout:
+      My First Group:
+      My Second Group:
+      My Third Group:
+    
+  widgets.yaml: |
+    - kubernetes:
+        cluster:
+          cpu: true
+          label: cluster
+          memory: true
+          show: true
+          showLabel: true
+        nodes:
+          cpu: true
+          memory: true
+          show: true
+          showLabel: true
+---
+# Source: homepage/templates/common.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: homepage
+  labels:
+    app.kubernetes.io/instance: homepage
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: homepage
+    app.kubernetes.io/version: v1.2.0
+    helm.sh/chart: homepage-2.1.0
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces
+      - pods
+      - nodes
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - extensions
+      - networking.k8s.io
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - traefik.containo.us
+      - traefik.io
+    resources:
+      - ingressroutes
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - gateway.networking.k8s.io
+    resources:
+      - httproutes
+      - gateways
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - metrics.k8s.io
+    resources:
+      - nodes
+      - pods
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - apiextensions.k8s.io
+    resources:
+      - customresourcedefinitions/status
+    verbs:
+      - get
+---
+# Source: homepage/templates/common.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: homepage
+  labels:
+    app.kubernetes.io/instance: homepage
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: homepage
+    app.kubernetes.io/version: v1.2.0
+    helm.sh/chart: homepage-2.1.0
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: homepage
+subjects:
+  - kind: ServiceAccount
+    name: homepage
+    namespace: default
 ---
 # Source: homepage/templates/common.yaml
 apiVersion: v1
@@ -39,8 +163,8 @@ metadata:
     app.kubernetes.io/instance: homepage
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: homepage
-    app.kubernetes.io/version: v0.6.10
-    helm.sh/chart: homepage-1.2.3
+    app.kubernetes.io/version: v1.2.0
+    helm.sh/chart: homepage-2.1.0
   annotations:
 spec:
   type: ClusterIP
@@ -62,8 +186,10 @@ metadata:
     app.kubernetes.io/instance: homepage
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: homepage
-    app.kubernetes.io/version: v0.6.10
-    helm.sh/chart: homepage-1.2.3
+    app.kubernetes.io/version: v1.2.0
+    helm.sh/chart: homepage-2.1.0
+  annotations:
+    values-checksum: 2e5cca25f0d1d0b2ea238e9f1170863cfe5a577b8d11ddfa74e897198eed9703
 spec:
   revisionHistoryLimit: 3
   replicas: 1
@@ -75,6 +201,10 @@ spec:
       app.kubernetes.io/instance: homepage
   template:
     metadata:
+      annotations:
+        
+        values-checksum: 2e5cca25f0d1d0b2ea238e9f1170863cfe5a577b8d11ddfa74e897198eed9703
+        checksum/secrets: 4141e6981f3b767e75a4e744858b9ff414dba5d0ef6afd761f7700061fb6e32e
       labels:
         app.kubernetes.io/name: homepage
         app.kubernetes.io/instance: homepage
@@ -86,13 +216,18 @@ spec:
       enableServiceLinks: true
       containers:
         - name: homepage
-          image: "ghcr.io/gethomepage/homepage:v0.8.4"
+          image: ghcr.io/gethomepage/homepage:v0.8.4
           imagePullPolicy: 
+          env:
+            - name: HOMEPAGE_ALLOWED_HOSTS
+              value: <nil>
           ports:
             - name: http
               containerPort: 3000
               protocol: TCP
           volumeMounts:
+            - name: homepage-base-config
+              mountPath: /app/config
             - name: homepage-config
               subPath: bookmarks.yaml
               mountPath: /app/config/bookmarks.yaml
@@ -135,6 +270,8 @@ spec:
               port: 3000
             timeoutSeconds: 1
       volumes:
+        - name: homepage-base-config
+          emptyDir: {}
         - name: homepage-config
           configMap:
             name: homepage
@@ -151,8 +288,8 @@ metadata:
     app.kubernetes.io/instance: homepage
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: homepage
-    app.kubernetes.io/version: v0.6.10
-    helm.sh/chart: homepage-1.2.3
+    app.kubernetes.io/version: v1.2.0
+    helm.sh/chart: homepage-2.1.0
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/ingress.class: nginx
