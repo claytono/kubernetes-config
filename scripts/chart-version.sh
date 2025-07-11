@@ -42,6 +42,10 @@ helm_template() {
   local chart_key="$2"
   shift 2
   local chart_args
-  mapfile -t chart_args < <(helm_chart_args "$chart_key")
+  # Use a more compatible approach for older shells
+  chart_args=()
+  while IFS= read -r line; do
+    chart_args+=("$line")
+  done < <(helm_chart_args "$chart_key")
   helm template "$release" "${chart_args[@]}" "$@"
 }
