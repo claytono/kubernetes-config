@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/instance: homepage
     app.kubernetes.io/version: "v0.6.10"
     app.kubernetes.io/managed-by: Helm
-
+    
 data:
   bookmarks.yaml: |
     - Developer:
