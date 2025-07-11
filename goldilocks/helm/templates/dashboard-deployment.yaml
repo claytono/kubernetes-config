@@ -7,12 +7,13 @@ metadata:
   namespace: default
   labels:
     app.kubernetes.io/name: goldilocks
-    helm.sh/chart: goldilocks-6.8.0
+    helm.sh/chart: goldilocks-9.0.2
     app.kubernetes.io/instance: goldilocks
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: dashboard
 spec:
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app.kubernetes.io/name: goldilocks
@@ -27,10 +28,11 @@ spec:
     spec:
       serviceAccountName: goldilocks-dashboard
       securityContext:
-        {}
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: goldilocks
-          image: "us-docker.pkg.dev/fairwinds-ops/oss/goldilocks:v4.9.0"
+          image: "us-docker.pkg.dev/fairwinds-ops/oss/goldilocks:v4.13.0"
           imagePullPolicy: Always
           command:
             - /goldilocks
