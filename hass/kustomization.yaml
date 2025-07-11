@@ -4,6 +4,7 @@ kind: Kustomization
 
 resources:
 - deploy.yaml
+- configmap.yaml
 - externalsecret.yaml
 - ingress.yaml
 - mysql-deploy.yaml
