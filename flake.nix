@@ -22,6 +22,7 @@
             jq
             pre-commit
             act
+            mosquitto
           ];
         };
       });
