@@ -9,13 +9,15 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: plexmediaserver
+      app.kubernetes.io/name: plexmediaserver
+      app.kubernetes.io/instance: plexmediaserver
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: plexmediaserver
+        app.kubernetes.io/name: plexmediaserver
+        app.kubernetes.io/instance: plexmediaserver
     spec:
       hostNetwork: true
       containers:

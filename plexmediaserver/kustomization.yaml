@@ -13,4 +13,5 @@ resources:
 
 labels:
 - pairs:
-    app: plexmediaserver
+    app.kubernetes.io/name: plexmediaserver
+    app.kubernetes.io/instance: plexmediaserver
