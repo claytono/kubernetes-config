@@ -36,7 +36,7 @@ spec:
         checksum/configmap: c8cdc0c4c772ac3192446a08bf401c29f1e39f33614657d36e4bb1692e34b39f
         checksum/health: e3a0f06458110f02986bb8df4391c43567355d3582dd02f25447184391196fbc
         checksum/scripts: 791de9ea7b477455268cda3e85c8e58a1505e8d19ff8e851d78a246cb185a0f7
-        checksum/secret: b9e606aa180e7be27edc8f517932b08d7c755dbe88e97fa0a70d62192c979e76
+        checksum/secret: b0d4b1a0dbb3ae5e7995dc680623a591139a6346f9f1f7bb68620f2aa9e8d75b
     spec:
       
       securityContext:
