@@ -18,7 +18,7 @@
           packages = with pkgs; [
             kubeconform
             kubectl
-            yq
+            yq-go
             jq
             pre-commit
             act
