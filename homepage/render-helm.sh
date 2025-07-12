@@ -17,3 +17,6 @@ mv tmp/*/* helm
 rmdir tmp/*
 rmdir tmp
 rm -rf helm/tests
+
+# Remove the ConfigMap template since we generate it via kustomize
+rm -f helm/templates/configmap.yaml
