@@ -3,27 +3,6 @@ image:
   repository: ghcr.io/gethomepage/homepage
   tag: v0.8.4
 
-config:
-  services:
-  - Media:
-  widgets:
-    # show the kubernetes widget, with the cluster summary and individual nodes
-  - kubernetes:
-      cluster:
-        show: true
-        cpu: true
-        memory: true
-        showLabel: true
-        label: cluster
-      nodes:
-        show: true
-        cpu: true
-        memory: true
-        showLabel: true
-  kubernetes:
-    mode: cluster
-  settings:
-
 # The service account is necessary to allow discovery of other services
 serviceAccount:
   create: true

@@ -11,6 +11,8 @@ labels:
     app: homepage
 configMapGenerator:
 - name: homepage
+  options:
+    disableNameSuffixHash: true
   literals:
   - docker.yaml=""
   - bookmarks.yaml=""
@@ -19,3 +21,13 @@ configMapGenerator:
   - settings.yaml
   - widgets.yaml
   - services.yaml
+
+patches:
+- target:
+    kind: Deployment
+    name: homepage
+  patch: |-
+    - op: add
+      path: /metadata/annotations
+      value:
+        reloader.stakater.com/auto: "true"
