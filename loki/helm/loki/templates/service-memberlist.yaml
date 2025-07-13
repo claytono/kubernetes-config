@@ -1,3 +1,4 @@
+---
 # Source: loki/templates/service-memberlist.yaml
 apiVersion: v1
 kind: Service
@@ -5,11 +6,10 @@ metadata:
   name: loki-memberlist
   namespace: default
   labels:
+    app: loki
     chart: loki-2.16.0
     release: loki
     heritage: Helm
-    app.kubernetes.io/name: "loki"
-    app.kubernetes.io/instance: "loki"
 spec:
   type: ClusterIP
   clusterIP: None
@@ -20,6 +20,5 @@ spec:
       targetPort: memberlist-port
       protocol: TCP
   selector:
+    app: loki
     release: loki
-    app.kubernetes.io/name: "loki"
-    app.kubernetes.io/instance: "loki"
