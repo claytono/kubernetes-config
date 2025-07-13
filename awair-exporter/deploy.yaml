@@ -9,12 +9,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: awair-exporter
+      app.kubernetes.io/name: awair-exporter
+      app.kubernetes.io/instance: awair-exporter
   template:
     metadata:
       name: awair-exporter
       labels:
-        app: awair-exporter
+        app.kubernetes.io/name: awair-exporter
+        app.kubernetes.io/instance: awair-exporter
     spec:
       containers:
       - name: awair-exporter

@@ -65,7 +65,7 @@ spec:
 
         securityContext:
           {}
-      securityContext:
+      securityContext: 
         runAsNonRoot: true
         runAsUser: 65534
       serviceAccountName: reloader-reloader

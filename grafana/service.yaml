@@ -13,4 +13,5 @@ spec:
   - port: 80
     targetPort: 3000
   selector:
-    app: grafana
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: grafana

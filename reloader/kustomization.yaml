@@ -10,4 +10,5 @@ resources:
 - helm/templates/deployment.yaml
 
 commonLabels:
-  app: reloader
+  app.kubernetes.io/name: reloader
+  app.kubernetes.io/instance: reloader

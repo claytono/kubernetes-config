@@ -1,6 +1,6 @@
 ---
 image:
-  tag: v4.0.18
+  tag: v4.0.2
 nfs:
   server: fs2.oneill.net
   path: /volume1/k8s-pv

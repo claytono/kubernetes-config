@@ -3,8 +3,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: smokeping-config
-  labels:
-    app: smokeping
 spec:
   accessModes:
   - ReadWriteOnce
@@ -16,8 +14,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: smokeping-data
-  labels:
-    app: smokeping
 spec:
   accessModes:
   - ReadWriteOnce

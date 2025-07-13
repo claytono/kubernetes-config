@@ -12,7 +12,8 @@ spec:
   type: LoadBalancer
   loadBalancerIP: 172.19.74.21
   selector:
-    app: mosquitto
+    app.kubernetes.io/name: mosquitto
+    app.kubernetes.io/instance: mosquitto
   ports:
   - name: mqtt
     protocol: TCP

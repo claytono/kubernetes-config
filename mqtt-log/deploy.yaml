@@ -8,14 +8,16 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: mqtt-log
+      app.kubernetes.io/name: mqtt-log
+      app.kubernetes.io/instance: mqtt-log
   replicas: 1
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: mqtt-log
+        app.kubernetes.io/name: mqtt-log
+        app.kubernetes.io/instance: mqtt-log
     spec:
       containers:
       - name: mqtt-log

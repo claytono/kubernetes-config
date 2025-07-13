@@ -9,8 +9,11 @@ resources:
 - pvc.yaml
 - service.yaml
 
-commonLabels:
-  app: mosquitto
+labels:
+- pairs:
+    app.kubernetes.io/name: mosquitto
+    app.kubernetes.io/instance: mosquitto
+  includeSelectors: true
 configMapGenerator:
 - name: mosquitto
   files:

@@ -5,7 +5,8 @@ metadata:
   name: exporter
 spec:
   selector:
-    app: blackbox-exporter
+    app.kubernetes.io/name: blackbox-exporter
+    app.kubernetes.io/instance: blackbox-exporter
   ports:
   - name: exporter
     protocol: TCP

@@ -4,7 +4,8 @@ kind: Service
 metadata:
   name: plexmediaserver
   labels:
-    app: plexmediaserver
+    app.kubernetes.io/name: plexmediaserver
+    app.kubernetes.io/instance: plexmediaserver
   annotations:
     metallb.universe.tf/allow-shared-ip: plexmediaserver
 spec:
@@ -15,14 +16,16 @@ spec:
     targetPort: 32400
     protocol: TCP
   selector:
-    app: plexmediaserver
+    app.kubernetes.io/name: plexmediaserver
+    app.kubernetes.io/instance: plexmediaserver
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: plexmediaserver-udp
   labels:
-    app: plexmediaserver
+    app.kubernetes.io/name: plexmediaserver
+    app.kubernetes.io/instance: plexmediaserver
   annotations:
     metallb.universe.tf/allow-shared-ip: plexmediaserver
 spec:
@@ -50,4 +53,5 @@ spec:
     targetPort: 32414
     protocol: UDP
   selector:
-    app: plexmediaserver
+    app.kubernetes.io/name: plexmediaserver
+    app.kubernetes.io/instance: plexmediaserver

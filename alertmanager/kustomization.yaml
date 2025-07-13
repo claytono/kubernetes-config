@@ -11,7 +11,9 @@ resources:
 
 labels:
 - pairs:
-    app: alertmanager
+    app.kubernetes.io/name: alertmanager
+    app.kubernetes.io/instance: alertmanager
+  includeSelectors: true
 configMapGenerator:
 - name: alertmanager
   files:

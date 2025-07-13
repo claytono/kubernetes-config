@@ -12,4 +12,5 @@ spec:
     targetPort: 8089
     protocol: TCP
   selector:
-    app: channels
+    app.kubernetes.io/name: channels
+    app.kubernetes.io/instance: channels

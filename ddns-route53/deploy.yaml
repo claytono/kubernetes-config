@@ -11,12 +11,14 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: ddns-route53
+      app.kubernetes.io/name: ddns-route53
+      app.kubernetes.io/instance: ddns-route53
   template:
     metadata:
       name: ddns-route53
       labels:
-        app: ddns-route53
+        app.kubernetes.io/name: ddns-route53
+        app.kubernetes.io/instance: ddns-route53
     spec:
       containers:
       - name: ddns-route53

@@ -12,4 +12,6 @@ resources:
 
 labels:
 - pairs:
-    app: channels
+    app.kubernetes.io/name: channels
+    app.kubernetes.io/instance: channels
+  includeSelectors: true

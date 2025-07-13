@@ -18,6 +18,7 @@ metadata:
     gethomepage.dev/group: Monitoring
     gethomepage.dev/icon: mdi-eye-outline
     gethomepage.dev/name: Goldilocks
+    gethomepage.dev/pod-selector: app.kubernetes.io/name=goldilocks
 spec:
   ingressClassName: nginx
   tls:

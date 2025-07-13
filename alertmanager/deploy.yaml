@@ -9,12 +9,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: alertmanager
+      app.kubernetes.io/name: alertmanager
+      app.kubernetes.io/instance: alertmanager
   template:
     metadata:
       name: alertmanager
       labels:
-        app: alertmanager
+        app.kubernetes.io/name: alertmanager
+        app.kubernetes.io/instance: alertmanager
     spec:
       initContainers:
       - name: gomplate-config

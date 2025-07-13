@@ -12,4 +12,5 @@ resources:
 
 labels:
 - pairs:
-    app: netatmo-exporter
+    app.kubernetes.io/name: netatmo-exporter
+    app.kubernetes.io/instance: netatmo-exporter

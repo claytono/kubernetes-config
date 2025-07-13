@@ -5,7 +5,8 @@ metadata:
   name: tautulli
 spec:
   selector:
-    app: tautulli
+    app.kubernetes.io/name: tautulli
+    app.kubernetes.io/instance: tautulli
   ports:
   - port: 8181
     targetPort: 8181

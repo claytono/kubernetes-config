@@ -9,4 +9,5 @@ resources:
 
 labels:
 - pairs:
-    app: mqtt-log
+    app.kubernetes.io/name: mqtt-log
+    app.kubernetes.io/instance: mqtt-log

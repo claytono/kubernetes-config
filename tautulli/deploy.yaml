@@ -9,11 +9,13 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: tautulli
+      app.kubernetes.io/name: tautulli
+      app.kubernetes.io/instance: tautulli
   template:
     metadata:
       labels:
-        app: tautulli
+        app.kubernetes.io/name: tautulli
+        app.kubernetes.io/instance: tautulli
     spec:
       containers:
       - name: tautulli

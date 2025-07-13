@@ -7,12 +7,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pushgateway
+      app.kubernetes.io/name: pushgateway
+      app.kubernetes.io/instance: pushgateway
   template:
     metadata:
       name: pushgateway
       labels:
-        app: pushgateway
+        app.kubernetes.io/name: pushgateway
+        app.kubernetes.io/instance: pushgateway
     spec:
       containers:
       - name: pushgateway

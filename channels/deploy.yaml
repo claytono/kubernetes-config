@@ -7,13 +7,15 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: channels
+      app.kubernetes.io/name: channels
+      app.kubernetes.io/instance: channels
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: channels
+        app.kubernetes.io/name: channels
+        app.kubernetes.io/instance: channels
     spec:
       hostname: channels
       hostNetwork: true

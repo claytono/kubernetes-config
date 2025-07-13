@@ -9,11 +9,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hass-mysql
+      app.kubernetes.io/name: hass
+      app.kubernetes.io/instance: hass
   template:
     metadata:
       labels:
-        app: hass-mysql
+        app.kubernetes.io/name: hass
+        app.kubernetes.io/instance: hass
     spec:
       containers:
       - name: mysql
