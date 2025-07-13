@@ -1,7 +1,7 @@
 ---
 image:
   repository: ghcr.io/gethomepage/homepage
-  tag: v0.8.4
+  tag: v0.9.1
 
 # The service account is necessary to allow discovery of other services
 serviceAccount:
@@ -9,6 +9,11 @@ serviceAccount:
   name: homepage
 # This enables the service account to access the necessary resources
 enableRbac: true
+
+# Environment variables
+env:
+- name: HOMEPAGE_ALLOWED_HOSTS
+  value: '*'
 
 ingress:
   main:
