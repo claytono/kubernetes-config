@@ -30,8 +30,12 @@ spec:
         volumeMounts:
         - mountPath: /config
           name: config
+        - mountPath: /movies
+          name: movies
         - mountPath: /downloads
           name: downloads
+        - mountPath: /shared
+          name: shared
         env:
         - name: PUID
           value: '10001'
@@ -52,5 +56,13 @@ spec:
             name: iscsi-chap-secret
       - nfs:
           server: fs2.oneill.net
+          path: /volume2/shared/video/movies
+        name: movies
+      - nfs:
+          server: fs2.oneill.net
           path: /volume2/shared/downloads
         name: downloads
+      - nfs:
+          server: fs2.oneill.net
+          path: /volume2/shared
+        name: shared
