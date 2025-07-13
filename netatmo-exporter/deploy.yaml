@@ -9,12 +9,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: netatmo-exporter
+      app.kubernetes.io/name: netatmo-exporter
+      app.kubernetes.io/instance: netatmo-exporter
   template:
     metadata:
       name: netatmo-exporter
       labels:
-        app: netatmo-exporter
+        app.kubernetes.io/name: netatmo-exporter
+        app.kubernetes.io/instance: netatmo-exporter
     spec:
       containers:
       - name: netatmo-exporter

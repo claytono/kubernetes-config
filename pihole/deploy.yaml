@@ -4,19 +4,22 @@ kind: Deployment
 metadata:
   name: pihole
   labels:
-    app: pihole
+    app.kubernetes.io/name: pihole
+    app.kubernetes.io/instance: pihole
   annotations:
     reloader.stakater.com/auto: 'true'
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pihole
+      app.kubernetes.io/name: pihole
+      app.kubernetes.io/instance: pihole
   template:
     metadata:
       labels:
-        app: pihole
         name: pihole
+        app.kubernetes.io/name: pihole
+        app.kubernetes.io/instance: pihole
     spec:
       containers:
       - name: pihole

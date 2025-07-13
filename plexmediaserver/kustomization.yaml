@@ -15,3 +15,4 @@ labels:
 - pairs:
     app.kubernetes.io/name: plexmediaserver
     app.kubernetes.io/instance: plexmediaserver
+  includeSelectors: true

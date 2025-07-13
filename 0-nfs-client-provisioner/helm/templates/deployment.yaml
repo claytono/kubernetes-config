@@ -29,7 +29,7 @@ spec:
         {}
       containers:
         - name: nfs-subdir-external-provisioner
-          image: "registry.k8s.io/sig-storage/nfs-subdir-external-provisioner:v4.0.18"
+          image: "registry.k8s.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2"
           imagePullPolicy: IfNotPresent
           securityContext:
             {}

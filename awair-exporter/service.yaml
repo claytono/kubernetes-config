@@ -5,7 +5,8 @@ metadata:
   name: exporter
 spec:
   selector:
-    app: awair-exporter
+    app.kubernetes.io/name: awair-exporter
+    app.kubernetes.io/instance: awair-exporter
   ports:
   - name: awair-exporter
     protocol: TCP

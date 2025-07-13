@@ -9,12 +9,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: netatmo-wunderground-agent
+      app.kubernetes.io/name: netatmo-wunderground-agent
+      app.kubernetes.io/instance: netatmo-wunderground-agent
   template:
     metadata:
       name: netatmo-wunderground-agent
       labels:
-        app: netatmo-wunderground-agent
+        app.kubernetes.io/name: netatmo-wunderground-agent
+        app.kubernetes.io/instance: netatmo-wunderground-agent
     spec:
       containers:
       - name: netatmo-wunderground-agent

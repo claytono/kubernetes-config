@@ -9,7 +9,8 @@ metadata:
   name: alertmanager
 spec:
   selector:
-    app: alertmanager
+    app.kubernetes.io/name: alertmanager
+    app.kubernetes.io/instance: alertmanager
   ports:
   - name: alertmanager
     protocol: TCP

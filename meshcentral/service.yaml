@@ -5,7 +5,8 @@ metadata:
   name: meshcentral
 spec:
   selector:
-    app: meshcentral
+    app.kubernetes.io/name: meshcentral
+    app.kubernetes.io/instance: meshcentral
   ports:
   - name: meshcentral
     protocol: TCP

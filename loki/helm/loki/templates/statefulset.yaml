@@ -1,4 +1,3 @@
----
 # Source: loki/templates/statefulset.yaml
 apiVersion: apps/v1
 kind: StatefulSet
@@ -6,28 +5,30 @@ metadata:
   name: loki
   namespace: default
   labels:
-    app: loki
     chart: loki-2.16.0
     release: loki
     heritage: Helm
-  annotations:
-    {}
+    app.kubernetes.io/name: "loki"
+    app.kubernetes.io/instance: "loki"
+  annotations: {}
 spec:
   podManagementPolicy: OrderedReady
   replicas: 1
   selector:
     matchLabels:
-      app: loki
       release: loki
+      app.kubernetes.io/name: "loki"
+      app.kubernetes.io/instance: "loki"
   serviceName: loki-headless
   updateStrategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: loki
         name: loki
         release: loki
+        app.kubernetes.io/name: "loki"
+        app.kubernetes.io/instance: "loki"
       annotations:
         checksum/config: 0d1bf922013941d83e96f6269a97cf7e4711572f47d72112a4c2f9bf7a1c65ce
         prometheus.io/port: http-metrics
@@ -39,8 +40,7 @@ spec:
         runAsGroup: 10001
         runAsNonRoot: true
         runAsUser: 10001
-      initContainers:
-        []
+      initContainers: []
       containers:
         - name: loki
           image: "grafana/loki:2.6.1"
@@ -75,17 +75,13 @@ spec:
               path: /ready
               port: http-metrics
             initialDelaySeconds: 45
-          resources:
-            {}
+          resources: {}
           securityContext:
             readOnlyRootFilesystem: true
           env:
-      nodeSelector:
-        {}
-      affinity:
-        {}
-      tolerations:
-        []
+      nodeSelector: {}
+      affinity: {}
+      tolerations: []
       terminationGracePeriodSeconds: 4800
       volumes:
         - name: tmp
@@ -94,16 +90,14 @@ spec:
           secret:
             secretName: loki
   volumeClaimTemplates:
-  - metadata:
-      name: storage
-      labels:
-        {}
-      annotations:
-        {}
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      resources:
-        requests:
-          storage: "10Gi"
-      storageClassName:
+    - metadata:
+        name: storage
+        labels: {}
+        annotations: {}
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: "10Gi"
+        storageClassName:

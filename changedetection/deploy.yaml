@@ -11,12 +11,14 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: changedetection
+      app.kubernetes.io/name: changedetection
+      app.kubernetes.io/instance: changedetection
   template:
     metadata:
       name: changedetection
       labels:
-        app: changedetection
+        app.kubernetes.io/name: changedetection
+        app.kubernetes.io/instance: changedetection
     spec:
       containers:
       - name: changedetection

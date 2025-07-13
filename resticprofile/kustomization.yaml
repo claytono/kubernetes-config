@@ -29,4 +29,5 @@ images:
 labels:
 - includeSelectors: true
   pairs:
-    app: resticprofile
+    app.kubernetes.io/name: resticprofile
+    app.kubernetes.io/instance: resticprofile

@@ -9,7 +9,8 @@ metadata:
   name: pushgateway
 spec:
   selector:
-    app: pushgateway
+    app.kubernetes.io/name: pushgateway
+    app.kubernetes.io/instance: pushgateway
   ports:
   - name: pushgateway
     protocol: TCP

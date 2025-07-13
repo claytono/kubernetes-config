@@ -9,7 +9,8 @@ resources:
 
 labels:
 - pairs:
-    app: blackbox-exporter
+    app.kubernetes.io/name: blackbox-exporter
+    app.kubernetes.io/instance: blackbox-exporter
 configMapGenerator:
 - name: config
   files:

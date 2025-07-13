@@ -10,4 +10,6 @@ resources:
 
 labels:
 - pairs:
-    app: tautulli
+    app.kubernetes.io/name: tautulli
+    app.kubernetes.io/instance: tautulli
+  includeSelectors: true

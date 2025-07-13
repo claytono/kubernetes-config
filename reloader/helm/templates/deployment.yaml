@@ -1,4 +1,3 @@
----
 # Source: reloader/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -7,7 +6,6 @@ metadata:
     meta.helm.sh/release-namespace: "default"
     meta.helm.sh/release-name: "reloader"
   labels:
-    app: reloader-reloader
     chart: "reloader-1.0.71"
     release: "reloader"
     heritage: "Helm"
@@ -15,6 +13,8 @@ metadata:
     group: com.stakater.platform
     provider: stakater
     version: v1.0.71
+    app.kubernetes.io/name: "reloader"
+    app.kubernetes.io/instance: "reloader"
   name: reloader-reloader
   namespace: default
 spec:
@@ -22,12 +22,12 @@ spec:
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: reloader-reloader
       release: "reloader"
+      app.kubernetes.io/name: "reloader"
+      app.kubernetes.io/instance: "reloader"
   template:
     metadata:
       labels:
-        app: reloader-reloader
         chart: "reloader-1.0.71"
         release: "reloader"
         heritage: "Helm"
@@ -35,36 +35,37 @@ spec:
         group: com.stakater.platform
         provider: stakater
         version: v1.0.71
+        app.kubernetes.io/name: "reloader"
+        app.kubernetes.io/instance: "reloader"
     spec:
       containers:
-      - image: "ghcr.io/stakater/reloader:v1.0.71"
-        imagePullPolicy: IfNotPresent
-        name: reloader-reloader
+        - image: "ghcr.io/stakater/reloader:v1.0.71"
+          imagePullPolicy: IfNotPresent
+          name: reloader-reloader
 
-        ports:
-        - name: http
-          containerPort: 9090
-        livenessProbe:
-          httpGet:
-            path: /live
-            port: http
-          timeoutSeconds: 5
-          failureThreshold: 5
-          periodSeconds: 10
-          successThreshold: 1
-          initialDelaySeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /metrics
-            port: http
-          timeoutSeconds: 5
-          failureThreshold: 5
-          periodSeconds: 10
-          successThreshold: 1
-          initialDelaySeconds: 10
+          ports:
+            - name: http
+              containerPort: 9090
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: http
+            timeoutSeconds: 5
+            failureThreshold: 5
+            periodSeconds: 10
+            successThreshold: 1
+            initialDelaySeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: http
+            timeoutSeconds: 5
+            failureThreshold: 5
+            periodSeconds: 10
+            successThreshold: 1
+            initialDelaySeconds: 10
 
-        securityContext:
-          {}
+          securityContext: {}
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534

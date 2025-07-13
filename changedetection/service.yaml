@@ -7,7 +7,8 @@ metadata:
   name: changedetection
 spec:
   selector:
-    app: changedetection
+    app.kubernetes.io/name: changedetection
+    app.kubernetes.io/instance: changedetection
   ports:
   - name: changedetection
     protocol: TCP

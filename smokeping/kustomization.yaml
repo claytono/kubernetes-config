@@ -3,13 +3,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- deploy.yaml
-- ingress.yaml
+- deployment.yaml
 - service.yaml
 - pvc.yaml
+- ingress.yaml
 
 labels:
 - pairs:
-    app.kubernetes.io/name: changedetection
-    app.kubernetes.io/instance: changedetection
+    app.kubernetes.io/name: smokeping
+    app.kubernetes.io/instance: smokeping
   includeSelectors: true

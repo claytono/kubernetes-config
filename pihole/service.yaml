@@ -5,7 +5,8 @@ metadata:
   name: pihole
 spec:
   selector:
-    app: pihole
+    app.kubernetes.io/name: pihole
+    app.kubernetes.io/instance: pihole
   ports:
   - name: pihole-admin
     protocol: TCP

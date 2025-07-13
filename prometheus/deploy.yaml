@@ -11,12 +11,14 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: prometheus
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/instance: prometheus
   template:
     metadata:
       name: prometheus
       labels:
-        app: prometheus
+        app.kubernetes.io/name: prometheus
+        app.kubernetes.io/instance: prometheus
     spec:
       serviceAccountName: prometheus
       containers:

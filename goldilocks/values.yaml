@@ -23,6 +23,7 @@ dashboard:
       gethomepage.dev/description: VPA generation and web UI
       gethomepage.dev/icon: mdi-eye-outline
       gethomepage.dev/group: Monitoring
+      gethomepage.dev/pod-selector: app.kubernetes.io/name=goldilocks
 
     hosts:
     - host: goldilocks.k.oneill.net

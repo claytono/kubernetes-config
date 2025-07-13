@@ -14,4 +14,6 @@ resources:
 
 labels:
 - pairs:
-    app: pihole
+    app.kubernetes.io/name: pihole
+    app.kubernetes.io/instance: pihole
+  includeSelectors: true

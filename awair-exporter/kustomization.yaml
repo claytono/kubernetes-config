@@ -11,4 +11,5 @@ resources:
 
 labels:
 - pairs:
-    app: awair-exporter
+    app.kubernetes.io/name: awair-exporter
+    app.kubernetes.io/instance: awair-exporter

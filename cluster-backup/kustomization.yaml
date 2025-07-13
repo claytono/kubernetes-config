@@ -8,7 +8,9 @@ resources:
 
 labels:
 - pairs:
-    app: cluster-backup
+    app.kubernetes.io/name: cluster-backup
+    app.kubernetes.io/instance: cluster-backup
+  includeSelectors: true
 configMapGenerator:
 - name: cluster-backup
   files:

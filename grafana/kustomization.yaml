@@ -10,4 +10,6 @@ resources:
 
 labels:
 - pairs:
-    app: grafana
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: grafana
+  includeSelectors: true

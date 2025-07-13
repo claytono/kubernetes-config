@@ -9,4 +9,6 @@ resources:
 
 labels:
 - pairs:
-    app: push-gateway
+    app.kubernetes.io/name: pushgateway
+    app.kubernetes.io/instance: pushgateway
+  includeSelectors: true

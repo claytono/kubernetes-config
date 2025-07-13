@@ -7,12 +7,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: blackbox-exporter
+      app.kubernetes.io/name: blackbox-exporter
+      app.kubernetes.io/instance: blackbox-exporter
   template:
     metadata:
       name: blackbox-exporter
       labels:
-        app: blackbox-exporter
+        app.kubernetes.io/name: blackbox-exporter
+        app.kubernetes.io/instance: blackbox-exporter
     spec:
       containers:
       - name: blackbox-exporter

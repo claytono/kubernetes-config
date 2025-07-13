@@ -12,7 +12,8 @@ resources:
 
 labels:
 - pairs:
-    app: loki
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/instance: loki
 secretGenerator:
 - name: loki
   files:

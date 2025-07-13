@@ -13,7 +13,9 @@ resources:
 
 labels:
 - pairs:
-    app: prometheus
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/instance: prometheus
+  includeSelectors: true
 configMapGenerator:
 - name: prometheus
   files:

@@ -7,7 +7,8 @@ metadata:
   name: hass-mysql
 spec:
   selector:
-    app: hass-mysql
+    app.kubernetes.io/name: hass
+    app.kubernetes.io/instance: hass
   ports:
   - name: hass-mysql
     protocol: TCP
