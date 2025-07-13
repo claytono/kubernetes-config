@@ -1,0 +1,30 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: transmission
+  labels:
+    app: transmission
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/name: Transmission
+    gethomepage.dev/group: Downloaders
+    gethomepage.dev/icon: transmission.png
+spec:
+  tls:
+  - hosts:
+    - transmission.k.oneill.net
+    secretName: transmission-tls
+  rules:
+  - host: transmission.k.oneill.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: transmission
+            port:
+              number: 9091

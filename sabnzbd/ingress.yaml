@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sabnzbd
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/name: SABnzbd
+    gethomepage.dev/group: Downloaders
+    gethomepage.dev/icon: sabnzbd.png
+spec:
+  tls:
+  - hosts:
+    - sabnzbd.k.oneill.net
+    secretName: sabnzbd-tls
+  rules:
+  - host: sabnzbd.k.oneill.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sabnzbd
+            port:
+              number: 8080

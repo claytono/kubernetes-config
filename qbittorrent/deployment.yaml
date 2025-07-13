@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent
+  labels:
+    app: qbittorrent
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qbittorrent
+  template:
+    metadata:
+      labels:
+        app: qbittorrent
+    spec:
+      containers:
+      - name: qbittorrent
+        image: linuxserver/qbittorrent
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        - containerPort: 51414
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        - mountPath: /downloads
+          name: downloads
+        - name: cross-seed-data
+          mountPath: /cross-seeds
+        env:
+        - name: PUID
+          value: '10001'
+        - name: PGID
+          value: '10001'
+        - name: TZ
+          value: America/New_York
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: qbittorrent-config
+      - nfs:
+          server: fs2.oneill.net
+          path: /volume2/shared/downloads
+        name: downloads
+      - name: cross-seed-data
+        persistentVolumeClaim:
+          claimName: cross-seed-data

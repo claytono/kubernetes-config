@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+  labels:
+    app: bazarr
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bazarr
+  template:
+    metadata:
+      labels:
+        app: bazarr
+    spec:
+      containers:
+      - name: bazarr
+        image: linuxserver/bazarr
+        ports:
+        - containerPort: 6767
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        - mountPath: /tv
+          name: tv
+        - mountPath: /movies
+          name: movies
+        env:
+        - name: PUID
+          value: '10001'
+        - name: PGID
+          value: '10001'
+        - name: TZ
+          value: EST5EDT
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: bazarr-config
+      - nfs:
+          server: fs2.oneill.net
+          path: /volume2/shared/video/tv
+        name: tv
+      - nfs:
+          server: fs2.oneill.net
+          path: /volume2/shared/video/movies
+        name: movies
