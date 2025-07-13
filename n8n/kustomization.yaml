@@ -30,3 +30,19 @@ resources:
 - helm/valkey/templates/primary/application.yaml
 - helm/valkey/templates/primary/service.yaml
 - helm/valkey/templates/primary/serviceaccount.yaml
+
+patches:
+- target:
+    kind: Ingress
+    name: n8n
+  patch: |-
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: n8n
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "n8n"
+        gethomepage.dev/description: "Workflow Automation"
+        gethomepage.dev/group: "Miscellaneous"
+        gethomepage.dev/icon: "n8n.png"
