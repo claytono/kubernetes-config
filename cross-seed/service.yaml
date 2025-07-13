@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cross-seed
+  labels:
+    app: cross-seed
+spec:
+  ports:
+  - port: 2468
+    targetPort: 2468
+    protocol: TCP
+    name: http
+  selector:
+    app: cross-seed

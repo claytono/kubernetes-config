@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transmission
+  annotations:
+    reloader.stakater.com/auto: 'true'
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transmission
+  template:
+    metadata:
+      labels:
+        app: transmission
+    spec:
+      containers:
+      - name: transmission
+        image: linuxserver/transmission:version-3.00-r8
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9091
+        - containerPort: 51413
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        - mountPath: /downloads
+          name: downloads
+        env:
+        - name: PUID
+          value: '10001'
+        - name: PGID
+          value: '10001'
+        - name: USER
+          valueFrom:
+            secretKeyRef:
+              name: transmission
+              key: username
+        - name: PASS
+          valueFrom:
+            secretKeyRef:
+              name: transmission
+              key: password
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: transmission-config
+      - nfs:
+          server: fs2.oneill.net
+          path: /volume2/shared/downloads
+        name: downloads

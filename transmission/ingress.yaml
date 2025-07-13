@@ -2,28 +2,29 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: channels
+  name: transmission
+  labels:
+    app: transmission
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt
     gethomepage.dev/enabled: 'true'
-    gethomepage.dev/name: Channels
-    gethomepage.dev/description: Channels DVR
-    gethomepage.dev/group: Media
-    gethomepage.dev/icon: channels-dvr.png
+    gethomepage.dev/name: Transmission
+    gethomepage.dev/group: Downloaders
+    gethomepage.dev/icon: transmission.png
 spec:
   tls:
   - hosts:
-    - channels.k.oneill.net
-    secretName: channels-tls
+    - transmission.k.oneill.net
+    secretName: transmission-tls
   rules:
-  - host: channels.k.oneill.net
+  - host: transmission.k.oneill.net
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: channels
+            name: transmission
             port:
-              number: 8089
+              number: 9091

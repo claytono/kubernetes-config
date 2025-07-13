@@ -2,28 +2,29 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: channels
+  name: qbittorrent
+  labels:
+    app: qbittorrent
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt
     gethomepage.dev/enabled: 'true'
-    gethomepage.dev/name: Channels
-    gethomepage.dev/description: Channels DVR
-    gethomepage.dev/group: Media
-    gethomepage.dev/icon: channels-dvr.png
+    gethomepage.dev/name: qBittorrent
+    gethomepage.dev/group: Downloaders
+    gethomepage.dev/icon: qbittorrent.png
 spec:
   tls:
   - hosts:
-    - channels.k.oneill.net
-    secretName: channels-tls
+    - qbittorrent.k.oneill.net
+    secretName: qbittorrent-tls
   rules:
-  - host: channels.k.oneill.net
+  - host: qbittorrent.k.oneill.net
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: channels
+            name: qbittorrent
             port:
-              number: 8089
+              number: 8080

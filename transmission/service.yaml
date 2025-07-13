@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transmission
+  labels:
+    app: transmission
+  annotations:
+    metallb.universe.tf/allow-shared-ip: transmission
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 172.19.74.22
+  ports:
+  - name: transmission-web
+    port: 9091
+    targetPort: 9091
+  - name: bittorrent
+    port: 51413
+    targetPort: 51413
+    protocol: TCP
+  selector:
+    app: transmission
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transmission-udp
+  labels:
+    app: transmission
+  annotations:
+    metallb.universe.tf/allow-shared-ip: transmission
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 172.19.74.22
+  ports:
+  - name: bittorrent
+    port: 51413
+    targetPort: 51413
+    protocol: UDP
+  selector:
+    app: transmission

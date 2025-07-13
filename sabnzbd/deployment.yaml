@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sabnzbd
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sabnzbd
+      app.kubernetes.io/name: sabnzbd
+      app.kubernetes.io/instance: sabnzbd
+  template:
+    metadata:
+      labels:
+        app: sabnzbd
+        app.kubernetes.io/name: sabnzbd
+        app.kubernetes.io/instance: sabnzbd
+    spec:
+      containers:
+      - name: sabnzbd
+        image: linuxserver/sabnzbd
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        - mountPath: /downloads
+          name: downloads
+        - mountPath: /intermediate
+          name: intermediate
+        env:
+        - name: PUID
+          value: '10001'
+        - name: PGID
+          value: '10001'
+        - name: TZ
+          value: America/New_York
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: sabnzbd-config
+      - name: intermediate
+        emptyDir: {}
+      - nfs:
+          server: fs2.oneill.net
+          path: /volume2/shared/downloads/sabnzbd
+        name: downloads

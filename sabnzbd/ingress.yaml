@@ -2,28 +2,27 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: channels
+  name: sabnzbd
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt
     gethomepage.dev/enabled: 'true'
-    gethomepage.dev/name: Channels
-    gethomepage.dev/description: Channels DVR
-    gethomepage.dev/group: Media
-    gethomepage.dev/icon: channels-dvr.png
+    gethomepage.dev/name: SABnzbd
+    gethomepage.dev/group: Downloaders
+    gethomepage.dev/icon: sabnzbd.png
 spec:
   tls:
   - hosts:
-    - channels.k.oneill.net
-    secretName: channels-tls
+    - sabnzbd.k.oneill.net
+    secretName: sabnzbd-tls
   rules:
-  - host: channels.k.oneill.net
+  - host: sabnzbd.k.oneill.net
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: channels
+            name: sabnzbd
             port:
-              number: 8089
+              number: 8080

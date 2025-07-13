@@ -2,28 +2,30 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: channels
+  name: bazarr
+  labels:
+    app: bazarr
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt
     gethomepage.dev/enabled: 'true'
-    gethomepage.dev/name: Channels
-    gethomepage.dev/description: Channels DVR
-    gethomepage.dev/group: Media
-    gethomepage.dev/icon: channels-dvr.png
+    gethomepage.dev/name: Bazarr
+    gethomepage.dev/group: Media Tools
+    gethomepage.dev/icon: bazarr.png
+    gethomepage.dev/description: Subtitle Downloader
 spec:
   tls:
   - hosts:
-    - channels.k.oneill.net
-    secretName: channels-tls
+    - bazarr.k.oneill.net
+    secretName: bazarr-tls
   rules:
-  - host: channels.k.oneill.net
+  - host: bazarr.k.oneill.net
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: channels
+            name: bazarr
             port:
-              number: 8089
+              number: 6767
