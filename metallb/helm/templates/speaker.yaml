@@ -98,7 +98,7 @@ spec:
             add:
             - NET_RAW
         volumeMounts:
-          - name: memberlist
+          - name: memberlist 
             mountPath: /etc/ml_secret_key
       nodeSelector:
         "kubernetes.io/os": linux
