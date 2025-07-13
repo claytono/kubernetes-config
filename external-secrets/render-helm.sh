@@ -5,14 +5,16 @@ set -eu -o pipefail
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$BASEDIR"
 
+source "$BASEDIR/../scripts/chart-version.sh"
+
 rm -rf helm tmp
 mkdir tmp helm
-helm template external-secrets external-secrets \
-	--version 0.9.13 \
-	--repo https://charts.external-secrets.io \
-	--namespace external-secrets \
-	--values values.yaml \
-	--output-dir tmp
+
+# Render external-secrets chart
+helm_template external-secrets external-secrets \
+  --values values.yaml \
+  --namespace external-secrets \
+  --output-dir tmp
 
 mv tmp/*/* helm
 rmdir tmp/*
