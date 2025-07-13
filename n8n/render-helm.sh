@@ -20,6 +20,10 @@ mv tmp/n8n/templates/* helm/n8n/
 mv tmp/n8n/charts/valkey/* helm/valkey/
 rm -f helm/valkey/templates/secret.yaml
 
+# Remove checksum/secret annotation from valkey application.yaml
+# Use sed to remove the specific checksum/secret annotation
+sed -i '' '/checksum\/secret:/d' helm/valkey/templates/primary/application.yaml || true
+
 
 # Render PostgreSQL chart
 helm_template n8n-postgres postgresql --namespace n8n --values postgres-values.yaml --output-dir tmp
