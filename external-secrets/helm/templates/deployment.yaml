@@ -4,12 +4,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: external-secrets
-  namespace: "external-secrets"
+  namespace: external-secrets
   labels:
-    helm.sh/chart: external-secrets-0.9.13
+    helm.sh/chart: external-secrets-0.18.2
     app.kubernetes.io/name: external-secrets
     app.kubernetes.io/instance: external-secrets
-    app.kubernetes.io/version: "v0.9.13"
+    app.kubernetes.io/version: "v0.18.2"
     app.kubernetes.io/managed-by: Helm
 spec:
   replicas: 1
@@ -21,10 +21,10 @@ spec:
   template:
     metadata:
       labels:
-        helm.sh/chart: external-secrets-0.9.13
+        helm.sh/chart: external-secrets-0.18.2
         app.kubernetes.io/name: external-secrets
         app.kubernetes.io/instance: external-secrets
-        app.kubernetes.io/version: "v0.9.13"
+        app.kubernetes.io/version: "v0.18.2"
         app.kubernetes.io/managed-by: Helm
     spec:
       serviceAccountName: external-secrets
@@ -42,12 +42,15 @@ spec:
             runAsUser: 1000
             seccompProfile:
               type: RuntimeDefault
-          image: ghcr.io/external-secrets/external-secrets:v0.9.13
+          image: oci.external-secrets.io/external-secrets/external-secrets:v0.18.2
           imagePullPolicy: IfNotPresent
           args:
           - --concurrent=1
           - --metrics-addr=:8080
+          - --loglevel=info
+          - --zap-time-encoding=epoch
           ports:
             - containerPort: 8080
               protocol: TCP
               name: metrics
+      dnsPolicy: ClusterFirst
