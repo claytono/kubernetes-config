@@ -10,7 +10,7 @@ metadata:
     gethomepage.dev/name: Channels
     gethomepage.dev/description: Channels DVR
     gethomepage.dev/group: Media
-    gethomepage.dev/icon: channels.png
+    gethomepage.dev/icon: channels-dvr.png
 spec:
   tls:
   - hosts:

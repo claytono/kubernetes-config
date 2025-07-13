@@ -10,8 +10,8 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt
     gethomepage.dev/enabled: 'true'
     gethomepage.dev/name: autobrr
-    gethomepage.dev/description: TV Manager
-    gethomepage.dev/group: Media
+    gethomepage.dev/description: IRC Torrent Watcher
+    gethomepage.dev/group: Media Tools
     gethomepage.dev/icon: autobrr.png
 spec:
   tls:
