@@ -2,7 +2,7 @@
 
 set -eu -o pipefail
 
-BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd)"
 cd "$BASEDIR"
 
 source "$BASEDIR/../scripts/chart-version.sh"
@@ -21,3 +21,6 @@ mv tmp/*/* helm
 rmdir tmp/*
 rmdir tmp
 rm -rf helm/tests
+
+# Remove the startupapicheck job (not needed for render-to-disk workflows)
+rm -f helm/templates/startupapicheck-job.yaml

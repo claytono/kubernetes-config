@@ -12,7 +12,6 @@ resources:
 - helm/templates/cainjector-deployment.yaml
 - helm/templates/webhook-service.yaml
 - helm/templates/startupapicheck-serviceaccount.yaml
-- helm/templates/startupapicheck-job.yaml
 - helm/templates/service.yaml
 - helm/templates/rbac.yaml
 - helm/templates/webhook-mutating-webhook.yaml
