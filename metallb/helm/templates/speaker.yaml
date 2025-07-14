@@ -8,10 +8,10 @@ metadata:
   name: metallb-frr-startup
   namespace: "metallb-system"
   labels:
-    helm.sh/chart: metallb-0.14.9
+    helm.sh/chart: metallb-0.15.2
     app.kubernetes.io/name: metallb
     app.kubernetes.io/instance: metallb
-    app.kubernetes.io/version: "v0.14.9"
+    app.kubernetes.io/version: "v0.15.2"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: speaker
 data:
@@ -55,8 +55,8 @@ data:
     # Check /etc/pam.d/frr if you intend to use "vtysh"!
     #
     vtysh_enable=yes
-    zebra_options="  -A 127.0.0.1 -s 90000000"
-    bgpd_options="   -A 127.0.0.1 -p 0"
+    zebra_options="  -A 127.0.0.1 -s 90000000 --limit-fds 100000"
+    bgpd_options="   -A 127.0.0.1 -p 0 --limit-fds 100000"
     ospfd_options="  -A 127.0.0.1"
     ospf6d_options=" -A ::1"
     ripd_options="   -A 127.0.0.1"
@@ -69,8 +69,8 @@ data:
     babeld_options=" -A 127.0.0.1"
     sharpd_options=" -A 127.0.0.1"
     pbrd_options="   -A 127.0.0.1"
-    staticd_options="-A 127.0.0.1"
-    bfdd_options="   -A 127.0.0.1"
+    staticd_options="-A 127.0.0.1 --limit-fds 100000"
+    bfdd_options="   -A 127.0.0.1 --limit-fds 100000"
     fabricd_options="-A 127.0.0.1"
     vrrpd_options="  -A 127.0.0.1"
 
@@ -114,10 +114,10 @@ metadata:
   name: metallb-speaker
   namespace: "metallb-system"
   labels:
-    helm.sh/chart: metallb-0.14.9
+    helm.sh/chart: metallb-0.15.2
     app.kubernetes.io/name: metallb
     app.kubernetes.io/instance: metallb
-    app.kubernetes.io/version: "v0.14.9"
+    app.kubernetes.io/version: "v0.15.2"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: speaker
 spec:
@@ -176,14 +176,14 @@ spec:
               mountPath: /etc/frr
         # Copies the reloader to the shared volume between the speaker and reloader.
         - name: cp-reloader
-          image: quay.io/metallb/speaker:v0.14.9
+          image: quay.io/metallb/speaker:v0.15.2
           command: ["/cp-tool","/frr-reloader.sh","/etc/frr_reloader/frr-reloader.sh"]
           volumeMounts:
             - name: reloader
               mountPath: /etc/frr_reloader
         # Copies the metrics exporter
         - name: cp-metrics
-          image: quay.io/metallb/speaker:v0.14.9
+          image: quay.io/metallb/speaker:v0.15.2
           command: ["/cp-tool","/frr-metrics","/etc/frr_metrics/frr-metrics"]
           volumeMounts:
             - name: metrics
@@ -191,7 +191,7 @@ spec:
       shareProcessNamespace: true
       containers:
       - name: speaker
-        image: quay.io/metallb/speaker:v0.14.9
+        image: quay.io/metallb/speaker:v0.15.2
         args:
         - --port=7472
         - --log-level=info

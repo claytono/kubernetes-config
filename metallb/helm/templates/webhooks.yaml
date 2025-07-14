@@ -6,10 +6,10 @@ metadata:
   name: metallb-webhook-cert
   namespace: "metallb-system"
   labels:
-    helm.sh/chart: metallb-0.14.9
+    helm.sh/chart: metallb-0.15.2
     app.kubernetes.io/name: metallb
     app.kubernetes.io/instance: metallb
-    app.kubernetes.io/version: "v0.14.9"
+    app.kubernetes.io/version: "v0.15.2"
     app.kubernetes.io/managed-by: Helm
 ---
 # Source: metallb/templates/webhooks.yaml
@@ -19,10 +19,10 @@ metadata:
   name: metallb-webhook-service
   namespace: "metallb-system"
   labels:
-    helm.sh/chart: metallb-0.14.9
+    helm.sh/chart: metallb-0.15.2
     app.kubernetes.io/name: metallb
     app.kubernetes.io/instance: metallb
-    app.kubernetes.io/version: "v0.14.9"
+    app.kubernetes.io/version: "v0.15.2"
     app.kubernetes.io/managed-by: Helm
 spec:
   ports:
@@ -39,10 +39,10 @@ kind: ValidatingWebhookConfiguration
 metadata:
   name: metallb-webhook-configuration
   labels:
-    helm.sh/chart: metallb-0.14.9
+    helm.sh/chart: metallb-0.15.2
     app.kubernetes.io/name: metallb
     app.kubernetes.io/instance: metallb
-    app.kubernetes.io/version: "v0.14.9"
+    app.kubernetes.io/version: "v0.15.2"
     app.kubernetes.io/managed-by: Helm
 webhooks:
 - admissionReviewVersions:

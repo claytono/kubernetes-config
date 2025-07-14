@@ -6,10 +6,10 @@ metadata:
   name: metallb-controller
   namespace: "metallb-system"
   labels:
-    helm.sh/chart: metallb-0.14.9
+    helm.sh/chart: metallb-0.15.2
     app.kubernetes.io/name: metallb
     app.kubernetes.io/instance: metallb
-    app.kubernetes.io/version: "v0.14.9"
+    app.kubernetes.io/version: "v0.15.2"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: controller
 spec:
@@ -38,7 +38,7 @@ spec:
         runAsUser: 65534
       containers:
       - name: controller
-        image: quay.io/metallb/controller:v0.14.9
+        image: quay.io/metallb/controller:v0.15.2
         args:
         - --port=7472
         - --log-level=info
