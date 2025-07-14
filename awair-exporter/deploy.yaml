@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: exporter
+  name: awair-exporter
   annotations:
     reloader.stakater.com/auto: 'true'
 spec:
@@ -24,6 +24,6 @@ spec:
         imagePullPolicy: Always
         envFrom:
         - secretRef:
-            name: exporter
+            name: awair-exporter
         ports:
         - containerPort: 8000
