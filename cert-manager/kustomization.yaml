@@ -15,7 +15,6 @@ resources:
 - helm/templates/service.yaml
 - helm/templates/rbac.yaml
 - helm/templates/webhook-mutating-webhook.yaml
-- helm/templates/webhook-config.yaml
 - helm/templates/webhook-rbac.yaml
 - helm/templates/serviceaccount.yaml
 - helm/templates/cainjector-rbac.yaml

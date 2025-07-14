@@ -10,9 +10,9 @@ metadata:
     app.kubernetes.io/name: cert-manager
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/component: "controller"
-    app.kubernetes.io/version: "v1.13.6"
+    app.kubernetes.io/version: "v1.14.7"
     app.kubernetes.io/managed-by: Helm
-    helm.sh/chart: cert-manager-v1.13.6
+    helm.sh/chart: cert-manager-v1.14.7
 spec:
   replicas: 1
   selector:
@@ -27,9 +27,9 @@ spec:
         app.kubernetes.io/name: cert-manager
         app.kubernetes.io/instance: cert-manager
         app.kubernetes.io/component: "controller"
-        app.kubernetes.io/version: "v1.13.6"
+        app.kubernetes.io/version: "v1.14.7"
         app.kubernetes.io/managed-by: Helm
-        helm.sh/chart: cert-manager-v1.13.6
+        helm.sh/chart: cert-manager-v1.14.7
       annotations:
         prometheus.io/path: "/metrics"
         prometheus.io/scrape: 'true'
@@ -43,13 +43,13 @@ spec:
           type: RuntimeDefault
       containers:
         - name: cert-manager-controller
-          image: "quay.io/jetstack/cert-manager-controller:v1.13.6"
+          image: "quay.io/jetstack/cert-manager-controller:v1.14.7"
           imagePullPolicy: IfNotPresent
           args:
           - --v=2
           - --cluster-resource-namespace=$(POD_NAMESPACE)
           - --leader-election-namespace=kube-system
-          - --acme-http01-solver-image=quay.io/jetstack/cert-manager-acmesolver:v1.13.6
+          - --acme-http01-solver-image=quay.io/jetstack/cert-manager-acmesolver:v1.14.7
           - --default-issuer-name=letsencrypt
           - --default-issuer-kind=ClusterIssuer
           - --default-issuer-group=cert-manager.io
@@ -66,10 +66,24 @@ spec:
             capabilities:
               drop:
               - ALL
+            readOnlyRootFilesystem: true
           env:
           - name: POD_NAMESPACE
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
+          # LivenessProbe settings are based on those used for the Kubernetes
+          # controller-manager. See:
+          # https://github.com/kubernetes/kubernetes/blob/806b30170c61a38fedd54cc9ede4cd6275a1ad3b/cmd/kubeadm/app/util/staticpod/utils.go#L241-L245
+          livenessProbe:
+            httpGet:
+              port: http-healthz
+              path: /livez
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 15
+            successThreshold: 1
+            failureThreshold: 8
       nodeSelector:
         kubernetes.io/os: linux
