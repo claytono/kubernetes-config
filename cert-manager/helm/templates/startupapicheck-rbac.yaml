@@ -11,16 +11,16 @@ metadata:
     app.kubernetes.io/name: startupapicheck
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/component: "startupapicheck"
-    app.kubernetes.io/version: "v1.15.5"
+    app.kubernetes.io/version: "v1.16.5"
     app.kubernetes.io/managed-by: Helm
-    helm.sh/chart: cert-manager-v1.15.5
+    helm.sh/chart: cert-manager-v1.16.5
   annotations:
     helm.sh/hook: post-install
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
     helm.sh/hook-weight: "-5"
 rules:
   - apiGroups: ["cert-manager.io"]
-    resources: ["certificates"]
+    resources: ["certificaterequests"]
     verbs: ["create"]
 ---
 # Source: cert-manager/templates/startupapicheck-rbac.yaml
@@ -34,9 +34,9 @@ metadata:
     app.kubernetes.io/name: startupapicheck
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/component: "startupapicheck"
-    app.kubernetes.io/version: "v1.15.5"
+    app.kubernetes.io/version: "v1.16.5"
     app.kubernetes.io/managed-by: Helm
-    helm.sh/chart: cert-manager-v1.15.5
+    helm.sh/chart: cert-manager-v1.16.5
   annotations:
     helm.sh/hook: post-install
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
