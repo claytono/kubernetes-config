@@ -4,5 +4,5 @@ name: cert-manager-meta
 version: 0.1.0
 dependencies:
 - name: cert-manager
-  version: 1.14.7
+  version: 1.15.5
   repository: https://charts.jetstack.io
