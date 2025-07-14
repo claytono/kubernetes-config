@@ -1,6 +1,7 @@
 ---
 prometheus:
   scrapeAnnotations: true
+  metricsPort: 7472
 
 controller:
   tolerations:
@@ -10,3 +11,7 @@ controller:
   - key: node-role.kubernetes.io/control-plane
     operator: Exists
     effect: NoSchedule
+
+speaker:
+  podAnnotations:
+    prometheus.io/port: '7472'

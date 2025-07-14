@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: pihole-dns-tcp
   annotations:
-    metallb.universe.tf/allow-shared-ip: pihole
+    metallb.io/allow-shared-ip: pihole
 spec:
   type: LoadBalancer
   loadBalancerIP: 172.19.74.23

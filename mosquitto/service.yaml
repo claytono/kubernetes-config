@@ -6,7 +6,7 @@ metadata:
     name: mosquitto
   annotations:
     external-dns.alpha.kubernetes.io/hostname: mqtt.k.oneill.net
-    metallb.universe.tf/allow-shared-ip: plexmediaserver
+    metallb.io/allow-shared-ip: plexmediaserver
   name: mosquitto
 spec:
   type: LoadBalancer

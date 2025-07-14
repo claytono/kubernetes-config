@@ -6,7 +6,7 @@ metadata:
   labels:
     app: transmission
   annotations:
-    metallb.universe.tf/allow-shared-ip: transmission
+    metallb.io/allow-shared-ip: transmission
 spec:
   type: LoadBalancer
   loadBalancerIP: 172.19.74.22
@@ -28,7 +28,7 @@ metadata:
   labels:
     app: transmission
   annotations:
-    metallb.universe.tf/allow-shared-ip: transmission
+    metallb.io/allow-shared-ip: transmission
 spec:
   type: LoadBalancer
   loadBalancerIP: 172.19.74.22
