@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: channels
   annotations:
-    metallb.universe.tf/allow-shared-ip: channels
+    metallb.io/allow-shared-ip: channels
 spec:
   type: LoadBalancer
   ports:

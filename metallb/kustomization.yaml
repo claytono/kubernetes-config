@@ -12,6 +12,7 @@ resources:
 - helm/templates/controller.yaml
 - helm/templates/speaker.yaml
 - helm/templates/webhooks.yaml
+- helm/templates/exclude-l2-config.yaml
 - config.yaml
 
 labels:
