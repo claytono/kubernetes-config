@@ -15,6 +15,7 @@ resources:
 - helm/controller-role.yaml
 - helm/controller-rolebinding.yaml
 - helm/controller-service.yaml
+- helm/controller-service-metrics.yaml
 - helm/controller-serviceaccount.yaml
 
 labels:
