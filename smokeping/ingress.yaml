@@ -4,7 +4,6 @@ kind: Ingress
 metadata:
   name: smokeping
   annotations:
-    kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt
     gethomepage.dev/enabled: 'true'
     gethomepage.dev/name: Smokeping
@@ -26,3 +25,4 @@ spec:
             name: smokeping
             port:
               number: 80
+  ingressClassName: nginx

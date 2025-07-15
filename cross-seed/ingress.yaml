@@ -6,7 +6,6 @@ metadata:
   labels:
     app: cross-seed
   annotations:
-    kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt
 spec:
   tls:
@@ -24,3 +23,4 @@ spec:
             name: cross-seed
             port:
               number: 2468
+  ingressClassName: nginx

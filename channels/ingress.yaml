@@ -4,7 +4,6 @@ kind: Ingress
 metadata:
   name: channels
   annotations:
-    kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt
     gethomepage.dev/enabled: 'true'
     gethomepage.dev/name: Channels
@@ -27,3 +26,4 @@ spec:
             name: channels
             port:
               number: 8089
+  ingressClassName: nginx
