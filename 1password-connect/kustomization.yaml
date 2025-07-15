@@ -8,9 +8,6 @@ resources:
 - helm/connect/templates/connect-deployment.yaml
 - helm/connect/templates/service.yaml
 
-labels:
-- pairs:
-    app: 1password-connect
 secretGenerator:
 - name: op-credentials
   files:
