@@ -4,10 +4,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   labels:
-    helm.sh/chart: ingress-nginx-4.1.4
+    helm.sh/chart: ingress-nginx-4.13.0
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: "1.2.1"
+    app.kubernetes.io/version: "1.13.0"
     app.kubernetes.io/part-of: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: controller
@@ -47,6 +47,7 @@ rules:
       - get
       - list
       - watch
+  # Omit Ingress status permissions if `--update-status` is disabled.
   - apiGroups:
       - networking.k8s.io
     resources:
@@ -62,18 +63,18 @@ rules:
       - list
       - watch
   - apiGroups:
-      - ""
+      - coordination.k8s.io
     resources:
-      - configmaps
+      - leases
     resourceNames:
-      - ingress-controller-leader
+      - ingress-nginx-leader
     verbs:
       - get
       - update
   - apiGroups:
-      - ""
+      - coordination.k8s.io
     resources:
-      - configmaps
+      - leases
     verbs:
       - create
   - apiGroups:
@@ -83,3 +84,11 @@ rules:
     verbs:
       - create
       - patch
+  - apiGroups:
+      - discovery.k8s.io
+    resources:
+      - endpointslices
+    verbs:
+      - list
+      - watch
+      - get
