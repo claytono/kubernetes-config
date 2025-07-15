@@ -5,11 +5,14 @@ set -eu -o pipefail
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$BASEDIR"
 
+# Source the chart-version.sh helper
+source "$BASEDIR/../scripts/chart-version.sh"
+
 rm -rf helm tmp
 mkdir tmp
-helm template ingress-nginx ingress-nginx \
-	--repo https://kubernetes.github.io/ingress-nginx \
-	--version 4.1.4 \
+
+# Use helm_template helper function
+helm_template ingress-nginx ingress-nginx \
 	--namespace ingress-nginx \
 	--values values.yaml \
 	--create-namespace \

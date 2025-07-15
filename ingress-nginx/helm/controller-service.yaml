@@ -17,7 +17,7 @@ metadata:
 spec:
   type: LoadBalancer
   ipFamilyPolicy: SingleStack
-  ipFamilies:
+  ipFamilies: 
     - IPv4
   ports:
     - name: http
