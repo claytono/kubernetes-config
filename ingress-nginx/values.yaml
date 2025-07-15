@@ -1,6 +1,7 @@
 ---
 controller:
   hostNetwork: true
+  replicaCount: 2
   config:
     proxy-body-size: 5m
   admissionWebhooks:
