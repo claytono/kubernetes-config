@@ -6,7 +6,6 @@ metadata:
   labels:
     app: bazarr
   annotations:
-    kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt
     gethomepage.dev/enabled: 'true'
     gethomepage.dev/name: Bazarr
@@ -29,3 +28,4 @@ spec:
             name: bazarr
             port:
               number: 6767
+  ingressClassName: nginx

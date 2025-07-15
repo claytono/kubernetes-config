@@ -6,7 +6,6 @@ metadata:
   labels:
     app: transmission
   annotations:
-    kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt
     gethomepage.dev/enabled: 'true'
     gethomepage.dev/name: Transmission
@@ -28,3 +27,4 @@ spec:
             name: transmission
             port:
               number: 9091
+  ingressClassName: nginx
