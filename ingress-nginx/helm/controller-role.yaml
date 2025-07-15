@@ -4,10 +4,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   labels:
-    helm.sh/chart: ingress-nginx-4.4.0
+    helm.sh/chart: ingress-nginx-4.8.0
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: "1.5.1"
+    app.kubernetes.io/version: "1.9.0"
     app.kubernetes.io/part-of: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: controller
@@ -61,26 +61,6 @@ rules:
       - get
       - list
       - watch
-  # TODO(Jintao Zhang)
-  # Once we release a new version of the controller,
-  # we will be able to remove the configmap related permissions
-  # We have used the Lease API for selection
-  # ref: https://github.com/kubernetes/ingress-nginx/pull/8921
-  - apiGroups:
-      - ""
-    resources:
-      - configmaps
-    resourceNames:
-      - ingress-nginx-leader
-    verbs:
-      - get
-      - update
-  - apiGroups:
-      - ""
-    resources:
-      - configmaps
-    verbs:
-      - create
   - apiGroups:
       - coordination.k8s.io
     resources:

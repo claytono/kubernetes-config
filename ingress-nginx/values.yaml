@@ -1,10 +1,31 @@
 ---
 controller:
-  hostNetwork: true
   replicaCount: 2
   config:
     proxy-body-size: 5m
   admissionWebhooks:
     enabled: false
   updateStrategy:
-    type: Recreate
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - ingress-nginx
+            - key: app.kubernetes.io/component
+              operator: In
+              values:
+              - controller
+          topologyKey: kubernetes.io/hostname

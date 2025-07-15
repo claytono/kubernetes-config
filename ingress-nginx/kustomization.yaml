@@ -11,6 +11,7 @@ resources:
 - helm/controller-configmap.yaml
 - helm/controller-deployment.yaml
 - helm/controller-ingressclass.yaml
+- helm/controller-poddisruptionbudget.yaml
 - helm/controller-role.yaml
 - helm/controller-rolebinding.yaml
 - helm/controller-service.yaml
