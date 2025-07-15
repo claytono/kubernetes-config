@@ -4,10 +4,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    helm.sh/chart: ingress-nginx-4.12.0
+    helm.sh/chart: ingress-nginx-4.13.0
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/version: "1.12.0"
+    app.kubernetes.io/version: "1.13.0"
     app.kubernetes.io/part-of: ingress-nginx
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: controller
@@ -30,10 +30,10 @@ spec:
   template:
     metadata:
       labels:
-        helm.sh/chart: ingress-nginx-4.12.0
+        helm.sh/chart: ingress-nginx-4.13.0
         app.kubernetes.io/name: ingress-nginx
         app.kubernetes.io/instance: ingress-nginx
-        app.kubernetes.io/version: "1.12.0"
+        app.kubernetes.io/version: "1.13.0"
         app.kubernetes.io/part-of: ingress-nginx
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/component: controller
@@ -41,7 +41,7 @@ spec:
       dnsPolicy: ClusterFirst
       containers:
         - name: controller
-          image: registry.k8s.io/ingress-nginx/controller:v1.12.0@sha256:e6b8de175acda6ca913891f0f727bca4527e797d52688cbe9fec9040d6f6b6fa
+          image: registry.k8s.io/ingress-nginx/controller:v1.13.0@sha256:dc75a7baec7a3b827a5d7ab0acd10ab507904c7dad692365b3e3b596eca1afd2
           imagePullPolicy: IfNotPresent
           lifecycle: 
             preStop:
@@ -133,4 +133,5 @@ spec:
               topologyKey: kubernetes.io/hostname
             weight: 100
       serviceAccountName: ingress-nginx
+      automountServiceAccountToken: true
       terminationGracePeriodSeconds: 300
