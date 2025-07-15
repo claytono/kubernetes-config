@@ -5,10 +5,10 @@ kind: ClusterRole
 metadata:
   name: external-dns
   labels:
-    helm.sh/chart: external-dns-1.12.1
+    helm.sh/chart: external-dns-1.13.1
     app.kubernetes.io/name: external-dns
     app.kubernetes.io/instance: external-dns
-    app.kubernetes.io/version: "0.13.2"
+    app.kubernetes.io/version: "0.13.6"
     app.kubernetes.io/managed-by: Helm
 rules:
   - apiGroups: [""]

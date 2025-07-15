@@ -5,10 +5,10 @@ kind: ClusterRoleBinding
 metadata:
   name: external-dns-viewer
   labels:
-    helm.sh/chart: external-dns-1.12.1
+    helm.sh/chart: external-dns-1.13.1
     app.kubernetes.io/name: external-dns
     app.kubernetes.io/instance: external-dns
-    app.kubernetes.io/version: "0.13.2"
+    app.kubernetes.io/version: "0.13.6"
     app.kubernetes.io/managed-by: Helm
 roleRef:
   apiGroup: rbac.authorization.k8s.io
