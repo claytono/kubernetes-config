@@ -9,6 +9,8 @@ resources:
 - helm/templates/clusterrolebinding.yaml
 - helm/templates/deployment.yaml
 
-commonLabels:
-  app.kubernetes.io/name: reloader
-  app.kubernetes.io/instance: reloader
+labels:
+- pairs:
+    app.kubernetes.io/name: reloader
+    app.kubernetes.io/instance: reloader
+  includeSelectors: true

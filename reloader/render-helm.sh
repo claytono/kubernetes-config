@@ -5,12 +5,13 @@ set -eu -o pipefail
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$BASEDIR"
 
+source "$BASEDIR/../scripts/chart-version.sh"
+
 rm -rf helm tmp
 mkdir tmp helm
 touch values.yaml
-helm template reloader reloader \
-	--version v1.0.71 \
-	--repo https://stakater.github.io/stakater-charts \
+# Template using Chart.yaml
+helm_template reloader reloader \
 	--values values.yaml \
 	--output-dir tmp
 
