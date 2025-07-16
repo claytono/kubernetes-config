@@ -7,53 +7,37 @@ metadata:
   namespace: default
   labels:
     app.kubernetes.io/name: descheduler
-    helm.sh/chart: descheduler-0.29.0
+    helm.sh/chart: descheduler-0.31.0
     app.kubernetes.io/instance: descheduler
-    app.kubernetes.io/version: "0.29.0"
+    app.kubernetes.io/version: "0.31.0"
     app.kubernetes.io/managed-by: Helm
 data:
   policy.yaml: |
-    apiVersion: "descheduler/v1alpha1"
+    apiVersion: "descheduler/v1alpha2"
     kind: "DeschedulerPolicy"
+    evictLocalStoragePods: true
     maxNoOfPodsToEvictPerNode: 2
-    strategies:
-      LowNodeUtilization:
-        enabled: true
-        params:
-          nodeResourceUtilizationThresholds:
-            targetThresholds:
-              cpu: 50
-              memory: 50
-              pods: 50
-            thresholds:
-              cpu: 20
-              memory: 20
-              pods: 20
-      PodLifeTime:
-        enabled: true
-        params:
-          podLifeTime:
-            maxPodLifeTimeSeconds: 1209600
-            states:
-            - Running
-      RemoveDuplicates:
-        enabled: true
-      RemovePodsHavingTooManyRestarts:
-        enabled: true
-        params:
-          podsHavingTooManyRestarts:
-            includingInitContainers: true
-            podRestartThreshold: 100
-      RemovePodsViolatingInterPodAntiAffinity:
-        enabled: true
-      RemovePodsViolatingNodeAffinity:
-        enabled: true
-        params:
-          nodeAffinityType:
-          - requiredDuringSchedulingIgnoredDuringExecution
-      RemovePodsViolatingNodeTaints:
-        enabled: true
-      RemovePodsViolatingTopologySpreadConstraint:
-        enabled: true
-        params:
-          includeSoftConstraints: false
+    profiles:
+    - name: default
+      pluginConfig:
+      - args:
+          evictLocalStoragePods: true
+          labelSelector:
+            matchExpressions:
+            - key: job-name
+              operator: DoesNotExist
+        name: DefaultEvictor
+      - args:
+          maxPodLifeTimeSeconds: 1209600
+          states:
+          - Running
+        name: PodLifeTime
+      - args:
+          includingInitContainers: true
+          podRestartThreshold: 10
+        name: RemovePodsHavingTooManyRestarts
+      plugins:
+        deschedule:
+          enabled:
+          - PodLifeTime
+          - RemovePodsHavingTooManyRestarts
