@@ -5,11 +5,13 @@ set -eu -o pipefail
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$BASEDIR"
 
+source "$BASEDIR/../scripts/chart-version.sh"
+
 rm -rf helm tmp
 mkdir tmp helm
-helm template descheduler descheduler \
-	--repo https://kubernetes-sigs.github.io/descheduler/ \
-	--version 0.29.0 \
+
+# Template using Chart.yaml
+helm_template descheduler descheduler \
 	--values values.yaml \
 	--output-dir tmp
 
