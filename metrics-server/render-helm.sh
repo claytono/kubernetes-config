@@ -5,11 +5,13 @@ set -eu -o pipefail
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$BASEDIR"
 
+source "$BASEDIR/../scripts/chart-version.sh"
+
 rm -rf helm tmp
 mkdir tmp
-helm template metrics-server metrics-server \
-	--repo https://kubernetes-sigs.github.io/metrics-server/ \
-	--version 3.8.2 \
+
+# Template using Chart.yaml
+helm_template metrics-server metrics-server \
 	--values values.yaml \
 	--output-dir tmp
 
