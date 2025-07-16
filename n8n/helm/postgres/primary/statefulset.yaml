@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: postgresql
     app.kubernetes.io/version: 17.5.0
-    helm.sh/chart: postgresql-16.7.18
+    helm.sh/chart: postgresql-16.7.19
     app.kubernetes.io/component: primary
 spec:
   replicas: 1
@@ -31,7 +31,7 @@ spec:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: postgresql
         app.kubernetes.io/version: 17.5.0
-        helm.sh/chart: postgresql-16.7.18
+        helm.sh/chart: postgresql-16.7.19
         app.kubernetes.io/component: primary
     spec:
       serviceAccountName: n8n-postgres-postgresql
