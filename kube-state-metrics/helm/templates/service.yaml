@@ -6,13 +6,13 @@ metadata:
   name: kube-state-metrics
   namespace: default
   labels:    
-    helm.sh/chart: kube-state-metrics-4.20.2
+    helm.sh/chart: kube-state-metrics-4.32.0
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: metrics
     app.kubernetes.io/part-of: kube-state-metrics
     app.kubernetes.io/name: kube-state-metrics
     app.kubernetes.io/instance: kube-state-metrics
-    app.kubernetes.io/version: "2.6.0"
+    app.kubernetes.io/version: "2.8.1"
   annotations:
     prometheus.io/scrape: 'true'
 spec:
