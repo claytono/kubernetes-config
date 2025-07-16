@@ -8,7 +8,5 @@
       "matchPaths": ["**/Chart.yaml"]
     }
   ],
-  "gitIgnoredAuthors": [
-    "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
-  ]
+  "gitIgnoredAuthors": ["github-actions[bot]@users.noreply.github.com"]
 }
