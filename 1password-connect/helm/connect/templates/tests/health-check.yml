@@ -6,10 +6,10 @@ metadata:
   name: "connect-health-check"
   namespace: 1password
   labels:
-    helm.sh/chart: connect-1.15.0
+    helm.sh/chart: connect-1.17.1
     app.kubernetes.io/name: connect
     app.kubernetes.io/instance: connect
-    app.kubernetes.io/version: "1.7.2"
+    app.kubernetes.io/version: "1.7.3"
     app.kubernetes.io/managed-by: Helm
   annotations:
     helm.sh/hook: test
