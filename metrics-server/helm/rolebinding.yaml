@@ -6,10 +6,10 @@ metadata:
   name: metrics-server-auth-reader
   namespace: kube-system
   labels:
-    helm.sh/chart: metrics-server-3.8.2
+    helm.sh/chart: metrics-server-3.12.2
     app.kubernetes.io/name: metrics-server
     app.kubernetes.io/instance: metrics-server
-    app.kubernetes.io/version: "0.6.1"
+    app.kubernetes.io/version: "0.7.2"
     app.kubernetes.io/managed-by: Helm
 roleRef:
   apiGroup: rbac.authorization.k8s.io
