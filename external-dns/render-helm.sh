@@ -5,12 +5,14 @@ set -eu -o pipefail
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$BASEDIR"
 
+# Source the chart-version.sh helper
+source "$BASEDIR/../scripts/chart-version.sh"
+
 rm -rf helm tmp
 mkdir tmp helm
-helm template external-dns external-dns \
-	--repo https://kubernetes-sigs.github.io/external-dns/ \
+
+helm_template external-dns external-dns \
 	--include-crds \
-	--version 1.12.1 \
 	--values values.yaml \
 	--output-dir tmp
 

@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: kube-system
 
 resources:
+- helm/crds/dnsendpoints.externaldns.k8s.io.yaml
 - helm/templates/deployment.yaml
 - helm/templates/service.yaml
 - helm/templates/clusterrole.yaml
