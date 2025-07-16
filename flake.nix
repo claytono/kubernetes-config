@@ -23,6 +23,7 @@
             pre-commit
             act
             mosquitto
+            skopeo
           ];
         };
       });

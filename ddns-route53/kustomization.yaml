@@ -11,3 +11,6 @@ labels:
     app.kubernetes.io/name: ddns-route53
     app.kubernetes.io/instance: ddns-route53
   includeSelectors: true
+images:
+- name: ghcr.io/crazy-max/ddns-route53
+  newTag: v2.13.0
