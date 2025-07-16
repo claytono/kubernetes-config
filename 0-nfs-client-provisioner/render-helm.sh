@@ -5,12 +5,13 @@ set -eu -o pipefail
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$BASEDIR"
 
+source "$BASEDIR/../scripts/chart-version.sh"
+
 rm -rf helm tmp
 mkdir tmp helm
-helm template nfs-subdir-external-provisioner nfs-subdir-external-provisioner \
-	--repo https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner \
+# Template using Chart.yaml
+helm_template nfs-subdir-external-provisioner nfs-subdir-external-provisioner \
 	--include-crds \
-	--version 4.0.18 \
 	--values values.yaml \
 	--output-dir tmp
 

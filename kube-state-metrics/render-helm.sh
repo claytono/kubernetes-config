@@ -5,12 +5,13 @@ set -eu -o pipefail
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$BASEDIR"
 
+source "$BASEDIR/../scripts/chart-version.sh"
+
 rm -rf helm tmp
 mkdir tmp helm
-helm template kube-state-metrics kube-state-metrics \
-	--repo https://prometheus-community.github.io/helm-charts \
+# Template using Chart.yaml
+helm_template kube-state-metrics kube-state-metrics \
 	--include-crds \
-	--version 4.20.2 \
 	--values values.yaml \
 	--output-dir tmp
 

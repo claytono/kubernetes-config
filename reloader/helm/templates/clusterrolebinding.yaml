@@ -8,17 +8,17 @@ metadata:
     meta.helm.sh/release-namespace: "default"
     meta.helm.sh/release-name: "reloader"
   labels:
-    app: reloader-reloader
+    app: reloader
     chart: "reloader-1.0.71"
     release: "reloader"
     heritage: "Helm"
     app.kubernetes.io/managed-by: "Helm"
-  name: reloader-reloader-role-binding
+  name: reloader-role-binding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: reloader-reloader-role
+  name: reloader-role
 subjects:
   - kind: ServiceAccount
-    name: reloader-reloader
+    name: reloader
     namespace: default

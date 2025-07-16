@@ -1,1 +1,6 @@
+---
 # intentionally left blank
+
+# Override the default naming to be more natural
+nameOverride: ''
+fullnameOverride: reloader
