@@ -56,14 +56,14 @@ spec:
             - name: OP_HTTP_PORT
               value: "8080"
             - name: OP_LOG_LEVEL
-              value: "info"
+              value: "info"            
           readinessProbe:
             httpGet:
               path: /health
               scheme: HTTP
               port: 8080
             initialDelaySeconds: 15
-
+          
           livenessProbe:
             httpGet:
               path: /heartbeat
@@ -72,7 +72,7 @@ spec:
             failureThreshold: 3
             periodSeconds: 30
             initialDelaySeconds: 15
-
+          
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: shared-data
@@ -98,13 +98,13 @@ spec:
             - name: OP_BUS_PEERS
               value: localhost:11220
             - name: OP_LOG_LEVEL
-              value: "info"
+              value: "info"            
           readinessProbe:
             httpGet:
               path: /health
               port: 8081
             initialDelaySeconds: 15
-
+          
           livenessProbe:
             httpGet:
               path: /heartbeat
@@ -113,7 +113,7 @@ spec:
             failureThreshold: 3
             periodSeconds: 30
             initialDelaySeconds: 15
-
+          
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: shared-data

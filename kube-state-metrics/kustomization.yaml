@@ -12,3 +12,4 @@ resources:
 labels:
 - pairs:
     app: kube-state-metrics
+  includeSelectors: true

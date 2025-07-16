@@ -3,7 +3,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  labels:
+  labels:    
     helm.sh/chart: kube-state-metrics-4.20.2
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: metrics

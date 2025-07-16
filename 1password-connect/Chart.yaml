@@ -1,0 +1,8 @@
+---
+apiVersion: v2
+name: 1password-connect-meta
+version: 0.1.0
+dependencies:
+- name: connect
+  version: 1.15.0
+  repository: https://1password.github.io/connect-helm-charts
