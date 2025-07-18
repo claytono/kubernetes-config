@@ -21,3 +21,4 @@ mv tmp/*/* helm
 rmdir tmp/*
 rmdir tmp
 rm -rf helm/tests
+rm -f helm/templates/post-delete-job.yaml
