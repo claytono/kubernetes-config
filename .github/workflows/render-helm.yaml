@@ -1,0 +1,94 @@
+name: Render Helm Charts
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    name: Render Helm Charts
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ github.token }}
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.ref || github.ref }}
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cache pre-commit
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: ${{ runner.os }}-precommit-${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-precommit-
+
+      - name: Install pre-commit hooks
+        run: nix develop --command pre-commit install
+
+      - name: Render changed charts
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA=${{ github.event.pull_request.base.sha }}
+            HEAD_SHA=${{ github.event.pull_request.head.sha }}
+          else
+            BASE_SHA=${{ github.event.before }}
+            HEAD_SHA=${{ github.sha }}
+          fi
+          echo "Comparing $BASE_SHA..$HEAD_SHA"
+          git diff --name-only -z $BASE_SHA $HEAD_SHA \
+            | xargs -0 -r -n1 dirname \
+            | sort -u \
+            | while read -r dir; do
+                if [ -f "$dir/render-helm.sh" ]; then
+                  echo "⏳ Rendering in $dir"
+                  pushd "$dir"
+                  nix develop --command ./render-helm.sh
+                  popd
+                else
+                  echo "⏭  Skipping $dir (no render-helm.sh)"
+                fi
+              done
+
+      - name: Check for changes
+        if: github.ref == 'refs/heads/main'
+        run: |
+          if ! git diff --quiet; then
+            echo "Helm manifests need to be regenerated on main branch!"
+            git diff --stat
+            exit 1
+          fi
+
+      - name: Commit regenerated manifests
+        if: github.event_name == 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: regenerate Helm manifests"
+          fi
+
+      - name: Push changes via PAT
+        if: github.event_name == 'pull_request'
+        run: |
+          BRANCH_NAME="${GITHUB_HEAD_REF:-${GITHUB_REF##*/}}"
+          echo "Pushing to branch: $BRANCH_NAME"
+          git push "https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}" "HEAD:${BRANCH_NAME}"

@@ -7,9 +7,9 @@ metadata:
   namespace: default
   labels:
     app.kubernetes.io/name: descheduler
-    helm.sh/chart: descheduler-0.29.0
+    helm.sh/chart: descheduler-0.31.0
     app.kubernetes.io/instance: descheduler
-    app.kubernetes.io/version: "0.29.0"
+    app.kubernetes.io/version: "0.31.0"
     app.kubernetes.io/managed-by: Helm
 spec:
   schedule: "17 7 * * *"
@@ -20,7 +20,7 @@ spec:
         metadata:
           name: descheduler
           annotations:
-            checksum/config: 6aff18a60c8a3f06a337c28571079e6f3851efe34680c90a6cc231d58714642d
+            checksum/config: 6c91eaa6a067e4c870e62724ad8e5089edeb2b5b24fc32939c320f5884ef5f0a
           labels:
             app.kubernetes.io/name: descheduler
             app.kubernetes.io/instance: descheduler
@@ -30,7 +30,7 @@ spec:
           restartPolicy: "Never"
           containers:
             - name: descheduler
-              image: "registry.k8s.io/descheduler/descheduler:v0.29.0"
+              image: "registry.k8s.io/descheduler/descheduler:v0.31.0"
               imagePullPolicy: IfNotPresent
               command:
                 - /bin/descheduler

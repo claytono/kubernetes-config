@@ -3,33 +3,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name:  release-name-node-feature-discovery-master
+  name:  node-feature-discovery-master
   namespace: node-feature-discovery
   labels:
-    helm.sh/chart: node-feature-discovery-0.14.3
+    helm.sh/chart: node-feature-discovery-0.17.3
     app.kubernetes.io/name: node-feature-discovery
-    app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "v0.14.3"
+    app.kubernetes.io/instance: node-feature-discovery
+    app.kubernetes.io/version: "v0.17.3"
     app.kubernetes.io/managed-by: Helm
     role: master
 spec:
   replicas: 1
+  revisionHistoryLimit: 
   selector:
     matchLabels:
       app.kubernetes.io/name: node-feature-discovery
-      app.kubernetes.io/instance: release-name
+      app.kubernetes.io/instance: node-feature-discovery
       role: master
   template:
     metadata:
       labels:
         app.kubernetes.io/name: node-feature-discovery
-        app.kubernetes.io/instance: release-name
+        app.kubernetes.io/instance: node-feature-discovery
         role: master
+      annotations:
+        checksum/config: 8498990861054deb5ed87fd3936a6063af4d6ba2536a05bfb34b5228593e57fc
     spec:
-      serviceAccountName: release-name-node-feature-discovery
+      serviceAccountName: node-feature-discovery
       enableServiceLinks: false
       securityContext:
         {}
+      hostNetwork: false
       containers:
         - name: master
           securityContext:
@@ -39,28 +43,24 @@ spec:
               - ALL
             readOnlyRootFilesystem: true
             runAsNonRoot: true
-          image: "registry.k8s.io/nfd/node-feature-discovery:v0.14.3"
+          image: "registry.k8s.io/nfd/node-feature-discovery:v0.17.3"
           imagePullPolicy: IfNotPresent
+          startupProbe:
+            grpc:
+              port: 8082
+            failureThreshold: 30
           livenessProbe:
-            exec:
-              command:
-              - "/usr/bin/grpc_health_probe"
-              - "-addr=:8080"
-            initialDelaySeconds: 10
-            periodSeconds: 10
+            grpc:
+              port: 8082
           readinessProbe:
-            exec:
-              command:
-              - "/usr/bin/grpc_health_probe"
-              - "-addr=:8080"
-            initialDelaySeconds: 5
-            periodSeconds: 10
+            grpc:
+              port: 8082
             failureThreshold: 10
           ports:
-          - containerPort: 8080
-            name: grpc
           - containerPort: 8081
             name: metrics
+          - containerPort: 8082
+            name: health
           env:
           - name: NODE_NAME
             valueFrom:
@@ -69,12 +69,17 @@ spec:
           command:
             - "nfd-master"
           resources:
-            {}
+            limits:
+              memory: 4Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
           args:
-            - "-port=8080"
-            ## By default, disable crd controller for other than the default instances
-            - "-crd-controller=true"
+            - "-enable-leader-election"
+            # Go over featureGates and add the feature-gate flag
+            - "-feature-gates=NodeFeatureGroupAPI=false"
             - "-metrics=8081"
+            - "-grpc-health=8082"
           volumeMounts:
             - name: nfd-master-conf
               mountPath: "/etc/kubernetes/node-feature-discovery"
@@ -82,7 +87,7 @@ spec:
       volumes:
         - name: nfd-master-conf
           configMap:
-            name: release-name-node-feature-discovery-master-conf
+            name: node-feature-discovery-master-conf
             items:
               - key: nfd-master.conf
                 path: nfd-master.conf
