@@ -2,33 +2,31 @@
 name: CI
 
 on:
-  push: {}
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   lint:
-    name: Lint & Test
+    name: Lint
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install Nix
+    - name: Install Nix & run pre-commit
       uses: cachix/install-nix-action@v31
       with:
-        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+        github_access_token: ${{ github.token }}
 
     - name: Cache pre-commit
       uses: actions/cache@v4
       with:
         path: ~/.cache/pre-commit
-        key: ${{ runner.os }}-precommit-${{ hashFiles('.pre-commit-config.yaml') }}
+        key: precommit-${{ hashFiles('.pre-commit-config.yaml') }}
         restore-keys: |
-          ${{ runner.os }}-precommit-
+          precommit-
 
-    - name: Setup development environment
-      run: nix develop --command echo "Development environment ready"
-
-    - name: Pre-commit install
-      run: nix develop --command pre-commit install
-
-    - name: Run pre-commit
-      run: nix develop --command pre-commit run --all-files
+    - run: |-
+        nix develop --command pre-commit run --all-files --show-diff-on-failure
