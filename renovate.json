@@ -1,6 +1,13 @@
 {
   "description": "Renovate config for multi-project Helm chart version automation.",
-  "extends": ["config:recommended"],
+  "extends": ["config:best-practices"],
+  "schedule": ["before 6am on monday"],
+  "minimumReleaseAge": "14 days",
+  "internalChecksFilter": "strict",
+  "semanticCommits": "disabled",
+  "pre-commit": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "matchDatasources": ["helm"],
