@@ -1,7 +1,11 @@
 {
   "description": "Renovate config for multi-project Helm chart version automation.",
-  "extends": ["config:best-practices"],
-  "schedule": ["before 6am on monday"],
+  "extends": [
+    "config:best-practices"
+  ],
+  "schedule": [
+    "before 6am on monday"
+  ],
   "minimumReleaseAge": "14 days",
   "internalChecksFilter": "strict",
   "semanticCommits": "disabled",
@@ -10,10 +14,18 @@
   },
   "packageRules": [
     {
-      "matchDatasources": ["helm"],
-      "matchManagers": ["helmv3"],
-      "matchPaths": ["**/Chart.yaml"]
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchManagers": [
+        "helmv3"
+      ],
+      "matchFileNames": [
+        "**/Chart.yaml"
+      ]
     }
   ],
-  "gitIgnoredAuthors": ["github-actions[bot]@users.noreply.github.com"]
+  "gitIgnoredAuthors": [
+    "github-actions[bot]@users.noreply.github.com"
+  ]
 }
