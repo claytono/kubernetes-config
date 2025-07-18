@@ -3,36 +3,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: release-name-node-feature-discovery-gc
+  name: node-feature-discovery-gc
   namespace: node-feature-discovery
   labels:
-    helm.sh/chart: node-feature-discovery-0.14.3
+    helm.sh/chart: node-feature-discovery-0.17.3
     app.kubernetes.io/name: node-feature-discovery
-    app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "v0.14.3"
+    app.kubernetes.io/instance: node-feature-discovery
+    app.kubernetes.io/version: "v0.17.3"
     app.kubernetes.io/managed-by: Helm
     role: gc
 spec:
   replicas: 1
+  revisionHistoryLimit: 
   selector:
     matchLabels:
       app.kubernetes.io/name: node-feature-discovery
-      app.kubernetes.io/instance: release-name
+      app.kubernetes.io/instance: node-feature-discovery
       role: gc
   template:
     metadata:
       labels:
         app.kubernetes.io/name: node-feature-discovery
-        app.kubernetes.io/instance: release-name
+        app.kubernetes.io/instance: node-feature-discovery
         role: gc
     spec:
-      serviceAccountName: release-name-node-feature-discovery-gc
+      serviceAccountName: node-feature-discovery-gc
       dnsPolicy: ClusterFirstWithHostNet
       securityContext:
         {}
+      hostNetwork: false
       containers:
       - name: gc
-        image: "registry.k8s.io/nfd/node-feature-discovery:v0.14.3"
+        image: "registry.k8s.io/nfd/node-feature-discovery:v0.17.3"
         imagePullPolicy: "IfNotPresent"
         env:
         - name: NODE_NAME
@@ -44,10 +46,17 @@ spec:
         args:
           - "-gc-interval=1h"
         resources:
-            {}
+            limits:
+              memory: 1Gi
+            requests:
+              cpu: 10m
+              memory: 128Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
             drop: [ "ALL" ]
           readOnlyRootFilesystem: true
           runAsNonRoot: true
+        ports:
+          - name: metrics
+            containerPort: 8081

@@ -3,32 +3,36 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name:  release-name-node-feature-discovery-worker
+  name:  node-feature-discovery-worker
   namespace: node-feature-discovery
   labels:
-    helm.sh/chart: node-feature-discovery-0.14.3
+    helm.sh/chart: node-feature-discovery-0.17.3
     app.kubernetes.io/name: node-feature-discovery
-    app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "v0.14.3"
+    app.kubernetes.io/instance: node-feature-discovery
+    app.kubernetes.io/version: "v0.17.3"
     app.kubernetes.io/managed-by: Helm
     role: worker
 spec:
+  revisionHistoryLimit: 
   selector:
     matchLabels:
       app.kubernetes.io/name: node-feature-discovery
-      app.kubernetes.io/instance: release-name
+      app.kubernetes.io/instance: node-feature-discovery
       role: worker
   template:
     metadata:
       labels:
         app.kubernetes.io/name: node-feature-discovery
-        app.kubernetes.io/instance: release-name
+        app.kubernetes.io/instance: node-feature-discovery
         role: worker
+      annotations:
+        checksum/config: e5d2bbbc0c8bac1980ecb41a66a198286924aab3971251bb02db0eb94ab38fc0
     spec:
       dnsPolicy: ClusterFirstWithHostNet
-      serviceAccountName: release-name-node-feature-discovery-worker
+      serviceAccountName: node-feature-discovery-worker
       securityContext:
         {}
+      hostNetwork: false
       containers:
       - name: worker
         securityContext:
@@ -38,23 +42,48 @@ spec:
               - ALL
             readOnlyRootFilesystem: true
             runAsNonRoot: true
-        image: "registry.k8s.io/nfd/node-feature-discovery:v0.14.3"
+        image: "registry.k8s.io/nfd/node-feature-discovery:v0.17.3"
         imagePullPolicy: IfNotPresent
+        livenessProbe:
+          grpc:
+            port: 8082
+          initialDelaySeconds: 10
+        readinessProbe:
+          grpc:
+            port: 8082
+          initialDelaySeconds: 5
+          failureThreshold: 10
         env:
         - name: NODE_NAME
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_UID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.uid
         resources:
-            {}
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 5m
+              memory: 64Mi
         command:
         - "nfd-worker"
         args:
-        - "-server=release-name-node-feature-discovery-master:8080"
+        # Go over featureGate and add the feature-gate flag
+        - "-feature-gates=NodeFeatureGroupAPI=false"
         - "-metrics=8081"
+        - "-grpc-health=8082"
         ports:
-          - name: metrics
-            containerPort: 8081
+          - containerPort: 8081
+            name: metrics
+          - containerPort: 8082
+            name: health
         volumeMounts:
         - name: host-boot
           mountPath: "/host-boot"
@@ -71,8 +100,8 @@ spec:
         - name: host-lib
           mountPath: "/host-lib"
           readOnly: true
-        - name: source-d
-          mountPath: "/etc/kubernetes/node-feature-discovery/source.d/"
+        - name: host-proc-swaps
+          mountPath: "/host-proc/swaps"
           readOnly: true
         - name: features-d
           mountPath: "/etc/kubernetes/node-feature-discovery/features.d/"
@@ -96,15 +125,15 @@ spec:
         - name: host-lib
           hostPath:
             path: "/lib"
-        - name: source-d
+        - name: host-proc-swaps
           hostPath:
-            path: "/etc/kubernetes/node-feature-discovery/source.d/"
+            path: "/proc/swaps"
         - name: features-d
           hostPath:
             path: "/etc/kubernetes/node-feature-discovery/features.d/"
         - name: nfd-worker-conf
           configMap:
-            name: release-name-node-feature-discovery-worker-conf
+            name: node-feature-discovery-worker-conf
             items:
               - key: nfd-worker.conf
                 path: nfd-worker.conf
