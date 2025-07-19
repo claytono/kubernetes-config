@@ -1,0 +1,36 @@
+---
+# Source: homebox/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homebox
+  labels:
+    helm.sh/chart: homebox-0.1.2
+    app.kubernetes.io/name: homebox
+    app.kubernetes.io/instance: homebox
+    app.kubernetes.io/version: "0.20.2"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    gethomepage.dev/description: Inventory and Organization System
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Home Lab
+    gethomepage.dev/icon: homebox.png
+    gethomepage.dev/name: HomeBox
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - "homebox.k.oneill.net"
+      secretName: homebox-tls
+  rules:
+    - host: "homebox.k.oneill.net"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: homebox
+                port:
+                  number: 7745

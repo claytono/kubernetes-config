@@ -1,0 +1,19 @@
+---
+# Source: homebox/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: homebox-data
+  labels:
+    helm.sh/chart: homebox-0.1.2
+    app.kubernetes.io/name: homebox
+    app.kubernetes.io/instance: homebox
+    app.kubernetes.io/version: "0.20.2"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
