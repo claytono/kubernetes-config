@@ -12,7 +12,7 @@
     {
       "matchDatasources": ["helm"],
       "matchManagers": ["helmv3"],
-      "matchPaths": ["**/Chart.yaml"]
+      "matchFileNames": ["**/Chart.yaml"]
     }
   ],
   "gitIgnoredAuthors": ["github-actions[bot]@users.noreply.github.com"]
