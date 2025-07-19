@@ -19,4 +19,4 @@ labels:
   includeSelectors: true
 images:
 - name: pihole/pihole
-  newTag: 2025.07.1
+  newTag: 2025.07.1@sha256:f84c1654bfbafc44e2ac8447a1fa2fb739eae66395b4c179d2c59cb93e1321f3
