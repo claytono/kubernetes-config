@@ -1,0 +1,86 @@
+---
+name: Fix Linting Issues in Renovate PRs
+
+# This workflow automatically fixes linting issues in Renovate PRs by running
+# pre-commit hooks and committing the fixes back to the PR. This prevents
+# CI failures due to formatting issues that can be automatically resolved.
+#
+# The workflow only runs on Renovate PRs and uses the same PAT token as the
+# render-helm workflow for authentication.
+
+on:
+  pull_request:
+    types:
+    - opened
+    - synchronize
+    - reopened
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  fix-linting:
+    name: Fix Linting Issues
+    runs-on: ubuntu-latest
+    # Only run on Renovate PRs
+    if: contains(github.event.pull_request.user.login, 'renovate')
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.PAT }}
+        persist-credentials: false
+        ref: ${{ github.event.pull_request.head.ref }}
+
+    - name: Install Nix
+      uses: cachix/install-nix-action@f0fe604f8a612776892427721526b4c7cfb23aba  # v31
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Cache pre-commit
+      uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684  # v4
+      with:
+        path: ~/.cache/pre-commit
+        key: ${{ runner.os }}-precommit-${{ hashFiles('.pre-commit-config.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-precommit-
+
+    - name: Run pre-commit hooks on all files
+      run: |
+        # Run pre-commit hooks and capture the exit code
+        nix develop --command pre-commit run --all-files || true
+
+    - name: Check for changes
+      id: check-changes
+      run: |
+        if ! git diff --quiet; then
+          echo "changes=true" >> "$GITHUB_OUTPUT"
+          echo "Linting fixes detected:"
+          git diff --stat
+        else
+          echo "changes=false" >> "$GITHUB_OUTPUT"
+          echo "No linting fixes needed"
+        fi
+
+    - name: Commit and push fixes
+      if: steps.check-changes.outputs.changes == 'true'
+      env:
+        BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
+      run: |-
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "chore: fix linting issues
+
+        Auto-fixed by pre-commit hooks:
+        - yamlfix formatting
+        - yamllint compliance
+        - prettier formatting
+        - trailing whitespace
+        - end-of-file fixes"
+
+        echo "Pushing fixes to branch: $BRANCH_NAME"
+        git push "https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}" "HEAD:$BRANCH_NAME"
