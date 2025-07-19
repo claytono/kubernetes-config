@@ -1,0 +1,86 @@
+---
+# Source: homebox/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homebox
+  labels:
+    helm.sh/chart: homebox-0.1.2
+    app.kubernetes.io/name: homebox
+    app.kubernetes.io/instance: homebox
+    app.kubernetes.io/version: "0.20.2"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: homebox
+      app.kubernetes.io/instance: homebox
+  template:
+    metadata:
+      annotations:
+        checksum/secret: b2428aa66152458dfb56bf8e299c8b639ad7d516193c2ea10e745547f03f77f5
+      labels:
+        helm.sh/chart: homebox-0.1.2
+        app.kubernetes.io/name: homebox
+        app.kubernetes.io/instance: homebox
+        app.kubernetes.io/version: "0.20.2"
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      serviceAccountName: homebox
+      securityContext:
+        fsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: homebox
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+            runAsGroup: 65532
+            runAsNonRoot: true
+            runAsUser: 65532
+          image: "sysadminsmedia/homebox:0.20.2"
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: homebox
+          ports:
+            - name: http
+              containerPort: 7745
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          startupProbe:
+            failureThreshold: 30
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 10
+          resources:
+            limits:
+              cpu: 300m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: "/data"
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: "homebox-data"

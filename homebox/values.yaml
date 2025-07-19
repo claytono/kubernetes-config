@@ -1,0 +1,54 @@
+---
+# HomeBox configuration
+# Only override non-default settings
+
+global:
+  defaultStorageClass: nfs
+
+env:
+  TZ: America/New_York
+  HBOX_OPTIONS_ALLOW_REGISTRATION: true
+
+  # Database configuration for PostgreSQL
+  HBOX_DATABASE_DRIVER: postgres
+  HBOX_DATABASE_HOST: homebox-postgresql
+  HBOX_DATABASE_PORT: 5432
+  HBOX_DATABASE_NAME: homebox
+  HBOX_DATABASE_USER: homebox
+  HBOX_DATABASE_SSL_MODE: disable
+
+# Ingress configuration
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/name: HomeBox
+    gethomepage.dev/description: Inventory and Organization System
+    gethomepage.dev/group: Home Lab
+    gethomepage.dev/icon: homebox.png
+  hosts:
+  - host: homebox.k.oneill.net
+    paths:
+    - path: /
+      pathType: Prefix
+  tls:
+  - secretName: homebox-tls
+    hosts:
+    - homebox.k.oneill.net
+
+# PostgreSQL configuration with external secrets
+postgresql:
+  auth:
+    username: homebox
+    database: homebox
+    existingSecret: homebox-postgresql
+    secretKeys:
+      adminPasswordKey: admin-password
+      userPasswordKey: postgres-password
+  primary:
+    networkPolicy:
+      enabled: false
+    pdb:
+      create: false

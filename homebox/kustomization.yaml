@@ -1,0 +1,40 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  # External secrets
+- externalsecret.yaml
+
+  # HomeBox resources
+- helm/homebox/deployment.yaml
+- helm/homebox/secrets.yaml
+- helm/homebox/service.yaml
+- helm/homebox/pvc.yaml
+- helm/homebox/serviceaccount.yaml
+- helm/homebox/ingress.yaml
+
+  # PostgreSQL resources
+- helm/postgresql/serviceaccount.yaml
+- helm/postgresql/primary/svc.yaml
+- helm/postgresql/primary/statefulset.yaml
+- helm/postgresql/primary/svc-headless.yaml
+
+patches:
+- target:
+    kind: Deployment
+    name: homebox
+  patch: |-
+    - op: add
+      path: /spec/template/spec/containers/0/env/-
+      value:
+        name: HBOX_DATABASE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: homebox-postgresql
+            key: postgres-password
+# Add labels for metrics
+labels:
+- pairs:
+    app.kubernetes.io/name: homebox
+    app.kubernetes.io/instance: homebox
