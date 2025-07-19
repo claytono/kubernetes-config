@@ -1,0 +1,11 @@
+---
+# Flannel configuration - only non-default values
+podCidr: 10.244.0.0/16
+
+flannel:
+  # Override default backend from vxlan to host-gw to match current deployment
+  backend: host-gw
+  # Override default tolerations to match current (only NoSchedule, not NoExecute)
+  tolerations:
+  - effect: NoSchedule
+    operator: Exists
