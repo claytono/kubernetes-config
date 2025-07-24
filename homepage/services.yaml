@@ -4,3 +4,8 @@
       href: https://upspi.oneill.net
       description: NUT Web UI
       icon: peanut.png
+- Home Lab:
+  - SpiderDuo KVM:
+      href: https://spiderduo.oneill.net
+      description: SpiderDuo KVM
+      icon: mdi-spider-outline
