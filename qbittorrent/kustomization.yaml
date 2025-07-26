@@ -9,6 +9,10 @@ resources:
 - service.yaml
 - ingress.yaml
 
+images:
+- name: linuxserver/qbittorrent
+  newTag: 5.1.2
+
 labels:
 - pairs:
     app.kubernetes.io/name: qbittorrent
