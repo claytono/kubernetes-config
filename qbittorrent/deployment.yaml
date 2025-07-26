@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: qbittorrent
-        image: linuxserver/qbittorrent
+        image: qbittorrent
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

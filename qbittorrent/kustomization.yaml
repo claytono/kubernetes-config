@@ -10,7 +10,8 @@ resources:
 - ingress.yaml
 
 images:
-- name: linuxserver/qbittorrent
+- name: qbittorrent
+  newName: ghcr.io/linuxserver/qbittorrent
   newTag: 5.1.2
 
 labels:
