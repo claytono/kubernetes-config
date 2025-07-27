@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbit-manage
+  labels:
+    app: qbit-manage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qbit-manage
+  template:
+    metadata:
+      labels:
+        app: qbit-manage
+    spec:
+
+      containers:
+      - name: qbit-manage
+        image: ghcr.io/stuffanthings/qbit_manage:latest
+        ports:
+        - containerPort: 8080
+          name: web-api
+        env:
+        # Web API Configuration
+        - name: QBT_WEB_SERVER
+          value: 'true'
+        # Configuration
+        - name: QBT_CONFIG
+          value: /config/config.yml
+
+        # qBittorrent credentials
+        - name: QBITTORRENT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: qbit-manage
+              key: qbittorrent-password
+        volumeMounts:
+        - name: config
+          mountPath: /config
+          readOnly: false
+        - name: downloads
+          mountPath: /downloads
+          readOnly: false
+        - name: qbittorrent-config
+          mountPath: /torrents
+          subPath: qBittorrent/BT_backup
+          readOnly: true
+
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: qbit-manage-config
+      - name: downloads
+        nfs:
+          server: fs2.oneill.net
+          path: /volume2/shared/downloads
+      - name: qbittorrent-config
+        persistentVolumeClaim:
+          claimName: qbittorrent-config
