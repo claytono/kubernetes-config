@@ -1,14 +1,11 @@
 ---
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  name: qbittorrent-config
-  labels:
-    k8s-app: qbittorrent
+  name: qbit-manage-config
 spec:
   accessModes:
   - ReadWriteOnce
-  - ReadOnlyMany
   resources:
     requests:
       storage: 1Gi
