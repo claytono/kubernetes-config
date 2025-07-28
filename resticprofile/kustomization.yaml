@@ -24,7 +24,7 @@ images:
 - name: alpine
   newTag: 3.22@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
 - name: creativeprojects/resticprofile
-  newTag: 0.31.0@sha256:972427f3e42c49e1e87e40b1c0c43f2490f736a47b5d162c85c669f9b283612b
+  newTag: 0.31.0@sha256:d24763cbd165aa7f73fbf014ca99eef895bf7f90b59552192ef614a3ae2d0bb3
 
 labels:
 - includeSelectors: true
