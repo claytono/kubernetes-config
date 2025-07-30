@@ -64,8 +64,22 @@ spec:
           readOnly: true
       volumes:
       - name: config-map
-        configMap:
-          name: hass
+        projected:
+          sources:
+          - configMap:
+              name: hass
+          - secret:
+              name: hass-caseta-certificates
+              items:
+              - key: caseta-bridge.crt
+                path: caseta-bridge.crt
+                mode: 0644
+              - key: caseta.crt
+                path: caseta.crt
+                mode: 0644
+              - key: caseta.key
+                path: caseta.key
+                mode: 0600
       - name: config
         persistentVolumeClaim:
           claimName: hass-config
