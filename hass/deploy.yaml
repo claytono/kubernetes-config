@@ -1,9 +1,10 @@
-{{ file.Read ".warning.txt" }}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hass
+  annotations:
+    reloader.stakater.com/auto: 'true'
 spec:
   replicas: 1
   strategy:
@@ -15,8 +16,6 @@ spec:
     metadata:
       labels:
         app: hass
-      annotations:
-        config-map-hash: {{ .cm.metadata.labels.hash }}
     spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
@@ -24,7 +23,7 @@ spec:
       - name: config-setup
         image: instrumentisto/rsync-ssh
         imagePullPolicy: Always
-        args: [ 'rsync', '-av', '--copy-links', '/config-map/', '/config/' ]
+        args: [rsync, -av, --copy-links, /config-map/, /config/]
         volumeMounts:
         - name: config-map
           mountPath: /config-map
@@ -33,28 +32,28 @@ spec:
       - name: ssh-setup
         image: busybox
         command:
-          - sh
-          - -c
-          - |
-            mkdir -p /root/.ssh
-            cp /ssh-key/id_ed25519 /root/.ssh/id_ed25519
-            chmod 600 /root/.ssh/id_ed25519
-            chmod 700 /root/.ssh
+        - sh
+        - -c
+        - |
+          mkdir -p /root/.ssh
+          cp /ssh-key/id_ed25519 /root/.ssh/id_ed25519
+          chmod 600 /root/.ssh/id_ed25519
+          chmod 700 /root/.ssh
         volumeMounts:
         - name: ssh-key
           mountPath: /ssh-key
       containers:
       - name: hass
-        image: ghcr.io/home-assistant/home-assistant:2024.11
+        image: ghcr.io/home-assistant/home-assistant:2025.7
         imagePullPolicy: Always
         env:
-          - name: MYSQL_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: hass-secrets
-                key: MYSQL_PASSWORD
-          - name: DB_URL
-            value: "mysql://hass:$(MYSQL_PASSWORD)@hass-mysql/hass?charset=utf8"
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: hass-secrets
+              key: MYSQL_PASSWORD
+        - name: DB_URL
+          value: mysql://hass:$(MYSQL_PASSWORD)@hass-mysql/hass?charset=utf8
         volumeMounts:
         - name: config
           mountPath: /config
@@ -75,6 +74,5 @@ spec:
           secretName: hass-ssh-key
           defaultMode: 0400
           items:
-            - key: ssh-privatekey
-              path: id_ed25519
-# vi: ft=yaml
+          - key: ssh-privatekey
+            path: id_ed25519
