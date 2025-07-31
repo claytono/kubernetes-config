@@ -4,6 +4,9 @@
       href: https://upspi.oneill.net
       description: NUT Web UI
       icon: peanut.png
+  - Z-Wave JS:
+      href: http://zwavejs.oneill.net:8091/
+      icon: mdi-z-wave
 - Home Lab:
   - SpiderDuo KVM:
       href: https://spiderduo.oneill.net
