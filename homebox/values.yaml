@@ -8,6 +8,7 @@ global:
 env:
   TZ: America/New_York
   HBOX_OPTIONS_ALLOW_REGISTRATION: true
+  HBOX_WEB_MAX_UPLOAD_SIZE: 250
 
   # Database configuration for PostgreSQL
   HBOX_DATABASE_DRIVER: postgres
