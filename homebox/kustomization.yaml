@@ -26,6 +26,9 @@ patches:
     name: homebox
   patch: |-
     - op: add
+      path: /spec/template/spec/containers/0/env
+      value: []
+    - op: add
       path: /spec/template/spec/containers/0/env/-
       value:
         name: HBOX_DATABASE_PASSWORD
