@@ -9,6 +9,7 @@ resources:
 - ingress.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: sonarr
     app.kubernetes.io/instance: sonarr

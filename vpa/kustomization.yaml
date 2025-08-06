@@ -12,5 +12,6 @@ resources:
 - helm/templates/recommender-service-account.yaml
 
 labels:
+
 - pairs:
     app: vpa

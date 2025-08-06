@@ -1,9 +1,11 @@
 ---
 apiVersion: batch/v1
 kind: CronJob
+
 metadata:
   name: cluster-backup
   namespace: kube-system
+
 spec:
   schedule: 0 */12 * * *
   concurrencyPolicy: Forbid

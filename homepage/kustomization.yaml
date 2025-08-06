@@ -6,8 +6,10 @@ resources:
 - helm/templates/common.yaml
 
 labels:
+
 - pairs:
     app: homepage
+
 configMapGenerator:
 - name: homepage
   options:
@@ -22,6 +24,7 @@ configMapGenerator:
   - services.yaml
 
 patches:
+
 - target:
     kind: Deployment
     name: homepage

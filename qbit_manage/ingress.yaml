@@ -1,6 +1,7 @@
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
   name: qbit-manage
   labels:
@@ -11,6 +12,7 @@ metadata:
     gethomepage.dev/name: qBit Manage
     gethomepage.dev/group: Downloaders
     gethomepage.dev/icon: qbittorrent.png
+
 spec:
   ingressClassName: nginx
   tls:

@@ -1,18 +1,23 @@
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
+
 metadata:
   name: default
   namespace: metallb-system
+
 spec:
   addresses:
   - 172.19.74.32/27
+
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
+
 metadata:
   name: static
   namespace: metallb-system
+
 spec:
   addresses:
   - 172.19.74.20/32
@@ -20,12 +25,15 @@ spec:
   - 172.19.74.22/32
   - 172.19.74.23/32
   autoAssign: false
+
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
+
 metadata:
   name: l2advertisement1
   namespace: metallb-system
+
 spec:
   # Control plane is hosted in a VM that is also on the same host as the
   # tailscale subnet router, so we want to exclude metallb from putting IPS on
@@ -37,12 +45,15 @@ spec:
       values: []
   ipAddressPools:
   - default
+
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
+
 metadata:
   name: l2advertisement2
   namespace: metallb-system
+
 spec:
   # See above
   nodeSelectors:

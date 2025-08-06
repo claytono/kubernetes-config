@@ -9,6 +9,7 @@ resources:
 - pvc.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: changedetection
     app.kubernetes.io/instance: changedetection

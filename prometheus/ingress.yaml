@@ -1,6 +1,7 @@
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
   name: prometheus
   annotations:
@@ -9,6 +10,7 @@ metadata:
     gethomepage.dev/name: Prometheus
     gethomepage.dev/group: Monitoring
     gethomepage.dev/icon: prometheus.png
+
 spec:
   tls:
   - hosts:

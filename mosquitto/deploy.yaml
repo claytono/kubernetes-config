@@ -1,10 +1,12 @@
 ---
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: mosquitto
   annotations:
     reloader.stakater.com/auto: 'true'
+
 spec:
   selector:
     matchLabels:

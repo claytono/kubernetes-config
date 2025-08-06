@@ -1,10 +1,12 @@
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
+
 metadata:
   name: bazarr-config
   labels:
     k8s-app: bazarr
+
 spec:
   accessModes:
   - ReadWriteOnce

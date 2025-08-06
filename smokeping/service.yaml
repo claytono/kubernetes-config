@@ -1,8 +1,10 @@
 ---
 apiVersion: v1
 kind: Service
+
 metadata:
   name: smokeping
+
 spec:
   ports:
   - port: 80

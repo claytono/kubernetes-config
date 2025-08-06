@@ -1,8 +1,10 @@
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
+
 metadata:
   name: prometheus-data
+
 spec:
   accessModes:
   - ReadWriteOnce

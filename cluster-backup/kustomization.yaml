@@ -7,10 +7,12 @@ resources:
 - cronjob.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: cluster-backup
     app.kubernetes.io/instance: cluster-backup
   includeSelectors: true
+
 configMapGenerator:
 - name: cluster-backup
   files:
