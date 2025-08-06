@@ -1,0 +1,36 @@
+---
+# Source: argo-cd/templates/argocd-server/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server
+  namespace: argocd
+  labels:
+    helm.sh/chart: argo-cd-8.1.0
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+    app.kubernetes.io/version: "v3.0.6"
+  annotations:
+    gethomepage.dev/description: "GitOps Continuous Delivery"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: "Platform"
+    gethomepage.dev/icon: "mdi-git"
+    gethomepage.dev/name: "Argo CD"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: argocd.k.oneill.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 443

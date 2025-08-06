@@ -1,0 +1,17 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: tautulli
+  namespace: argocd
+
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/claytono/kubernetes-config.git
+    targetRevision: main
+    path: tautulli
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default

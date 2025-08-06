@@ -1,0 +1,18 @@
+---
+# Source: argo-cd/templates/argocd-configs/argocd-notifications-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+  namespace: argocd
+  labels:
+    helm.sh/chart: argo-cd-8.1.0
+    app.kubernetes.io/name: argocd-notifications-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: notifications-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+    app.kubernetes.io/version: "v3.0.6"
+data:
+  context: |
+    argocdUrl: https://argocd.example.com

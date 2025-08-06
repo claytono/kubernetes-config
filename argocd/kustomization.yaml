@@ -1,0 +1,69 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: argocd
+
+labels:
+
+- pairs:
+    app: argocd
+
+resources:
+- namespace.yaml
+# Generated helm resources - do not edit below this line
+- helm/templates/argocd-application-controller/clusterrole.yaml
+- helm/templates/argocd-application-controller/clusterrolebinding.yaml
+- helm/templates/argocd-application-controller/role.yaml
+- helm/templates/argocd-application-controller/rolebinding.yaml
+- helm/templates/argocd-application-controller/serviceaccount.yaml
+- helm/templates/argocd-application-controller/statefulset.yaml
+- helm/templates/argocd-applicationset/deployment.yaml
+- helm/templates/argocd-applicationset/role.yaml
+- helm/templates/argocd-applicationset/rolebinding.yaml
+- helm/templates/argocd-applicationset/service.yaml
+- helm/templates/argocd-applicationset/serviceaccount.yaml
+- helm/templates/argocd-configs/argocd-cm.yaml
+- helm/templates/argocd-configs/argocd-cmd-params-cm.yaml
+- helm/templates/argocd-configs/argocd-gpg-keys-cm.yaml
+- helm/templates/argocd-configs/argocd-notifications-cm.yaml
+- helm/templates/argocd-configs/argocd-notifications-secret.yaml
+- helm/templates/argocd-configs/argocd-rbac-cm.yaml
+- helm/templates/argocd-configs/argocd-secret.yaml
+- helm/templates/argocd-configs/argocd-ssh-known-hosts-cm.yaml
+- helm/templates/argocd-configs/argocd-tls-certs-cm.yaml
+- helm/templates/argocd-notifications/clusterrole.yaml
+- helm/templates/argocd-notifications/clusterrolebinding.yaml
+- helm/templates/argocd-notifications/deployment.yaml
+- helm/templates/argocd-notifications/role.yaml
+- helm/templates/argocd-notifications/rolebinding.yaml
+- helm/templates/argocd-notifications/serviceaccount.yaml
+- helm/templates/argocd-repo-server/deployment.yaml
+- helm/templates/argocd-repo-server/role.yaml
+- helm/templates/argocd-repo-server/rolebinding.yaml
+- helm/templates/argocd-repo-server/service.yaml
+- helm/templates/argocd-repo-server/serviceaccount.yaml
+- helm/templates/argocd-server/certificate.yaml
+- helm/templates/argocd-server/clusterrole.yaml
+- helm/templates/argocd-server/clusterrolebinding.yaml
+- helm/templates/argocd-server/deployment.yaml
+- helm/templates/argocd-server/ingress.yaml
+- helm/templates/argocd-server/role.yaml
+- helm/templates/argocd-server/rolebinding.yaml
+- helm/templates/argocd-server/service.yaml
+- helm/templates/argocd-server/serviceaccount.yaml
+- helm/templates/crds/crd-application.yaml
+- helm/templates/crds/crd-applicationset.yaml
+- helm/templates/crds/crd-project.yaml
+- helm/templates/dex/deployment.yaml
+- helm/templates/dex/role.yaml
+- helm/templates/dex/rolebinding.yaml
+- helm/templates/dex/service.yaml
+- helm/templates/dex/serviceaccount.yaml
+- helm/templates/redis-secret-init/job.yaml
+- helm/templates/redis-secret-init/role.yaml
+- helm/templates/redis-secret-init/rolebinding.yaml
+- helm/templates/redis-secret-init/serviceaccount.yaml
+- helm/templates/redis/deployment.yaml
+- helm/templates/redis/health-configmap.yaml
+- helm/templates/redis/service.yaml

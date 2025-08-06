@@ -1,6 +1,8 @@
 ---
 controller:
   replicaCount: 2
+  extraArgs:
+    enable-ssl-passthrough: ''
   config:
     proxy-body-size: 5m
   admissionWebhooks:

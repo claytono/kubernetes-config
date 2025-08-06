@@ -1,0 +1,34 @@
+---
+server:
+  containerPorts:
+    server: 8443
+  service:
+    servicePortHttps: 443
+    servicePortHttp: 80
+  certificate:
+    enabled: true
+    domain: argocd.k.oneill.net
+    issuer:
+      kind: ClusterIssuer
+      name: letsencrypt
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hostname: argocd.k.oneill.net
+    servicePort: https
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-passthrough: 'true'
+      nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+      gethomepage.dev/enabled: 'true'
+      gethomepage.dev/name: Argo CD
+      gethomepage.dev/description: GitOps Continuous Delivery
+      gethomepage.dev/icon: mdi-git
+      gethomepage.dev/group: Platform
+    path: /
+    pathType: Prefix
+
+configs:
+  cm:
+    url: https://argocd.k.oneill.net
+  notifications:
+    argocdUrl: https://argocd.k.oneill.net
