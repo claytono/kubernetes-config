@@ -29,4 +29,4 @@ jobs:
           precommit-
 
     - run: |-
-        nix develop --command pre-commit run --all-files --show-diff-on-failure
+        nix develop --command ./scripts/lint
