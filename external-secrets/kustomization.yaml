@@ -38,8 +38,10 @@ resources:
 - iscsi-external-secret.yaml
 
 labels:
+
 - pairs:
     app: external-secrets
+
 secretGenerator:
 - name: secrets
   options:

@@ -1,6 +1,7 @@
 ---
 schedule: 17 7 * * *
 deschedulerPolicyAPIVersion: descheduler/v1alpha2
+
 deschedulerPolicy:
   maxNoOfPodsToEvictPerNode: 2
   evictLocalStoragePods: true

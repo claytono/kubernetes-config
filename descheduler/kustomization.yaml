@@ -12,5 +12,6 @@ resources:
 - helm/templates/configmap.yaml
 
 labels:
+
 - pairs:
     app: descheduler

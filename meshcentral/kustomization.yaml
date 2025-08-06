@@ -9,6 +9,7 @@ resources:
 - pvc.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: meshcentral
     app.kubernetes.io/instance: meshcentral

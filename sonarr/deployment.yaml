@@ -1,11 +1,13 @@
 ---
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: sonarr
   annotations:
     reloader.stakater.com/auto: 'true'
     secret.reloader.stakater.com/reload: iscsi-chap-secret
+
 spec:
   strategy:
     type: Recreate

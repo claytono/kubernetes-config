@@ -9,6 +9,7 @@ resources:
 - ingress.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: autobrr
     app.kubernetes.io/instance: autobrr

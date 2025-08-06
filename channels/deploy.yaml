@@ -1,8 +1,10 @@
 ---
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: channels-dvr
+
 spec:
   replicas: 1
   selector:
@@ -24,6 +26,7 @@ spec:
       - name: channels
         image: fancybits/channels-dvr:tve
         imagePullPolicy: Always
+
 #        command: ['sleep', 'infinity']
         env:
         - name: TZ

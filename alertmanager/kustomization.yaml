@@ -10,10 +10,12 @@ resources:
 - externalsecret.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: alertmanager
     app.kubernetes.io/instance: alertmanager
   includeSelectors: true
+
 configMapGenerator:
 - name: alertmanager
   files:

@@ -1,12 +1,14 @@
 ---
 apiVersion: v1
 kind: Service
+
 metadata:
   name: qbittorrent
   labels:
     app: qbittorrent
   annotations:
     metallb.io/allow-shared-ip: transmission
+
 spec:
   type: LoadBalancer
   loadBalancerIP: 172.19.74.22
@@ -20,15 +22,18 @@ spec:
     protocol: TCP
   selector:
     app: qbittorrent
+
 ---
 apiVersion: v1
 kind: Service
+
 metadata:
   name: qbittorrent-udp
   labels:
     app: qbittorrent
   annotations:
     metallb.io/allow-shared-ip: transmission
+
 spec:
   type: LoadBalancer
   loadBalancerIP: 172.19.74.22

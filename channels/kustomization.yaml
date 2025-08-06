@@ -11,6 +11,7 @@ resources:
 - service.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: channels
     app.kubernetes.io/instance: channels

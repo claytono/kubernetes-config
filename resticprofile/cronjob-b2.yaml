@@ -1,8 +1,10 @@
 ---
 apiVersion: batch/v1
 kind: CronJob
+
 metadata:
   name: resticprofile-b2
+
 spec:
   schedule: 0 18 * * *  # Daily at 18:00 (6 PM)
   concurrencyPolicy: Forbid

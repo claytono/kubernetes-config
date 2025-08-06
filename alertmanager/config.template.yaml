@@ -5,6 +5,7 @@ global:
   smtp_from: clayton@oneill.net
   smtp_auth_username: clayton.oneill@gmail.com
   smtp_auth_password: '{{ .Env.SMTP_PASSWORD }}'
+
 # # The directory from which notification templates are read.
 templates:
 - /etc/alertmanager-templates/*.tmpl
@@ -31,6 +32,7 @@ route:
   - match:
       severity: email
     receiver: default
+
 receivers:
 - name: default
   email_configs:

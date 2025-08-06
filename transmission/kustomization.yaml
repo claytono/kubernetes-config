@@ -11,6 +11,7 @@ resources:
 - externalsecret.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: transmission
     app.kubernetes.io/instance: transmission

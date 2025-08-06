@@ -10,6 +10,7 @@ resources:
 - helm/templates/deployment.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: reloader
     app.kubernetes.io/instance: reloader

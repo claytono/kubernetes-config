@@ -1,8 +1,10 @@
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
+
 metadata:
   name: netatmo-wunderground-agent-data
+
 spec:
   accessModes:
   - ReadWriteOnce
