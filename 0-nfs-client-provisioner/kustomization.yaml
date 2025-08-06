@@ -13,6 +13,7 @@ resources:
 - helm/templates/deployment.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: 0-nfs-client-provisioner
     app.kubernetes.io/instance: 0-nfs-client-provisioner

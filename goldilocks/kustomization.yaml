@@ -17,5 +17,6 @@ resources:
 - helm/templates/dashboard-serviceaccount.yaml
 
 labels:
+
 - pairs:
     app: goldilocks

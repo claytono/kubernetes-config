@@ -1,8 +1,10 @@
 ---
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: smokeping
+
 spec:
   strategy:
     type: Recreate

@@ -32,6 +32,7 @@ resources:
 - helm/valkey/templates/primary/serviceaccount.yaml
 
 patches:
+
 - target:
     kind: Ingress
     name: n8n

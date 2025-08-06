@@ -11,9 +11,11 @@ resources:
 - helm/loki/templates/service-memberlist.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: loki
     app.kubernetes.io/instance: loki
+
 secretGenerator:
 - name: loki
   files:
@@ -21,6 +23,7 @@ secretGenerator:
   type: Opaque
 
 patches:
+
 - target:
     kind: StatefulSet
     name: loki

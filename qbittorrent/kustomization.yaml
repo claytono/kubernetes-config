@@ -15,6 +15,7 @@ images:
   newTag: 5.1.2@sha256:db088f4b2afec2fb1c7d61d800de37af1d098722ee3700829b25a8ccc88d8416
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: qbittorrent
     app.kubernetes.io/instance: qbittorrent

@@ -1,10 +1,12 @@
 ---
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: alertmanager
   annotations:
     reloader.stakater.com/auto: 'true'
+
 spec:
   replicas: 1
   selector:

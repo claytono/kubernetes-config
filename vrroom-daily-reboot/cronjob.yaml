@@ -1,8 +1,10 @@
 ---
 apiVersion: batch/v1
 kind: CronJob
+
 metadata:
   name: vrroom-daily-reboot
+
 spec:
   schedule: 0 5 * * *  # 5:00 AM daily in local time
   timeZone: America/New_York

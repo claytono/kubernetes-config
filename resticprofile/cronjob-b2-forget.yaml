@@ -1,8 +1,10 @@
 ---
 apiVersion: batch/v1
 kind: CronJob
+
 metadata:
   name: resticprofile-b2-forget
+
 spec:
   schedule: 0 2 * * *  # Daily at 2 AM (after backup completes)
   concurrencyPolicy: Forbid

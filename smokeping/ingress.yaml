@@ -1,6 +1,7 @@
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
   name: smokeping
   annotations:
@@ -9,6 +10,7 @@ metadata:
     gethomepage.dev/name: Smokeping
     gethomepage.dev/group: Monitoring
     gethomepage.dev/icon: smokeping.png
+
 spec:
   tls:
   - hosts:

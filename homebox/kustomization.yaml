@@ -4,6 +4,7 @@ kind: Kustomization
 
 resources:
   # External secrets
+
 - externalsecret.yaml
 
   # HomeBox resources
@@ -21,6 +22,7 @@ resources:
 - helm/postgresql/primary/svc-headless.yaml
 
 patches:
+
 - target:
     kind: Deployment
     name: homebox
@@ -36,8 +38,10 @@ patches:
           secretKeyRef:
             name: homebox-postgresql
             key: postgres-password
+
 # Add labels for metrics
 labels:
+
 - pairs:
     app.kubernetes.io/name: homebox
     app.kubernetes.io/instance: homebox

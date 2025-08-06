@@ -1,8 +1,10 @@
 ---
 global:
   scrape_interval: 15s
+
 rule_files:
 - /etc/prometheus/rules.yml
+
 alerting:
   alertmanagers:
 
@@ -10,6 +12,7 @@ alerting:
     static_configs:
     - targets:
       - alertmanager.k.oneill.net:443
+
 scrape_configs:
 - job_name: prometheus
 
@@ -18,6 +21,7 @@ scrape_configs:
 
   static_configs:
   - targets: [localhost:9090]
+
 - job_name: node resources
   static_configs:
   - targets:
@@ -106,6 +110,7 @@ scrape_configs:
     # Kubernetes apiserver.  This means it will work if Prometheus is running out of
     # cluster, or can't connect to nodes for some other reason (e.g. because of
     # firewalling).
+
 - job_name: kubernetes-nodes
 
   # Default to scraping over https. If required, just disable this or change to
@@ -134,6 +139,7 @@ scrape_configs:
     regex: (.+)
     target_label: __metrics_path__
     replacement: /api/v1/nodes/${1}/proxy/metrics
+
 # Scrape config for Kubelet cAdvisor.
 #
 # This is required for Kubernetes 1.7.3 and later, where cAdvisor metrics
@@ -176,6 +182,7 @@ scrape_configs:
     regex: (.+)
     target_label: __metrics_path__
     replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
+
 # Scrape config for service endpoints.
 #
 # The relabeling allows the actual service scrape endpoint to be configured
@@ -220,6 +227,7 @@ scrape_configs:
   - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape_interval]
     action: replace
     target_label: scrape_interval
+
 # Example scrape config for probing services via the Blackbox Exporter.
 #
 # The relabeling allows the actual service scrape endpoint to be configured
@@ -251,6 +259,7 @@ scrape_configs:
     target_label: kubernetes_namespace
   - source_labels: [__meta_kubernetes_service_name]
     target_label: kubernetes_name
+
 # Example scrape config for pods
 #
 # The relabeling allows the actual pod scrape endpoint to be configured via the

@@ -1,12 +1,14 @@
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
   name: cross-seed
   labels:
     app: cross-seed
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+
 spec:
   tls:
   - hosts:

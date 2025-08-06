@@ -1,6 +1,7 @@
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
   name: changedetection
   labels:
@@ -11,6 +12,7 @@ metadata:
     gethomepage.dev/name: ChangeDetection
     gethomepage.dev/group: Miscellaneous
     gethomepage.dev/icon: changedetection
+
 spec:
   ingressClassName: nginx
   tls:

@@ -1,6 +1,7 @@
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
   name: bazarr
   labels:
@@ -12,6 +13,7 @@ metadata:
     gethomepage.dev/group: Media Tools
     gethomepage.dev/icon: bazarr.png
     gethomepage.dev/description: Subtitle Downloader
+
 spec:
   tls:
   - hosts:

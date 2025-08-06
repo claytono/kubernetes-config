@@ -11,6 +11,7 @@ resources:
 - pvc.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: qbit-manage
     app.kubernetes.io/instance: qbit-manage

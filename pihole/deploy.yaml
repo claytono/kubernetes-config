@@ -1,6 +1,7 @@
 ---
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: pihole
   labels:
@@ -8,6 +9,7 @@ metadata:
     app.kubernetes.io/instance: pihole
   annotations:
     reloader.stakater.com/auto: 'true'
+
 spec:
   replicas: 1
   selector:
