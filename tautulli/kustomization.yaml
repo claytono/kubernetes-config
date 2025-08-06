@@ -9,6 +9,7 @@ resources:
 - service.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: tautulli
     app.kubernetes.io/instance: tautulli

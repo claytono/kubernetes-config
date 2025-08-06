@@ -1,10 +1,12 @@
 ---
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: ddns-route53
   annotations:
     reloader.stakater.com/auto: 'true'
+
 spec:
   replicas: 1
   strategy:

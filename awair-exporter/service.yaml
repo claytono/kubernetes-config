@@ -1,8 +1,10 @@
 ---
 apiVersion: v1
 kind: Service
+
 metadata:
   name: awair-exporter
+
 spec:
   selector:
     app.kubernetes.io/name: awair-exporter

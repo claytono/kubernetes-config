@@ -11,8 +11,10 @@ resources:
 - helm/promtail/templates/serviceaccount.yaml
 
 labels:
+
 - pairs:
     app: promtail
+
 secretGenerator:
 - name: promtail
   files:

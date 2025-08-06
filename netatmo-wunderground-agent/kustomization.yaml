@@ -8,6 +8,7 @@ resources:
 - externalsecret.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: netatmo-wunderground-agent
     app.kubernetes.io/instance: netatmo-wunderground-agent

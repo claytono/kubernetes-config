@@ -1,10 +1,12 @@
 ---
 apiVersion: v1
 kind: Service
+
 metadata:
   name: cross-seed
   labels:
     app: cross-seed
+
 spec:
   ports:
   - port: 2468

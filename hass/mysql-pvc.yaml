@@ -1,10 +1,12 @@
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
+
 metadata:
   name: hass-mysql
   labels:
     k8s-app: hass-mysql
+
 spec:
   accessModes:
   - ReadWriteOnce

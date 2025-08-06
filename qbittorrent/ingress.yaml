@@ -1,6 +1,7 @@
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
   name: qbittorrent
   labels:
@@ -11,6 +12,7 @@ metadata:
     gethomepage.dev/name: qBittorrent
     gethomepage.dev/group: Downloaders
     gethomepage.dev/icon: qbittorrent.png
+
 spec:
   tls:
   - hosts:

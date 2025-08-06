@@ -9,6 +9,7 @@ resources:
 - service.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: grafana
     app.kubernetes.io/instance: grafana

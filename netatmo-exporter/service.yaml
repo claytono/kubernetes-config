@@ -1,6 +1,7 @@
 ---
 apiVersion: v1
 kind: Service
+
 metadata:
   labels:
     name: netatmo-exporter
@@ -8,6 +9,7 @@ metadata:
   annotations:
     prometheus.io/scrape: 'true'
     prometheus.io/port: '9210'
+
 spec:
   selector:
     app.kubernetes.io/name: netatmo-exporter

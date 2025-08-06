@@ -1,6 +1,7 @@
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
   name: autobrr
   labels:
@@ -12,6 +13,7 @@ metadata:
     gethomepage.dev/description: IRC Torrent Watcher
     gethomepage.dev/group: Media Tools
     gethomepage.dev/icon: autobrr.png
+
 spec:
   tls:
   - hosts:
