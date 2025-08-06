@@ -43,9 +43,8 @@ spec:
         imagePullPolicy: IfNotPresent
         args:
         - /usr/local/bin/argocd-server
-        - --port=8080
+        - --port=8443
         - --metrics-port=8083
-        - --insecure
         env:
           - name: ARGOCD_SERVER_NAME
             value: argocd-server
@@ -374,7 +373,7 @@ spec:
           mountPath: /home/argocd/params
         ports:
         - name: server
-          containerPort: 8080
+          containerPort: 8443
           protocol: TCP
         - name: metrics
           containerPort: 8083

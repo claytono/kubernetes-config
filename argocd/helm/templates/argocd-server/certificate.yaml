@@ -1,0 +1,28 @@
+---
+# Source: argo-cd/templates/argocd-server/certificate.yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-server
+  namespace: argocd
+  labels:
+    helm.sh/chart: argo-cd-8.1.0
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+    app.kubernetes.io/version: "v3.0.6"
+spec: 
+  secretName: argocd-server-tls
+  commonName: argocd.k.oneill.net
+  dnsNames:
+    - argocd.k.oneill.net
+  issuerRef:
+    kind: "ClusterIssuer"
+    name: "letsencrypt"
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    rotationPolicy: Never
+    size: 2048

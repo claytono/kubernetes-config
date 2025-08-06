@@ -14,12 +14,13 @@ metadata:
     app.kubernetes.io/part-of: argocd
     app.kubernetes.io/version: "v3.0.6"
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt"
     gethomepage.dev/description: "GitOps Continuous Delivery"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/group: "Platform"
     gethomepage.dev/icon: "mdi-git"
     gethomepage.dev/name: "Argo CD"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 spec:
   ingressClassName: nginx
   rules:
@@ -33,7 +34,3 @@ spec:
                 name: argocd-server
                 port:
                   number: 443
-  tls:
-    - hosts:
-      - argocd.k.oneill.net
-      secretName: argocd-server-tls

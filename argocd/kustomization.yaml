@@ -43,6 +43,7 @@ resources:
 - helm/templates/argocd-repo-server/rolebinding.yaml
 - helm/templates/argocd-repo-server/service.yaml
 - helm/templates/argocd-repo-server/serviceaccount.yaml
+- helm/templates/argocd-server/certificate.yaml
 - helm/templates/argocd-server/clusterrole.yaml
 - helm/templates/argocd-server/clusterrolebinding.yaml
 - helm/templates/argocd-server/deployment.yaml
