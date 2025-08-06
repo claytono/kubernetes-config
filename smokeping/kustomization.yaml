@@ -9,6 +9,7 @@ resources:
 - ingress.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: smokeping
     app.kubernetes.io/instance: smokeping

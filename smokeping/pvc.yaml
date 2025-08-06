@@ -1,19 +1,24 @@
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
+
 metadata:
   name: smokeping-config
+
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
+
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
+
 metadata:
   name: smokeping-data
+
 spec:
   accessModes:
   - ReadWriteOnce

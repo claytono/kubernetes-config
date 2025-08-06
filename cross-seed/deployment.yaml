@@ -1,11 +1,13 @@
 ---
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: cross-seed
   annotations:
     reloader.stakater.com/auto: 'true'
     secret.reloader.stakater.com/reload: iscsi-chap-secret,cross-seed-secrets
+
 spec:
   strategy:
     type: Recreate

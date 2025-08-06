@@ -1,10 +1,12 @@
 ---
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: bazarr
   labels:
     app: bazarr
+
 spec:
   strategy:
     type: Recreate

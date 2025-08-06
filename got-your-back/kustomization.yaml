@@ -9,10 +9,12 @@ resources:
 - pvc.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: got-your-back
     app.kubernetes.io/instance: got-your-back
   includeSelectors: true
+
 configMapGenerator:
 - name: run-script
   files:

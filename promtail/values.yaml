@@ -4,6 +4,7 @@ config:
   snippets:
     pipelineStages:
     - docker: {}
+
 podAnnotations:
   prometheus.io/scrape: 'true'
   prometheus.io/port: http-metrics

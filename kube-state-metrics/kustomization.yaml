@@ -10,6 +10,7 @@ resources:
 - helm/templates/service.yaml
 
 labels:
+
 - pairs:
     app: kube-state-metrics
   includeSelectors: true

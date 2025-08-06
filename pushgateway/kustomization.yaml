@@ -8,6 +8,7 @@ resources:
 - service.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: pushgateway
     app.kubernetes.io/instance: pushgateway

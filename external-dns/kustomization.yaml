@@ -14,6 +14,7 @@ resources:
 
 commonLabels:
   app: external-dns
+
 patches:
 - patch: |-
     apiVersion: apps/v1

@@ -58,6 +58,7 @@ b2:
   prometheus-push: https://pushgateway.k.oneill.net/
   check:
     read-data-subset: 1%
+
 # B2 copy profile (copy from local repo to B2)
 copy-main:
   compression: max

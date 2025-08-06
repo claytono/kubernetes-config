@@ -1,10 +1,12 @@
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
+
 metadata:
   name: changedetection-data
   labels:
     k8s-app: changedetection
+
 spec:
   accessModes:
   - ReadWriteOnce

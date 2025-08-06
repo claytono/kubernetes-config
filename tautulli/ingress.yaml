@@ -1,6 +1,7 @@
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
   name: tautulli
   labels:
@@ -12,6 +13,7 @@ metadata:
     gethomepage.dev/description: Plex Monitoring and Statistics
     gethomepage.dev/group: Media
     gethomepage.dev/icon: tautulli.png
+
 spec:
   tls:
   - hosts:

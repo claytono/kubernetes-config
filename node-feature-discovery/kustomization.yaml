@@ -19,5 +19,6 @@ resources:
 - helm/templates/worker.yaml
 
 labels:
+
 - pairs:
     app: node-feature-discovery

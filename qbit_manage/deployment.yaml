@@ -1,10 +1,12 @@
 ---
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: qbit-manage
   labels:
     app: qbit-manage
+
 spec:
   replicas: 1
   selector:

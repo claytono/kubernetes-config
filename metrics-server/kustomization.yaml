@@ -16,5 +16,6 @@ resources:
 - helm/serviceaccount.yaml
 
 labels:
+
 - pairs:
     app: metrics-server

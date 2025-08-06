@@ -8,9 +8,11 @@ resources:
 - service.yaml
 
 labels:
+
 - pairs:
     app.kubernetes.io/name: blackbox-exporter
     app.kubernetes.io/instance: blackbox-exporter
+
 configMapGenerator:
 - name: config
   files:
