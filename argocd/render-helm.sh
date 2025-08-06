@@ -24,7 +24,8 @@ rmdir tmp
 rm -rf helm/tests
 
 # Update kustomization.yaml resources to match actual helm files
-sed -i '' '/# Generated helm resources/,$d' kustomization.yaml
+# Use awk for cross-platform compatibility
+awk '/# Generated helm resources/ { exit } { print }' kustomization.yaml > kustomization.yaml.tmp && mv kustomization.yaml.tmp kustomization.yaml
 
 # Add marker comment and all current helm template files
 echo "# Generated helm resources - do not edit below this line" >> kustomization.yaml
