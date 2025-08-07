@@ -1,3 +1,12 @@
+# ⚠️ REPOSITORY ARCHIVED
+
+**This repository has been merged into the main infrastructure repository:**
+**👉 https://github.com/claytono/infra**
+
+**All Kubernetes manifests are now located in the `kubernetes/` directory of the merged repository.**
+
+---
+
 # Kubernetes Home Lab Manifests
 
 This repository contains the Kubernetes manifests for my bare-metal home
